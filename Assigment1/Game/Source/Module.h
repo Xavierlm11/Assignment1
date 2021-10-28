@@ -7,6 +7,9 @@
 
 class App;
 
+struct Collider;
+
+
 class Module
 {
 public:
@@ -89,8 +92,7 @@ public:
 		}
 	}
 
-	virtual void OnCollision(Collider* c1, Collider* c2)
-	{}
+	void OnCollision(Collider* c1, Collider* c2){}
 
 	inline bool IsEnabled() const { return  isEnabled; }
 

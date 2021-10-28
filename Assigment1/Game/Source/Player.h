@@ -9,6 +9,8 @@
 
 struct SDL_Texture;
 struct SDL_Surface;
+struct Collider;
+
 
 class Player :public Module {
 public:
