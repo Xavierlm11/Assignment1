@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Animation.h"
 #include "Audio.h"
+#include "ModuleCollisions.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -98,6 +99,7 @@ bool Player::Start()
 	app->player->position.y = 20;
 	PlayerPosition = true;
 
+	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,16 }, Collider::Type::PLAYER, this);
 
 
 	return ret;

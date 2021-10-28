@@ -56,10 +56,11 @@ public:
 private:
 	bool PlayerPosition = true;
 
+	//cargar textura del jugador
 	SDL_Texture* texture = nullptr;
 
+	//animation
 	Animation* currentAnimation = nullptr;
-
 	Animation idleAnimR,
 		idleAnimL,
 		jumpAnimR,
@@ -68,6 +69,9 @@ private:
 		walkAnimL,
 		PlayerDeathR,
 		PlayerDeathL;
+
+	//Declarar colisiones del jugador
+	Collider* colliderPlayer = nullptr;
 
 	bool god = false;
 

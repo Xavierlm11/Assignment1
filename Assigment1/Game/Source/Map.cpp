@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
+#include "ModuleCollisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -431,5 +432,40 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 		properties.list.add(p);
 	}
 
+	return ret;
+}
+
+bool Map::CreateColliders(pugi::xml_node& node, MapLayer* layer) {
+	bool ret = true;
+	ListItem<MapLayer*>* LayersInfo;
+	LayersInfo = mapData.layers.start;
+	if (LayersInfo->data->properties.GetProperty("Draw") == 0) {
+		for (int y = 0; y < LayersInfo->data->height; y++) {
+			for (int x = 0; x < LayersInfo->data->width; x++) {
+				int gid = LayersInfo->data->Get(x, y);
+
+				if (gid > 0) {
+
+					//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
+					//now we always use the firt tileset in the list
+					//TileSet* tileset = mapData.tilesets.start->data;
+					TileSet* tileset = GetTilesetFromTileId(gid);
+
+					SDL_Rect r = tileset->GetTileRect(gid);
+					iPoint pos = MapToWorld(x, y);
+
+					app->render->DrawTexture(tileset->texture,
+						pos.x,
+						pos.y,
+						&r);
+
+					collidersMap = app->coll->AddCollider({ pos.x,pos.y,8,8 }, Collider::Type::SUELO, this);
+				}
+
+			}
+		}
+		LayersInfo = LayersInfo->next;
+
+	}
 	return ret;
 }

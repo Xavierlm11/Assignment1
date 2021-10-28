@@ -11,13 +11,7 @@ struct Collider
 	{
 		NONE = -1,
 		PLAYER,
-		ENEMY,
-		PLAYER_ATTACK,
-		PURPLE_ATTACK,
-		ORANGE_ATTACK,
-		WHITE_ATTACK,
-		BOSS_ATTACK,
-		ENEMY_SHOT,
+		SUELO,
 
 		MAX
 	};

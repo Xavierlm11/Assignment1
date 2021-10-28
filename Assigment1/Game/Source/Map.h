@@ -139,6 +139,8 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadAllLayers(pugi::xml_node mapNode);
 
+	bool CreateColliders(pugi::xml_node& node, MapLayer* layer);
+
 	// L06: TODO 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
@@ -149,6 +151,8 @@ public:
 
     // L03: DONE 1: Add your struct for map info
 	MapData mapData;
+
+	Collider* collidersMap = nullptr;
 
 private:
 

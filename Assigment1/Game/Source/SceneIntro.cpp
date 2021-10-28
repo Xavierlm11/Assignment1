@@ -98,6 +98,9 @@ bool SceneIntro::CleanUp()
 	app->player->position.x = 50;
 	app->player->position.y = 20;
 
+
+	/*SDL_DestroyTexture(bgTexture);*/
+
 	//app->audio->Enable();
 	//app->intro->Disable();
 	return true;
