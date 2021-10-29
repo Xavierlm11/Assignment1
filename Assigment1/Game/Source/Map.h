@@ -127,6 +127,8 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	void CreateColliders();
+
 private:
 
 	// L03: Methods to load all required map data
@@ -139,7 +141,7 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadAllLayers(pugi::xml_node mapNode);
 
-	bool CreateColliders(pugi::xml_node& node, MapLayer* layer);
+	
 
 	// L06: TODO 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);

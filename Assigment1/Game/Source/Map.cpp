@@ -435,37 +435,46 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-bool Map::CreateColliders(pugi::xml_node& node, MapLayer* layer) {
-	bool ret = true;
-	ListItem<MapLayer*>* LayersInfo;
-	LayersInfo = mapData.layers.start;
-	if (LayersInfo->data->properties.GetProperty("Draw") == 0) {
-		for (int y = 0; y < LayersInfo->data->height; y++) {
-			for (int x = 0; x < LayersInfo->data->width; x++) {
-				int gid = LayersInfo->data->Get(x, y);
+void Map::CreateColliders() {
+	
+	if (mapLoaded == false) return;
 
-				if (gid > 0) {
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = mapData.layers.start;
 
-					//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
-					//now we always use the firt tileset in the list
-					//TileSet* tileset = mapData.tilesets.start->data;
-					TileSet* tileset = GetTilesetFromTileId(gid);
+	/*while (LayersInfo != NULL) {*/
+	LOG("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+		if (mapLayerItem->data->properties.GetProperty("Draw")== 0) {
+			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+			for (int y = 0; y < mapLayerItem->data->height; y++) {
+				LOG("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+				for (int x = 0; x < mapLayerItem->data->width; x++) {
+					int gid = mapLayerItem->data->Get(x, y);
+					LOG("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+					if (gid > 0) {
 
-					SDL_Rect r = tileset->GetTileRect(gid);
-					iPoint pos = MapToWorld(x, y);
+						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
+						//now we always use the firt tileset in the list
+						/*TileSet* tileset = mapData.tilesets.start->data;*/
+						TileSet* tileset = GetTilesetFromTileId(gid);
 
-					app->render->DrawTexture(tileset->texture,
-						pos.x,
-						pos.y,
-						&r);
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
 
-					collidersMap = app->coll->AddCollider({ pos.x,pos.y,8,8 }, Collider::Type::SUELO, this);
+						collidersMap = app->coll->AddCollider({ pos.x,pos.y,8,8 }, Collider::Type::SUELO, this);
+						LOG("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
+
+						Uint8 alpha = 80;
+						app->render->DrawRectangle(collidersMap->rect, 255, 0, 255, alpha);
+
+					}
 				}
-
 			}
 		}
-		LayersInfo = LayersInfo->next;
-
-	}
-	return ret;
+		mapLayerItem = mapLayerItem->next;
+	/*}*/
 }

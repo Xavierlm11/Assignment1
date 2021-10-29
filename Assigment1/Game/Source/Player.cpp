@@ -112,8 +112,14 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt) {
 	bool ret = true;
-	//right
 	int speed = 2;
+	
+	
+
+	if (app->coll->matrix[Collider::Type::SUELO][Collider::Type::PLAYER] == false) {
+		position.y -= gravity;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += speed;
@@ -183,12 +189,20 @@ bool Player::Update(float dt) {
 
 bool Player::PostUpdate()
 {
+	colliderPlayer->SetPos(position.x - 8, position.y + 21);
+	Uint8 alpha = 80;
+
+	/*if (app->input->GetKey(SDL_SCANCODE_F1 == KEY_DOWN)) {*/
+	
+	/*}*/
+
 	bool ret = true;
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (ActivePlayer == true) {
 		
 		app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
 	}
+	app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);
 
 	return ret;
 }

@@ -46,6 +46,8 @@ bool Scene::Start()
 	}
 	
 
+	
+
 	return true;
 }
 
@@ -58,6 +60,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	app->map->CreateColliders();
+
 	scrollerX -= 0.2069;
 	scrollerX1 -= 0.2069;
 	if (scrollerX < -1550) {
@@ -95,6 +99,7 @@ bool Scene::Update(float dt)
 
 	// Draw map
 	app->map->Draw();
+	
 
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -111,6 +116,9 @@ bool Scene::Update(float dt)
 // Called each loop iteration
 bool Scene::PostUpdate()
 {
+
+	
+
 	bool ret = true;
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
