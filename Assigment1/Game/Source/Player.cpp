@@ -205,10 +205,10 @@ bool Player::PostUpdate()
 
 		bool ret = true;
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		if (ActivePlayer == true) {
+		
 
 			app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
-		}
+		
 		app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);
 	}
 	return ret;
