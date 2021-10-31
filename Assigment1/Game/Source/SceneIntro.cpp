@@ -52,15 +52,15 @@ bool SceneIntro::Start() {
 
 	//app->audio->PlayMusic("assets/sound/music/intro.ogg", 1.0f);
 
-	app->render->camera.x = 0;
-	app->render->camera.y = 0;
+	//app->render->camera.x = 0;
+	//app->render->camera.y = 0;
 
 	return ret;
 }
 
 bool SceneIntro::Update(float dt) {	// plays Game logo + animation
 	bool ret = true;
-	intro.Update();
+	/*intro.Update();*/
 
 	/*if (intro.HasFinished())
 	{
@@ -69,12 +69,12 @@ bool SceneIntro::Update(float dt) {	// plays Game logo + animation
 	
 
 
-	 if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-	 {
-		 /*CleanUp();*/
-		app->fade->FadeToBlack((Module*)app->intro, (Module*)app->scene, 90);
-		
-	 }
+	 //if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	 //{
+		// /*CleanUp();*/
+		//app->fade->FadeToBlack((Module*)app->intro, (Module*)app->scene, 90);
+		//
+	 //}
 	
 	return ret;
 }
@@ -85,7 +85,7 @@ bool SceneIntro::PostUpdate() {
 	bool ret = true;
 
 
-	app->render->DrawTexture(bgTexture,0,0, &(intro.GetCurrentFrame()));
+	//app->render->DrawTexture(bgTexture,0,0, &(intro.GetCurrentFrame()));
 
 	return ret;
 }
@@ -93,10 +93,10 @@ bool SceneIntro::PostUpdate() {
 bool SceneIntro::CleanUp()
 {
 	LOG("Cleaning SCENE 1");
-	app->tex->UnLoad(bgTexture);
+	/*app->tex->UnLoad(bgTexture);
 	app->player->ActivePlayer = true;
 	app->player->position.x = 50;
-	app->player->position.y = 20;
+	app->player->position.y = 20;*/
 
 
 	/*SDL_DestroyTexture(bgTexture);*/

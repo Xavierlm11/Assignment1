@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "SceneIntro.h"
 #include "Map.h"
 #include "Player.h"
 #include"ModuleFadeToBlack.h"
@@ -41,12 +42,15 @@ bool Scene::Start()
 	bgpa = app->tex->Load("Assets/textures/backgroundParallax.png");
 	bgpa1 = app->tex->Load("Assets/textures/backgroundParallax.png");
 	// Load music
-	if (app->player->ActivePlayer == true) {
+	/*if (app->player->ActivePlayer == true) {
 		app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
-	}
-	
+	}*/
+	bgTexture = app->tex->Load("Assets/textures/IntroMenu.png");
+	currentScene = TITLE_SCREEN;
+	startTitle = true;
 
-	
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
 
 	return true;
 }
@@ -60,56 +64,93 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	app->map->CreateColliders();
+	switch (currentScene)
+	{
+	case TITLE_SCREEN:
 
-	scrollerX -= 0.2069;
-	scrollerX1 -= 0.2069;
-	if (scrollerX < -1550) {
-		scrollerX = 1600;
+		app->intro->intro.Update();
+		app->audio->PlayMusic("pinball/audio/music/silence.ogg");
+		//if (startTitle)
+		//{
+		//	startTitle = false;
+		//	/*app->audio->PlayMusic("pinball/audio/music/TitleScreen.ogg", 0.0f);*/
+		//}
+
+		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+			currentScene = SCENE;
+			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
+			//app->fade->FadeToBlack((Module*)app->intro, (Module*)app->scene, 90);
+		}
+
+		app->render->DrawTexture(bgTexture, 0, 0, &(app->intro->intro.GetCurrentFrame()));
+
+		break;
+	case SCENE:
+		if (startTitle)
+		{
+			startTitle = false;
+			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
+		}
+
+
+		app->map->CreateColliders();
+
+		scrollerX -= 0.2069;
+		scrollerX1 -= 0.2069;
+		if (scrollerX < -1550) {
+			scrollerX = 1600;
+		}
+		if (scrollerX1 < -1550) {
+			scrollerX1 = 1600;
+		}
+		//app->render->DrawTexture(Paral, 0, 0);
+		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
+
+		app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
+
+		int speed = 8;
+		// L02: DONE 3: Request Load / Save when pressing L/S
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+			app->LoadGameRequest();
+
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+			app->SaveGameRequest();
+
+		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
+			app->render->camera.y += speed;
+
+		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
+			app->render->camera.y -= speed;
+
+		if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
+			app->render->camera.x += speed;
+
+		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
+			app->render->camera.x -= speed;
+
+		//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+
+		// Draw map
+		app->map->Draw();
+
+		if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+			currentScene = TITLE_SCREEN;
+		
+			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
+		/*	app->fade->FadeToBlack((Module*)app->scene, (Module*)app->intro, 90);*/
+		}
+
+		break;
+
+		// L03: DONE 7: Set the window title with map/tileset info
+		SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+			app->map->mapData.width, app->map->mapData.height,
+			app->map->mapData.tileWidth, app->map->mapData.tileHeight,
+			app->map->mapData.tilesets.count());
+
+		app->win->SetTitle(title.GetString());
+
 	}
-	if (scrollerX1 < -1550) {
-		scrollerX1 = 1600;
-	}
-	//app->render->DrawTexture(Paral, 0, 0);
-	app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
-
-	app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
-
-	int speed = 8;
-    // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		app->LoadGameRequest();
-
-	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->SaveGameRequest();
-
-	if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
-		app->render->camera.y += speed;
-
-	if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
-		app->render->camera.y -= speed;
-
-	if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
-		app->render->camera.x += speed;
-
-	if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
-		app->render->camera.x -= speed;
-
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
-
-	// Draw map
-	app->map->Draw();
-	
-
-	// L03: DONE 7: Set the window title with map/tileset info
-	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-				   app->map->mapData.width, app->map->mapData.height,
-				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
-				   app->map->mapData.tilesets.count());
-
-	app->win->SetTitle(title.GetString());
-
-	
 	return true;
 }
 

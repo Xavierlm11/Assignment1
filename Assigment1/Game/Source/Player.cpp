@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "Audio.h"
 #include "ModuleCollisions.h"
+#include "Scene.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -114,96 +115,102 @@ bool Player::Update(float dt) {
 	bool ret = true;
 	int speed = 2;
 	
-	
-
-	if (app->coll->matrix[Collider::Type::SUELO][Collider::Type::PLAYER] == false) {
-		position.y -= gravity;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->scene->currentScene == State::SCENE)
 	{
-		position.x += speed;
-		if (currentAnimation != &walkAnimR)
-		{
-			walkAnimR.Reset();
-			currentAnimation = &walkAnimR;
-			PlayerPosition = true;
-		}
-	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		position.x -= speed;
-		if (currentAnimation != &walkAnimL)
-		{
-			walkAnimL.Reset();
-			currentAnimation = &walkAnimL;
-			PlayerPosition = false;
+		if (app->coll->matrix[Collider::Type::SUELO][Collider::Type::PLAYER] == false) {
+			position.y -= gravity;
 		}
-	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		/*position.y += speed;*/
-		if (PlayerPosition == false) {
-			jumpAnimL.Reset();
-			currentAnimation = &jumpAnimL;
-		}
-		if (PlayerPosition == true)
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			jumpAnimR.Reset();
-			currentAnimation = &jumpAnimR;
-		}
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
-		if (currentAnimation != &idleAnimR && currentAnimation != &idleAnimL && currentAnimation != &jumpAnimR && currentAnimation != &jumpAnimL) {
-			if (PlayerPosition == true) {
-				idleAnimR.Reset();
-				currentAnimation = &idleAnimR;
+			position.x += speed;
+			if (currentAnimation != &walkAnimR)
+			{
+				walkAnimR.Reset();
+				currentAnimation = &walkAnimR;
+				PlayerPosition = true;
 			}
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			position.x -= speed;
+			if (currentAnimation != &walkAnimL)
+			{
+				walkAnimL.Reset();
+				currentAnimation = &walkAnimL;
+				PlayerPosition = false;
+			}
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			/*position.y += speed;*/
 			if (PlayerPosition == false) {
-				idleAnimL.Reset();
-				currentAnimation = &idleAnimL;
+				jumpAnimL.Reset();
+				currentAnimation = &jumpAnimL;
+			}
+			if (PlayerPosition == true)
+			{
+				jumpAnimR.Reset();
+				currentAnimation = &jumpAnimR;
 			}
 		}
-	}
 
-	if (position.x > 660)
-	{
-		position.x = 660;
-	}
-	//if (position.y > 800) { //bottom
-	//	position.y = 840;
-	//}
-	if (position.y < 20) {//top
-		position.y = 20;
-	}
-	if (position.x < 20) {
-		position.x = 20;
-	}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
+			if (currentAnimation != &idleAnimR && currentAnimation != &idleAnimL && currentAnimation != &jumpAnimR && currentAnimation != &jumpAnimL) {
+				if (PlayerPosition == true) {
+					idleAnimR.Reset();
+					currentAnimation = &idleAnimR;
+				}
+				if (PlayerPosition == false) {
+					idleAnimL.Reset();
+					currentAnimation = &idleAnimL;
+				}
+			}
+		}
 
-	currentAnimation->Update();
+		if (position.x > 660)
+		{
+			position.x = 660;
+		}
+		//if (position.y > 800) { //bottom
+		//	position.y = 840;
+		//}
+		if (position.y < 20) {//top
+			position.y = 20;
+		}
+		if (position.x < 20) {
+			position.x = 20;
+		}
+
+		currentAnimation->Update();
+
+	}
 	return ret;
 }
 
 bool Player::PostUpdate()
 {
-	colliderPlayer->SetPos(position.x - 8, position.y + 21);
-	Uint8 alpha = 80;
-
-	/*if (app->input->GetKey(SDL_SCANCODE_F1 == KEY_DOWN)) {*/
-	
-	/*}*/
-
 	bool ret = true;
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	if (ActivePlayer == true) {
-		
-		app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
-	}
-	app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);
+	if (app->scene->currentScene == State::SCENE)
+	{
+		colliderPlayer->SetPos(position.x - 8, position.y + 21);
+		Uint8 alpha = 80;
 
+		/*if (app->input->GetKey(SDL_SCANCODE_F1 == KEY_DOWN)) {*/
+
+		/*}*/
+
+		bool ret = true;
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		if (ActivePlayer == true) {
+
+			app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
+		}
+		app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);
+	}
 	return ret;
 }
 
