@@ -24,7 +24,7 @@ class SceneIntro : public Module {
 public:
 
 	//sprite loaded into an SDL_Texture
-	SDL_Texture* bgTexture;
+	/*SDL_Texture* bgTexture;*/
 	SDL_Texture* PressEnterTex;
 	//The intro animation 
 	Animation intro;

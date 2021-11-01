@@ -47,8 +47,8 @@ bool SceneIntro::Start() {
 	LOG("Loading backgroud assets :)");
 
 	bool ret = true;
-    
-	bgTexture = app->tex->Load("Assets/textures/IntroMenu.png");
+   /* 
+	bgTexture = app->tex->Load("Assets/textures/IntroMenu.png");*/
 
 	//app->audio->PlayMusic("assets/sound/music/intro.ogg", 1.0f);
 

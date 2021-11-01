@@ -16,6 +16,12 @@ Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("scene");
 
+	Press.PushBack({ 0,0,115,55 });
+	Press.PushBack({ 0,0,1,1 });
+	Press.loop = true;
+	Press.speed = 0.01f;
+
+
 }
 
 // Destructor
@@ -34,6 +40,7 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
 	app->map->Load("level1.tmx");
@@ -46,6 +53,9 @@ bool Scene::Start()
 		app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 	}*/
 	bgTexture = app->tex->Load("Assets/textures/IntroMenu.png");
+	GameOver = app->tex->Load("Assets/textures/Wasted.png");
+	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
+
 	currentScene = TITLE_SCREEN;
 	startTitle = true;
 
@@ -108,7 +118,7 @@ bool Scene::Update(float dt)
 
 		app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
 
-		int speed = 8;
+		{int speed = 8; 
 		// L02: DONE 3: Request Load / Save when pressing L/S
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
@@ -127,7 +137,7 @@ bool Scene::Update(float dt)
 
 		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
 			app->render->camera.x -= speed;
-
+         }
 		//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 		// Draw map
@@ -139,18 +149,30 @@ bool Scene::Update(float dt)
 			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
 		/*	app->fade->FadeToBlack((Module*)app->scene, (Module*)app->intro, 90);*/
 		}
+		if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+			currentScene =GAME_OVER;
+
+			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
+		/*	app->fade->FadeToBlack((Module*)app->scene, (Module*)app->intro, 90);*/
+		}
+		break;
+	case GAME_OVER:
+		app->audio->PlayMusic("pinball/audio/music/silence.ogg");
+		Press.Update();
+		app->render->DrawTexture(GameOver, 0, 0);
+		app->render->DrawTexture(Enter, 62, 100, &(Press.GetCurrentFrame()));
 
 		break;
+		
 
-		// L03: DONE 7: Set the window title with map/tileset info
+	}
+	// L03: DONE 7: Set the window title with map/tileset info
 		SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 			app->map->mapData.width, app->map->mapData.height,
 			app->map->mapData.tileWidth, app->map->mapData.tileHeight,
 			app->map->mapData.tilesets.count());
 
 		app->win->SetTitle(title.GetString());
-
-	}
 	return true;
 }
 

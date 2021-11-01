@@ -46,14 +46,23 @@ public:
 	bool startTitle;
 	bool LoseScreen;
 
-	SDL_Texture* bgTexture;
+	
+
 private:
+	SDL_Texture* bgTexture;
+	SDL_Texture* GameOver;
+	SDL_Texture* Enter;
+
 	SDL_Texture* img;
 	SDL_Texture* Paral;
 	SDL_Texture* bgpa;
 	SDL_Texture* bgpa1;
+
 	float scrollerX = 0;
 	float scrollerX1 = 1600;
+
+	Animation Press;
+	
 };
 
 #endif // __SCENE_H__
