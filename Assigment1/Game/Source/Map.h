@@ -154,7 +154,7 @@ public:
     // L03: DONE 1: Add your struct for map info
 	MapData mapData;
 
-	Collider* collidersMap = nullptr;
+	Collider* collidersMap[1000];
 
 private:
 

@@ -79,7 +79,7 @@ bool Scene::Update(float dt)
 	case TITLE_SCREEN:
 
 		app->intro->intro.Update();
-		app->audio->PlayMusic("pinball/audio/music/silence.ogg");
+		app->audio->PlayMusic("Assets/audio/music/silence.ogg");
 		//if (startTitle)
 		//{
 		//	startTitle = false;
