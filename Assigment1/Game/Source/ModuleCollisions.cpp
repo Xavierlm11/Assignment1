@@ -77,9 +77,7 @@ bool ModuleCollisions::Update(float dt)
 {
 	// Get gamepad info
 	/*GamePad& pad = app->input->pads[0];*/
-	//if (app->input->GetKey(SDL_SCANCODE_F1 == KEY_REPEAT)/*||pad.r1*/) {
-	//	DebugDraw();
-	//}
+	
 	
 
 
@@ -103,7 +101,7 @@ void ModuleCollisions::DebugDraw()
 		
 		switch(colliders[i]->type)
 		{
-			LOG("aaaaaaaaaaaaaaaaaaaaaaaa");
+			LOG("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
 			case Collider::Type::NONE: // white
 			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
 			break;

@@ -441,16 +441,22 @@ void Map::CreateColliders() {
 
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
-	mapLayerItem = mapLayerItem->next;
+	
 	int i = 0;
-	/*while (LayersInfo != NULL) {*/
+	while (mapLayerItem != NULL) {
 	LOG("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+
 		if (mapLayerItem->data->properties.GetProperty("Draw")== 0) {
+
 			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+
 			for (int y = 0; y < mapLayerItem->data->height; y++) {
+
 				LOG("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
 				for (int x = 0; x < mapLayerItem->data->width; x++) {
 					int gid = mapLayerItem->data->Get(x, y);
+
 					LOG("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 					if (gid > 0) {
 
@@ -462,18 +468,18 @@ void Map::CreateColliders() {
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
 
-						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, 8,8 }, Collider::Type::SUELO, this);
+						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.h,r.w }, Collider::Type::SUELO, this);
 						i++;
 
 						LOG("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-						Uint8 alpha = 80;
-						app->render->DrawRectangle(collidersMap[i]->rect, 255, 0, 255, alpha);
+					/*	Uint8 alpha = 80;
+						app->render->DrawRectangle(collidersMap[i]->rect, 255, 0, 255, alpha);*/
 
 					}
 				}
 			}
 		}
-		
-	/*}*/
+		mapLayerItem = mapLayerItem->next;
+	}
 }

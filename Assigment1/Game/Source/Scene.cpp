@@ -11,6 +11,7 @@
 #include"ModuleFadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
+#include "ModuleCollisions.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -44,6 +45,9 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
 	app->map->Load("level1.tmx");
+	if(currentScene==SCENE)
+		app->map->CreateColliders();
+	
 
 	//Paral = app->tex->Load("Assets/textures/Fondo.png");
 	bgpa = app->tex->Load("Assets/textures/backgroundParallax.png");
@@ -103,7 +107,9 @@ bool Scene::Update(float dt)
 		}
 
 
-		app->map->CreateColliders();
+		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
+			app->coll->DebugDraw();
+		}
 
 		scrollerX -= 0.2069;
 		scrollerX1 -= 0.2069;
@@ -156,6 +162,7 @@ bool Scene::Update(float dt)
 		/*	app->fade->FadeToBlack((Module*)app->scene, (Module*)app->intro, 90);*/
 		}
 		break;
+
 	case GAME_OVER:
 		app->audio->PlayMusic("pinball/audio/music/silence.ogg");
 		Press.Update();
