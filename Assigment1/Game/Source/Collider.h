@@ -12,6 +12,8 @@ struct Collider
 		NONE = -1,
 		PLAYER,
 		SUELO,
+		PARED,
+		LAVA,
 
 		MAX
 	};

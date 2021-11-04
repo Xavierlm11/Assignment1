@@ -8707,6 +8707,7 @@
  <layer id="8" name="wallcolliders" width="85" height="50">
   <properties>
    <property name="collider" type="int" value="1"/>
+   <property name="wallcol" type="int" value="1"/>
   </properties>
   <data>
    <tile/>
@@ -12965,6 +12966,7 @@
   <properties>
    <property name="Draw" type="int" value="0"/>
    <property name="collider" type="int" value="1"/>
+   <property name="suelocol" type="int" value="1"/>
   </properties>
   <data>
    <tile/>
@@ -17222,6 +17224,7 @@
  <layer id="9" name="deadcollider" width="85" height="50">
   <properties>
    <property name="collider" type="int" value="1"/>
+   <property name="lavacol" type="int" value="1"/>
   </properties>
   <data>
    <tile/>

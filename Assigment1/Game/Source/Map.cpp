@@ -462,17 +462,19 @@ bool Map::Start() {
 }
 
 void Map::CreateColliders() {
-	
+
 	if (mapLoaded == false) return;
 
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
-	
+
 	int i = 0;
 	while (mapLayerItem != NULL) {
-	LOG("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
 
-		if (mapLayerItem->data->properties.GetProperty("collider")== 1) {
+		LOG("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+
+		//suelo
+		if (mapLayerItem->data->properties.GetProperty("collider") == 1) {
 
 			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
 
@@ -508,6 +510,84 @@ void Map::CreateColliders() {
 					}
 				}
 			}
+
+		}
+		//wall
+		if (mapLayerItem->data->properties.GetProperty("wallcol") == 1) {
+
+			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+
+			for (int x = 0; x < mapLayerItem->data->width; x++) {
+
+				LOG("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
+				for (int y = 0; y < mapLayerItem->data->height; y++) {
+
+					int gid = mapLayerItem->data->Get(x, y);
+
+					LOG("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+					if (gid > 0) {
+
+						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
+						//now we always use the firt tileset in the list
+						TileSet* tileset = mapData.tilesets.start->data;
+						/*TileSet* tileset = GetTilesetFromTileId(gid);*/
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
+
+						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::PARED, this);
+						i++;
+
+						LOG("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+					}
+				}
+			}
+		}
+		//lava
+		if (mapLayerItem->data->properties.GetProperty("lavacol") == 1) {
+
+			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+
+			for (int x = 0; x < mapLayerItem->data->width; x++) {
+
+				LOG("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
+				for (int y = 0; y < mapLayerItem->data->height; y++) {
+
+					int gid = mapLayerItem->data->Get(x, y);
+
+					LOG("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+					if (gid > 0) {
+
+						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
+						//now we always use the firt tileset in the list
+						TileSet* tileset = mapData.tilesets.start->data;
+						/*TileSet* tileset = GetTilesetFromTileId(gid);*/
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
+
+						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::LAVA, this);
+						i++;
+
+						LOG("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+					}
+				}
+			}
+
 		}
 		mapLayerItem = mapLayerItem->next;
 	}
