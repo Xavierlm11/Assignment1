@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "DynArray.h"
+#include "ModuleCollisions.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -23,6 +25,8 @@ struct TileSet
 	int	texHeight;
 	int	tilecount;
 	int	columns;
+	int	num_tiles_width;
+	int	num_tiles_height;
 
 	// L04: DONE 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
@@ -50,7 +54,15 @@ struct Properties
 	
 	~Properties()
 	{
+		ListItem<Property*>* listItem;
+		listItem = list.start;
 
+		while (listItem != NULL)
+		{
+			RELEASE(listItem->data);
+			listItem = listItem->next;
+		}
+		list.clear();
 	}
 
 	// L06: TODO 7: Method to ask for the value of a custom property
@@ -145,7 +157,7 @@ private:
 
 	
 
-	// L06: TODO 6: Load a group of properties 
+	// L06: DONE 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
 	// L06: TODO 3: Pick the right Tileset based on a tile id
@@ -156,7 +168,7 @@ public:
     // L03: DONE 1: Add your struct for map info
 	MapData mapData;
 
-	Collider* collidersMap[1000];
+	Collider* collidersMap[MAX_COLLIDERS];
 
 private:
 

@@ -60,7 +60,7 @@ bool Scene::Start()
 	GameOver = app->tex->Load("Assets/textures/Wasted.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
 
-	currentScene = TITLE_SCREEN;
+	currentScene = SCENE;
 	startTitle = true;
 	silence = true;
 	app->render->camera.x = 0;
@@ -143,10 +143,10 @@ bool Scene::Update(float dt)
 		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
 			app->render->camera.y -= speed;
 
-		if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
+		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->render->camera.x < 0)
 			app->render->camera.x += speed;
 
-		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
+		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->render->camera.x > -2200)
 			app->render->camera.x -= speed;
          }
 		//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more

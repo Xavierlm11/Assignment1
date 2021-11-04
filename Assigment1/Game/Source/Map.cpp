@@ -2,6 +2,7 @@
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Scene.h"
 #include "Map.h"
 #include "ModuleCollisions.h"
 
@@ -24,13 +25,21 @@ int Properties::GetProperty(const char* value, int defaultValue) const
 {
 		//...
 
-	ListItem<Property*>* item = list.start;
+	/*ListItem<Property*>* item = list.start;
 
 	while (item)
 	{
 		if (item->data->name == value)
 			return item->data->value;
 		item = item->next;
+	}*/
+
+	for (int i = 0; i < list.count(); i++) {
+		if (strcmp(list.At(i)->data->name.GetString(), value) == 0)
+		{
+			if (list.At(i)->data->value != defaultValue) return list.At(i)->data->value;
+			else return defaultValue;
+		}
 	}
 
 	return defaultValue;
@@ -111,6 +120,9 @@ iPoint Map::WorldToMap(int x, int y) const
 	iPoint ret(0, 0);
 
 	// L05: TODO 2: Add orthographic world to map coordinates
+	
+	ret.x = x / mapData.tileWidth;
+	ret.y = y / mapData.tileHeight;
 
 	// L05: TODO 3: Add the case for isometric maps to WorldToMap
 
@@ -125,9 +137,13 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	TileSet* set = item->data;
 
 
-	//..
+	for (set; set; item = item->next, set = item->data)
+	{
+		if (id >= set->firstgid && id < set->firstgid + set->tilecount)
+			return set;
+	}
 
-	while (item)
+	/*while (item)
 	{
 		if (id < item->data->firstgid)
 		{
@@ -136,7 +152,7 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 		}
 		set = item->data;
 		item = item->next;
-	}
+	}*/
 
 	return set;
 }
@@ -368,6 +384,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		// L03: DONE 4: Load Tileset image
 		SString tmp("%s%s", folder.GetString(), image.attribute("source").as_string());
 		set->texture = app->tex->Load(tmp.GetString());
+
 	}
 
 	return ret;
@@ -385,6 +402,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	//L06: TODO 6 Call Load Properties
 	LoadProperties(node, layer->properties);
+	pugi::xml_node layer_data = node.child("data");
 
 	//Reserve the memory for the tile array
 	layer->data = new uint[layer->width * layer->height];
@@ -422,7 +440,10 @@ bool Map::LoadAllLayers(pugi::xml_node mapNode) {
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
 	bool ret = false;
+	pugi::xml_node data = node.child("properties");
 	
+	pugi::xml_node propertieNode;
+
 	for (pugi::xml_node propertieNode = node.child("properties").child("property"); propertieNode; propertieNode = propertieNode.next_sibling("property"))
 	{
 		Properties::Property* p = new Properties::Property();
@@ -451,7 +472,7 @@ void Map::CreateColliders() {
 	while (mapLayerItem != NULL) {
 	LOG("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
 
-		if (mapLayerItem->data->properties.GetProperty("Draw")== 0) {
+		if (mapLayerItem->data->properties.GetProperty("collider")== 1) {
 
 			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
 
@@ -460,6 +481,7 @@ void Map::CreateColliders() {
 				LOG("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
 				for (int y = 0; y < mapLayerItem->data->height; y++) {
+
 					int gid = mapLayerItem->data->Get(x, y);
 
 					LOG("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
@@ -472,6 +494,11 @@ void Map::CreateColliders() {
 
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
+
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
 
 						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::SUELO, this);
 						i++;
