@@ -62,7 +62,7 @@ bool Scene::Start()
 
 	currentScene = TITLE_SCREEN;
 	startTitle = true;
-
+	silence = true;
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
@@ -83,7 +83,11 @@ bool Scene::Update(float dt)
 	case TITLE_SCREEN:
 
 		app->intro->intro.Update();
-		app->audio->PlayMusic("Assets/audio/music/silence.ogg");
+		if (silence)
+		{
+			silence = false;
+			app->audio->PlayMusic("Assets/audio/music/silence.ogg");
+		}
 		//if (startTitle)
 		//{
 		//	startTitle = false;
@@ -91,6 +95,7 @@ bool Scene::Update(float dt)
 		//}
 
 		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+			startTitle = true;
 			currentScene = SCENE;
 			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
 			//app->fade->FadeToBlack((Module*)app->intro, (Module*)app->scene, 90);
@@ -150,6 +155,7 @@ bool Scene::Update(float dt)
 		app->map->Draw();
 
 		if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+			silence = true;
 			currentScene = TITLE_SCREEN;
 		
 			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
