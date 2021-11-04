@@ -368,7 +368,7 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// L03: DONE 4: Load Tileset image
+ //Load  tileset image
 bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
@@ -390,7 +390,8 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// L04: DONE 3: Implement a function that loads a single layer layer
+
+//load tileset Layer
 bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
@@ -400,9 +401,8 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
 
-	//L06: TODO 6 Call Load Properties
+	//L06: TODO 6 Call Load Propoerties
 	LoadProperties(node, layer->properties);
-	pugi::xml_node layer_data = node.child("data");
 
 	//Reserve the memory for the tile array
 	layer->data = new uint[layer->width * layer->height];
@@ -442,7 +442,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	bool ret = false;
 	pugi::xml_node data = node.child("properties");
 	
-	pugi::xml_node propertieNode;
+	/*pugi::xml_node propertieNode;*/
 
 	for (pugi::xml_node propertieNode = node.child("properties").child("property"); propertieNode; propertieNode = propertieNode.next_sibling("property"))
 	{
@@ -456,7 +456,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-bool Map::StartColliders() {
+bool Map::Start() {
 	CreateColliders();
 	return true;
 }
