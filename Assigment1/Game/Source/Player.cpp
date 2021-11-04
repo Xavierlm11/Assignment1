@@ -118,10 +118,6 @@ bool Player::Update(float dt) {
 	if (app->scene->currentScene == State::SCENE)
 	{
 
-		if (app->coll->matrix[Collider::Type::SUELO][Collider::Type::PLAYER] == false) {
-			position.y -= gravity;
-		}
-
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			position.x += speed;
@@ -209,7 +205,7 @@ bool Player::PostUpdate()
 
 			app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
 		
-		app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);
+		/*app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);*/
 	}
 	return ret;
 }
@@ -248,4 +244,10 @@ bool Player::SaveState(pugi::xml_node& data) const
 	pla.attribute("y").set_value(position.y);
 
 	return true;
+}
+
+void Player::OnCollision(Collider* c1, Collider* c2) {
+	if (c1 == colliderPlayer && god == false) {
+		position.y += 2;
+	}
 }

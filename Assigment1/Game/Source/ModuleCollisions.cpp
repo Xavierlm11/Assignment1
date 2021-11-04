@@ -77,7 +77,9 @@ bool ModuleCollisions::Update(float dt)
 {
 	// Get gamepad info
 	/*GamePad& pad = app->input->pads[0];*/
-	
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		debug = !debug;
+	}
 	
 
 
@@ -86,7 +88,9 @@ bool ModuleCollisions::Update(float dt)
 
 bool ModuleCollisions::PostUpdate()
 {
-	
+	if (debug) {
+		DebugDraw();
+	}
 
 	return true;
 }

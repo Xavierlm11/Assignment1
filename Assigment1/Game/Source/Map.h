@@ -129,6 +129,8 @@ public:
 
 	void CreateColliders();
 
+	bool StartColliders();
+
 private:
 
 	// L03: Methods to load all required map data

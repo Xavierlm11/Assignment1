@@ -8707,7 +8707,7 @@
  <layer id="7" name="colliders" width="85" height="50">
   <properties>
    <property name="Draw" type="int" value="0"/>
-   <property name="collider" type="bool" value="true"/>
+   <property name="collider" type="int" value="1"/>
   </properties>
   <data>
    <tile/>
