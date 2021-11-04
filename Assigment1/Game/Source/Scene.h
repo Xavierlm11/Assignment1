@@ -45,7 +45,7 @@ public:
 
 	bool startTitle;
 	bool LoseScreen;
-
+	bool silence;
 	
 
 private:
