@@ -14,7 +14,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-SceneIntro::SceneIntro(bool startEnabled) : Module(startEnabled)
+SceneIntro::SceneIntro( ) : Module()
 {
 	/*intro.PushBack({0,0,240,168});
 	intro.PushBack({ 0,168,240,168 });

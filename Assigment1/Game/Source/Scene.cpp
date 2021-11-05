@@ -13,7 +13,7 @@
 #include "Log.h"
 #include "ModuleCollisions.h"
 
-Scene::Scene(bool startEnabled) : Module(startEnabled)
+Scene::Scene( ) : Module()
 {
 	name.Create("scene");
 	//death scene animation

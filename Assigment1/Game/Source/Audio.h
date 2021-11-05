@@ -12,7 +12,7 @@ class Audio : public Module
 {
 public:
 
-	Audio(bool startEnabled);
+	Audio( );
 
 	// Destructor
 	virtual ~Audio();

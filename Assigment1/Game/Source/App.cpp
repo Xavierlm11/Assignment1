@@ -25,18 +25,18 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 
-	win = new Window(true);
-	input = new Input(true);
-	tex = new Textures(true);
-	audio = new Audio(true);
-	intro = new SceneIntro(false);
-	scene = new Scene(false);
-	map = new Map(false);
-	player = new Player(false);
-	fade = new ModuleFadeToBlack(true);
-	coll = new ModuleCollisions(true);
+	win = new Window();
+	input = new Input();
+	tex = new Textures();
+	audio = new Audio();
+	intro = new SceneIntro();
+	scene = new Scene();
+	map = new Map();
+	player = new Player();
+	fade = new ModuleFadeToBlack();
+	coll = new ModuleCollisions();
 
-	render = new Render(true);
+	render = new Render();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(win);

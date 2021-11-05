@@ -7,7 +7,7 @@
 class ModuleFadeToBlack : public Module
 {
 public:
-	ModuleFadeToBlack(bool startEnabled);
+	ModuleFadeToBlack( );
 
 	~ModuleFadeToBlack();
 

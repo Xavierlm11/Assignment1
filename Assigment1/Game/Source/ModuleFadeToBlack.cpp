@@ -9,7 +9,7 @@
 
 #include "SDL/include/SDL_render.h"
 
-ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled) : Module(startEnabled)
+ModuleFadeToBlack::ModuleFadeToBlack() : Module()
 	{
 	//int s = app->win->GetScale();
 		screenRect = {0,0,1200  ,840};

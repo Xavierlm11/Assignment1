@@ -7,7 +7,7 @@
 struct SDL_Texture;
 class SceneIntro : public Module {
 	public:
-		SceneIntro(bool startEnabled);
+		SceneIntro( );
 
 		~SceneIntro();
 

@@ -14,7 +14,7 @@ class Module
 {
 public:
 
-	Module(bool startEnabled) : active(false)
+	Module() : active(false)
 	{}
 
 	void Init()

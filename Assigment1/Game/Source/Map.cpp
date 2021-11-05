@@ -11,7 +11,7 @@
 
 #include <math.h>
 
-Map::Map(bool startEnabled) : Module(startEnabled), mapLoaded(false)
+Map::Map( ) : Module(), mapLoaded(false)
 {
     name.Create("map");
 }
