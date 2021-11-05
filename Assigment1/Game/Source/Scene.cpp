@@ -16,12 +16,33 @@
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("scene");
-
+	//death scene animation
 	Press.PushBack({ 0,0,115,55 });
 	Press.PushBack({ 0,0,1,1 });
 	Press.loop = true;
 	Press.speed = 0.01f;
 
+	//intro animation
+	intro.PushBack({ 0,0,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.PushBack({ 240,168,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.PushBack({ 240,168,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.PushBack({ 240,168,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.PushBack({ 240,168,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.PushBack({ 240,168,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.PushBack({ 240,168,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.PushBack({ 240,168,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.PushBack({ 240,168,240,168 });
+	intro.PushBack({ 0,168,240,168 });
+	intro.loop = false;
+	intro.speed = 0.01f;
 
 }
 
@@ -82,7 +103,7 @@ bool Scene::Update(float dt)
 	{
 	case TITLE_SCREEN:
 
-		app->intro->intro.Update();
+		intro.Update();
 		if (silence)
 		{
 			silence = false;
@@ -101,7 +122,7 @@ bool Scene::Update(float dt)
 			//app->fade->FadeToBlack((Module*)app->intro, (Module*)app->scene, 90);
 		}
 
-		app->render->DrawTexture(bgTexture, 0, 0, &(app->intro->intro.GetCurrentFrame()));
+		app->render->DrawTexture(bgTexture, 0, 0, &(intro.GetCurrentFrame()));
 
 		break;
 	case SCENE:
