@@ -18,7 +18,7 @@
 #include "SDL_image/include/SDL_image.h"
 //#pragma comment(lib, "../Game/Source/External/SDL_image/libx86/SDL2_image.lib")
 
-Player::Player(bool startEnabled) : Module(startEnabled)
+Player::Player( ) : Module()
 {
 	name.Create("player");
 
@@ -97,14 +97,17 @@ bool Player::Start()
 	bool ret = true;
 	currentAnimation = &idleAnimR;
 	app->player->position.x = 50;
-	app->player->position.y = 20;
+	app->player->position.y = 0;
 	PlayerPosition = true;
 
 	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,16 }, Collider::Type::PLAYER, this);
 	colliderPlayerR = app->coll->AddCollider({ position.x+16,position.y-16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
 	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
 
-
+	contact = false;
+	death = false;
+	sidesR = false;
+	sidesL = false;
 	return ret;
 }
 
@@ -123,7 +126,7 @@ bool Player::Update(float dt) {
 	if (app->scene->currentScene == State::SCENE)
 	{
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR==false)
 		{
 			position.x += speed;
 			if (currentAnimation != &walkAnimR)
@@ -134,7 +137,7 @@ bool Player::Update(float dt) {
 			}
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
 		{
 			position.x -= speed;
 			if (currentAnimation != &walkAnimL)
@@ -144,7 +147,16 @@ bool Player::Update(float dt) {
 				PlayerPosition = false;
 			}
 		}
+		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) )
+		{
+			position.y -= speed;
+			
+		}
+		if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT))
+		{
+			position.y += speed;
 
+		}
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			/*position.y += speed;*/
@@ -188,12 +200,19 @@ bool Player::Update(float dt) {
 
 		currentAnimation->Update();
 
+		}
+	if (death == true)
+	{
+		
+		app->scene->currentScene = GAME_OVER;
+	}
+		
+	if (contact == false) {
+		position.y += 3;
 	}
 
-	/*if (contact == false) {
-		position.y += 3;
-	}*/
-
+	
+	
 	return ret;
 }
 
@@ -219,6 +238,14 @@ bool Player::PostUpdate()
 		
 		/*app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);*/
 	}
+	contact = false;
+	sidesR = false;
+	sidesL = false;
+	if (contact = false) { LOG("hhhhh"); }
+	else if (contact != false) { LOG("cccccc"); }
+	/*contact == false;*/
+	int i = 0;
+	i++;
 	return ret;
 }
 
@@ -259,10 +286,57 @@ bool Player::SaveState(pugi::xml_node& data) const
 }
 
 void Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1 == colliderPlayer && god == false ) {
+	if (c1->type==Collider::Type::PLAYER && c2->type == Collider::Type::SUELO /*&& god == false*/ ) {
+		/*contact = true;
+			*/
 		contact = true;
+		
+		LOG("AAAA " );
+		/*if (c1->rect.y + c1->rect.h <= c2->rect.y  && c1->rect.y + c1->rect.h >= c2->rect.y) {
+			
+			position.y = c2->rect.y - 48;
+
+			
+			if (c1->rect.x < c2->rect.x + c2->rect.w) {
+				
+				c1->rect.y = c2->rect.y - c1->rect.h ;
+			}
+
+		}*/
+		/*else { contact = false; LOG("cccccc"); }*/
+
+
+		
+
 	}
-	if (c2 == colliderPlayerR) {
-		position.y += 3;
+	if ((c1->type == Collider::Type::PLAYERRIGHT) &&( c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO) /*&& god == false*/) {
+		
+		
+
+		LOG("CCCCCCCC ");
+		sidesR = true;
+		
+
+
 	}
+	if ( c1->type == Collider::Type::PLAYERLEFT && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO) /*&& god == false*/) {
+
+
+
+		LOG("CCCCCCCC ");
+		sidesL = true;
+
+
+
+	}
+	if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA /*&& god == false*/) {
+		/*contact = true;
+			*/
+		LOG("MORISTE PUTOOOOOOOOOOOOO");
+		/*app->scene->currentScene = GAME_OVER;*/
+		death = true;
+
+	}
+
+	
 }

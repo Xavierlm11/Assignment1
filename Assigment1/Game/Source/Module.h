@@ -92,7 +92,7 @@ public:
 		}
 	}
 
-	void OnCollision(Collider* c1, Collider* c2){}
+	virtual void OnCollision(Collider* c1, Collider* c2){}
 
 	inline bool IsEnabled() const { return  isEnabled; }
 

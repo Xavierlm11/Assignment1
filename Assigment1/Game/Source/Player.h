@@ -5,7 +5,7 @@
 #include "Animation.h"
 #include "List.h"
 #include "App.h"
-
+#include "Point.h"
 
 struct SDL_Texture;
 struct SDL_Surface;
@@ -14,7 +14,7 @@ struct Collider;
 
 class Player :public Module {
 public:
-	Player(bool startEnabled);
+	Player( );
 
 	// Destructor
 	virtual ~Player();
@@ -40,8 +40,8 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
-	void OnCollision(Collider* c1, Collider* c2);
-
+	 void OnCollision(Collider* c1, Collider* c2) override ;
+	
 	// Load Texture
 	SDL_Texture* const Load(const char* path);
 	SDL_Texture* const LoadSurface(SDL_Surface* surface);
@@ -80,9 +80,12 @@ private:
 	//gravity
 	int gravity = 1;
 
-	bool contact = false;
+	bool contact ;
 
 	bool god = false;
+	bool death;
+	bool sidesR;
+	bool sidesL;
 
 };
 

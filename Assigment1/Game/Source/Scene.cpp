@@ -117,6 +117,13 @@ bool Scene::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 			startTitle = true;
+
+			app->render->camera.y = 0;
+			app->render->camera.x = 0;
+
+			app->player->position.y = 0;
+			app->player->position.x = 0;
+
 			currentScene = SCENE;
 			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
 			//app->fade->FadeToBlack((Module*)app->intro, (Module*)app->scene, 90);
@@ -191,10 +198,22 @@ bool Scene::Update(float dt)
 		break;
 
 	case GAME_OVER:
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
 		app->audio->PlayMusic("pinball/audio/music/silence.ogg");
 		Press.Update();
 		app->render->DrawTexture(GameOver, 0, 0);
 		app->render->DrawTexture(Enter, 62, 100, &(Press.GetCurrentFrame()));
+
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			currentScene = SCENE;
+			app->render->camera.y = 0;
+			app->render->camera.x = 0;
+
+			app->player->position.y = 0;
+			app->player->position.x = 0;
+			
+		}
 
 		break;
 		
