@@ -100,7 +100,7 @@ bool Player::Start()
 	app->player->position.y = 0;
 	PlayerPosition = true;
 
-	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,16 }, Collider::Type::PLAYER, this);
+	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
 	colliderPlayerR = app->coll->AddCollider({ position.x+16,position.y-16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
 	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
 
@@ -221,7 +221,7 @@ bool Player::PostUpdate()
 	bool ret = true;
 	if (app->scene->currentScene == State::SCENE)
 	{
-		colliderPlayer->SetPos(position.x - 8, position.y + 21);
+		colliderPlayer->SetPos(position.x - 8, position.y + 33);
 		colliderPlayerR->SetPos(position.x + 4, position.y + 21);
 		colliderPlayerL->SetPos(position.x - 9, position.y + 21);
 		Uint8 alpha = 80;
