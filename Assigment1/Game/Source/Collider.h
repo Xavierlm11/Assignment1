@@ -11,6 +11,8 @@ struct Collider
 	{
 		NONE = -1,
 		PLAYER,
+		PLAYERRIGHT,
+		PLAYERLEFT,
 		SUELO,
 		PARED,
 		LAVA,

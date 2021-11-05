@@ -471,22 +471,17 @@ void Map::CreateColliders() {
 	int i = 0;
 	while (mapLayerItem != NULL) {
 
-		LOG("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
-
 		//suelo
 		if (mapLayerItem->data->properties.GetProperty("collider") == 1) {
 
-			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
 
 			for (int x = 0; x < mapLayerItem->data->width; x++) {
 
-				LOG("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
 				for (int y = 0; y < mapLayerItem->data->height; y++) {
 
 					int gid = mapLayerItem->data->Get(x, y);
 
-					LOG("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 					if (gid > 0) {
 
 						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
@@ -505,8 +500,7 @@ void Map::CreateColliders() {
 						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::SUELO, this);
 						i++;
 
-						LOG("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
+						
 					}
 				}
 			}
@@ -515,17 +509,17 @@ void Map::CreateColliders() {
 		//wall
 		if (mapLayerItem->data->properties.GetProperty("wallcol") == 1) {
 
-			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+			
 
 			for (int x = 0; x < mapLayerItem->data->width; x++) {
 
-				LOG("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+				
 
 				for (int y = 0; y < mapLayerItem->data->height; y++) {
 
 					int gid = mapLayerItem->data->Get(x, y);
 
-					LOG("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+				
 					if (gid > 0) {
 
 						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
@@ -544,7 +538,7 @@ void Map::CreateColliders() {
 						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::PARED, this);
 						i++;
 
-						LOG("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+						
 
 					}
 				}
@@ -553,17 +547,17 @@ void Map::CreateColliders() {
 		//lava
 		if (mapLayerItem->data->properties.GetProperty("lavacol") == 1) {
 
-			LOG("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+			
 
 			for (int x = 0; x < mapLayerItem->data->width; x++) {
 
-				LOG("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+				
 
 				for (int y = 0; y < mapLayerItem->data->height; y++) {
 
 					int gid = mapLayerItem->data->Get(x, y);
 
-					LOG("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+					
 					if (gid > 0) {
 
 						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
@@ -582,7 +576,7 @@ void Map::CreateColliders() {
 						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::LAVA, this);
 						i++;
 
-						LOG("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+						
 
 					}
 				}

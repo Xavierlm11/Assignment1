@@ -74,10 +74,13 @@ private:
 
 	//Declarar colisiones del jugador
 	Collider* colliderPlayer = nullptr;
+	Collider* colliderPlayerR = nullptr;
+	Collider* colliderPlayerL = nullptr;
 
 	//gravity
 	int gravity = 1;
 
+	bool contact = false;
 
 	bool god = false;
 

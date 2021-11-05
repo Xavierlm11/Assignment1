@@ -101,6 +101,8 @@ bool Player::Start()
 	PlayerPosition = true;
 
 	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,16 }, Collider::Type::PLAYER, this);
+	colliderPlayerR = app->coll->AddCollider({ position.x+16,position.y-16, 5,12 }, Collider::Type::PLAYER, this);
+	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYER, this);
 
 
 	return ret;
@@ -184,6 +186,11 @@ bool Player::Update(float dt) {
 		currentAnimation->Update();
 
 	}
+
+	if (contact = false) {
+		position.y += 3;
+	}
+
 	return ret;
 }
 
@@ -248,6 +255,6 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 void Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == colliderPlayer && god == false) {
-		position.y += 2;
+		contact = true;
 	}
 }
