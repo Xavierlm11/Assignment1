@@ -6,7 +6,7 @@
 	<audio />
 	<scene />
 	<renderer>
-		<camera x="-304" y="0" />
+		<camera x="-400" y="0" />
 	</renderer>
 	<player>
 		<position x="0" y="0" />

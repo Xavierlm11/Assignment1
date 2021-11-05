@@ -101,8 +101,8 @@ bool Player::Start()
 	PlayerPosition = true;
 
 	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,16 }, Collider::Type::PLAYER, this);
-	colliderPlayerR = app->coll->AddCollider({ position.x+16,position.y-16, 5,12 }, Collider::Type::PLAYER, this);
-	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYER, this);
+	colliderPlayerR = app->coll->AddCollider({ position.x+16,position.y-16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
+	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
 
 
 	return ret;
@@ -116,6 +116,9 @@ bool Player::PreUpdate()
 bool Player::Update(float dt) {
 	bool ret = true;
 	int speed = 2;
+
+	//Gravity
+	/*position.y += 2;*/
 	
 	if (app->scene->currentScene == State::SCENE)
 	{
@@ -187,9 +190,9 @@ bool Player::Update(float dt) {
 
 	}
 
-	if (contact = false) {
+	/*if (contact == false) {
 		position.y += 3;
-	}
+	}*/
 
 	return ret;
 }
@@ -200,6 +203,8 @@ bool Player::PostUpdate()
 	if (app->scene->currentScene == State::SCENE)
 	{
 		colliderPlayer->SetPos(position.x - 8, position.y + 21);
+		colliderPlayerR->SetPos(position.x + 4, position.y + 21);
+		colliderPlayerL->SetPos(position.x - 9, position.y + 21);
 		Uint8 alpha = 80;
 
 		/*if (app->input->GetKey(SDL_SCANCODE_F1 == KEY_DOWN)) {*/
@@ -254,7 +259,10 @@ bool Player::SaveState(pugi::xml_node& data) const
 }
 
 void Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1 == colliderPlayer && god == false) {
+	if (c1 == colliderPlayer && god == false ) {
 		contact = true;
+	}
+	if (c2 == colliderPlayerR) {
+		position.y += 3;
 	}
 }

@@ -155,16 +155,16 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::PLAYER: // green
 			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-			case Collider::Type::PLAYERRIGHT: // green
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 0, alpha);
+			case Collider::Type::PLAYERRIGHT: //
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
-			case Collider::Type::PLAYERLEFT: // green
-			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 255, alpha);
+			case Collider::Type::PLAYERLEFT: //
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 			case Collider::Type::SUELO: // blue
 			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
-			case Collider::Type::PARED: // 
+			case Collider::Type::PARED: //yellow
 			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 			case Collider::Type::LAVA: // red
