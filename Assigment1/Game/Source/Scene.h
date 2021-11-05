@@ -49,19 +49,27 @@ public:
 	
 
 private:
+	//scenes
 	SDL_Texture* bgTexture;
 	SDL_Texture* GameOver;
 	SDL_Texture* Enter;
 
+	//parallax
 	SDL_Texture* img;
 	SDL_Texture* Paral;
 	SDL_Texture* bgpa;
 	SDL_Texture* bgpa1;
 
+	SDL_Texture* PressEnterTex;
+
 	float scrollerX = 0;
 	float scrollerX1 = 1600;
 
+	//scenes animations
 	Animation Press;
+	Animation intro;
+	
+	//The intro animation 
 	
 };
 

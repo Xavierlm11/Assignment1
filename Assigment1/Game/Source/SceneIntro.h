@@ -25,9 +25,9 @@ public:
 
 	//sprite loaded into an SDL_Texture
 	/*SDL_Texture* bgTexture;*/
-	SDL_Texture* PressEnterTex;
-	//The intro animation 
-	Animation intro;
+	//SDL_Texture* PressEnterTex;
+	////The intro animation 
+	//Animation intro;
 };
 
 #endif

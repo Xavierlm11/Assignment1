@@ -16,7 +16,7 @@
 
 SceneIntro::SceneIntro(bool startEnabled) : Module(startEnabled)
 {
-	intro.PushBack({0,0,240,168});
+	/*intro.PushBack({0,0,240,168});
 	intro.PushBack({ 0,168,240,168 });
 	intro.PushBack({ 240,168,240,168 });
 	intro.PushBack({ 0,168,240,168 });
@@ -35,7 +35,7 @@ SceneIntro::SceneIntro(bool startEnabled) : Module(startEnabled)
 	intro.PushBack({ 240,168,240,168 });
 	intro.PushBack({ 0,168,240,168 });
 	intro.loop = false;
-	intro.speed = 0.01f;
+	intro.speed = 0.01f;*/
 
 }
 
