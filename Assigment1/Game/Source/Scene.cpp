@@ -173,6 +173,8 @@ bool Scene::Update(float dt)
 			silence = true;
 			currentScene = TITLE_SCREEN;
 
+			app->player->position.x = 50000;
+			app->player->position.y = 20000;
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
 		}
