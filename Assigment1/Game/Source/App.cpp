@@ -328,7 +328,7 @@ bool App::LoadGame()
 		{
 			item->data->LoadState(gameStateFile.child("game_state").child(item->data->name.GetString()));
 			item = item->next;
-			LOG("could Load xml file savegame.xml. pugi error: aaaaaaaaaaaaA");
+			LOG("could Load xml file savegame.xml. pugi error: %s", result.description());
 		}
 	}
 	loadGameRequested = false;
