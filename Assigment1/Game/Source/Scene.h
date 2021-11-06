@@ -59,8 +59,8 @@ private:
 	SDL_Texture* Paral;
 	SDL_Texture* bgpa;
 	SDL_Texture* bgpa1;
-
 	SDL_Texture* PressEnterTex;
+	SDL_Texture* EnterStartTex;
 
 	float scrollerX = 0;
 	float scrollerX1 = 1600;
@@ -68,8 +68,10 @@ private:
 	//scenes animations
 	Animation Press;
 	Animation intro;
+	Animation EnterStart;
 	
-	//The intro animation 
+	//Fx
+	uint wasted=0;
 	
 };
 

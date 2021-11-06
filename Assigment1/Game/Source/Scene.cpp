@@ -18,29 +18,22 @@ Scene::Scene( ) : Module()
 	name.Create("scene");
 	//death scene animation
 	Press.PushBack({ 0,0,115,55 });
-	Press.PushBack({ 0,0,1,1 });
+	Press.PushBack({ 0,0,0,0 });
 	Press.loop = true;
 	Press.speed = 0.01f;
 
+	//Press Enter Anim
+	EnterStart.PushBack({ 0,0,0,0 });
+	EnterStart.PushBack({0,0,85,26});
+	EnterStart.PushBack({0,0,0,0});
+	EnterStart.PushBack({ 0,0,85,26 });
+	EnterStart.loop = true;
+	EnterStart.speed = 0.01f;
+
+
 	//intro animation
 	intro.PushBack({ 0,0,240,168 });
-	intro.PushBack({ 0,168,240,168 });
 	intro.PushBack({ 240,168,240,168 });
-	intro.PushBack({ 0,168,240,168 });
-	intro.PushBack({ 240,168,240,168 });
-	intro.PushBack({ 0,168,240,168 });
-	intro.PushBack({ 240,168,240,168 });
-	intro.PushBack({ 0,168,240,168 });
-	intro.PushBack({ 240,168,240,168 });
-	intro.PushBack({ 0,168,240,168 });
-	intro.PushBack({ 240,168,240,168 });
-	intro.PushBack({ 0,168,240,168 });
-	intro.PushBack({ 240,168,240,168 });
-	intro.PushBack({ 0,168,240,168 });
-	intro.PushBack({ 240,168,240,168 });
-	intro.PushBack({ 0,168,240,168 });
-	intro.PushBack({ 240,168,240,168 });
-	intro.PushBack({ 0,168,240,168 });
 	intro.loop = false;
 	intro.speed = 0.01f;
 
@@ -69,17 +62,16 @@ bool Scene::Start()
 	
 	app->map->CreateColliders();
 	
-
 	//Paral = app->tex->Load("Assets/textures/Fondo.png");
 	bgpa = app->tex->Load("Assets/textures/backgroundParallax.png");
 	bgpa1 = app->tex->Load("Assets/textures/backgroundParallax.png");
-	// Load music
-	/*if (app->player->ActivePlayer == true) {
-		app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
-	}*/
 	bgTexture = app->tex->Load("Assets/textures/IntroMenu.png");
 	GameOver = app->tex->Load("Assets/textures/Wasted.png");
+	EnterStartTex = app->tex->Load("Assets/textures/PressEnter.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
+
+	//Fx
+	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 
 	currentScene = TITLE_SCREEN;
 	startTitle = true;
@@ -99,6 +91,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	EnterStart.Update();
 	switch (currentScene)
 	{
 	case TITLE_SCREEN:
@@ -123,7 +116,11 @@ bool Scene::Update(float dt)
 			
 		}
 
+		
+		
 		app->render->DrawTexture(bgTexture, 0, 0, &(intro.GetCurrentFrame()));
+		app->render->DrawTexture(EnterStartTex,80, 140, &(EnterStart.GetCurrentFrame()));
+		
 
 		break;
 	case SCENE:
@@ -189,6 +186,7 @@ bool Scene::Update(float dt)
 
 	case GAME_OVER:
 
+		
 		app->player->death = false;
 		app->player->position.y = 20000;
 		app->player->position.x = 20000;
@@ -196,6 +194,7 @@ bool Scene::Update(float dt)
 		app->render->camera.y = 0;
 		if (silence)
 		{
+			app->audio->PlayFx(wasted);
 			silence = false;
 			app->audio->PlayMusic("Assets/audio/music/silence.ogg");
 		}

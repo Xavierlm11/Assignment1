@@ -71,6 +71,10 @@ Player::Player( ) : Module()
 	jumpAnimL.PushBack({ 944,338,20,18 });
 	jumpAnimL.loop = false;
 	jumpAnimL.speed = 0.080f;
+
+	PlayerDeathR.PushBack({37,101,24,24});
+
+	PlayerDeathL.PushBack({788,342,24,24});
 }
 
 // Destructor
@@ -258,6 +262,14 @@ bool Player::Update(float dt) {
 
 		if (death == true && god==false )
 		{
+			if (PlayerPosition == true) {
+			PlayerDeathR.Reset();
+			currentAnimation = &PlayerDeathR;
+			}
+			if (PlayerPosition == false) {
+				PlayerDeathL.Reset();
+				currentAnimation = &PlayerDeathL;
+			}
 			death = false;
 			app->scene->silence = true;
 			app->scene->currentScene = GAME_OVER;
@@ -332,18 +344,15 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::SUELO )
 		{
 			contact = true;
-			LOG("AAAA ");
 		}
 
 		if ((c1->type == Collider::Type::PLAYERRIGHT) && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO))
 		{
-			LOG("CCCCCCCC ");
 			sidesR = true;
 		}
 
 		if (c1->type == Collider::Type::PLAYERLEFT && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO) )
 		{
-			LOG("CCCCCCCC ");
 			sidesL = true;
 		}
 	
