@@ -112,7 +112,7 @@ bool Player::Start()
 		death = false;
 		sidesR = false;
 		sidesL = false;
-		god = true;
+		god = false;
 	return ret;
 }
 
@@ -128,15 +128,12 @@ bool Player::Update(float dt) {
 	
 	/*if (app->scene->currentScene == State::SCENE)
 	{*/
-		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) )
+		if ((app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) )
 		{
+			if (god) { god = false; }
+			else if (!god) { god = true; }
 			
-			if (currentAnimation != &walkAnimR)
-			{
-				walkAnimR.Reset();
-				currentAnimation = &walkAnimR;
-				PlayerPosition = true;
-			}
+			
 		}
 		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR==false)
 		{
@@ -164,7 +161,7 @@ bool Player::Update(float dt) {
 			position.y -= speed*2;
 			
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && (sidesL == false || sidesR == false) && contact == false && god == true)
+		if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && /*(sidesL == false || sidesR == false) &&*/ contact == false && god == true)
 		{
 			position.y += speed;
 
