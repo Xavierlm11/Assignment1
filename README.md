@@ -18,8 +18,8 @@ Keyboard
 ### Debug functionality
 
 Keyboard
-- F1 - Start from the first level
-- F2 - Start from the beginning of the current level
+- F1 - Start level
+- F2 - Start intro
 - F3 - Direct loose
 - F4 - View colliders / logic
 - F5 - Save the current game state
