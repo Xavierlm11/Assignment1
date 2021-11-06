@@ -344,18 +344,15 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::SUELO )
 		{
 			contact = true;
-			LOG("AAAA ");
 		}
 
 		if ((c1->type == Collider::Type::PLAYERRIGHT) && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO))
 		{
-			LOG("CCCCCCCC ");
 			sidesR = true;
 		}
 
 		if (c1->type == Collider::Type::PLAYERLEFT && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO) )
 		{
-			LOG("CCCCCCCC ");
 			sidesL = true;
 		}
 	
