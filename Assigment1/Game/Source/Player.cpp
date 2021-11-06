@@ -128,12 +128,11 @@ bool Player::Update(float dt) {
 	
 	/*if (app->scene->currentScene == State::SCENE)
 	{*/
-		if ((app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) )
+		if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) )
 		{
 			if (god) { god = false; }
 			else if (!god) { god = true; }
-			
-			
+		
 		}
 		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR==false)
 		{
