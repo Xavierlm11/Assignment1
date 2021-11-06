@@ -115,7 +115,7 @@ bool Scene::Update(float dt)
 		//	/*app->audio->PlayMusic("pinball/audio/music/TitleScreen.ogg", 0.0f);*/
 		//}
 
-		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 			startTitle = true;
 
 			app->render->camera.y = 0;
@@ -140,9 +140,9 @@ bool Scene::Update(float dt)
 		}
 
 
-		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
+		/*if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
 			app->coll->DebugDraw();
-		}
+		}*/
 
 		scrollerX -= 0.2069;
 		scrollerX1 -= 0.2069;
@@ -182,14 +182,17 @@ bool Scene::Update(float dt)
 		// Draw map
 		app->map->Draw();
 
-		if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 			silence = true;
 			currentScene = TITLE_SCREEN;
+
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
 		
 			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
 		/*	app->fade->FadeToBlack((Module*)app->scene, (Module*)app->intro, 90);*/
 		}
-		if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 			currentScene =GAME_OVER;
 
 			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
@@ -220,12 +223,13 @@ bool Scene::Update(float dt)
 
 	}
 	// L03: DONE 7: Set the window title with map/tileset info
-		SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+		/*SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 			app->map->mapData.width, app->map->mapData.height,
 			app->map->mapData.tileWidth, app->map->mapData.tileHeight,
 			app->map->mapData.tilesets.count());
 
-		app->win->SetTitle(title.GetString());
+		app->win->SetTitle(title.GetString());*/
+
 	return true;
 }
 

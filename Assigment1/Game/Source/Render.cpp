@@ -71,7 +71,7 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-	if(app->scene->currentScene=SCENE){
+	if(app->scene->currentScene==SCENE){
 	camera.x = ((app->player->position.x - app->player->position.x * 2) * 5) + (app->win->screenSurface->w / 2 - 24 * 5);
 	camera.y = ((app->player->position.y - app->player->position.y * 2) * 5) + (app->win->screenSurface->h / 2 - 24 * 5);
 	}
@@ -93,24 +93,24 @@ bool Render::CleanUp()
 	return true;
 }
 
-// L02: DONE 6: Implement a method to load the state, for now load camera's x and y
-// Load Game State
+
+// Load Game State PLAYER POSITION
 bool Render::LoadState(pugi::xml_node& data)
 {
-	camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
+	app->player->position.x = data.child("position").attribute("x").as_int();
+	app->player->position.y = data.child("position").attribute("y").as_int();
 
 	return true;
 }
 
-// L02: DONE 8: Create a method to save the state of the renderer
-// Save Game State
+
+// Save Game State PLAYER POSITION
 bool Render::SaveState(pugi::xml_node& data) const
 {
-	pugi::xml_node cam = data.child("camera");
+	pugi::xml_node pos = data.child("position");
 
-	cam.attribute("x").set_value(camera.x);
-	cam.attribute("y").set_value(camera.y);
+	pos.attribute("x").set_value(app->player->position.x);
+	pos.attribute("y").set_value(app->player->position.y);
 
 	return true;
 }

@@ -37,16 +37,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
+	// Load / Save
+	//bool LoadState(pugi::xml_node&);
+	//bool SaveState(pugi::xml_node&) const;
 
 	 void OnCollision(Collider* c1, Collider* c2) override ;
 	
 	// Load Texture
 	SDL_Texture* const Load(const char* path);
 	SDL_Texture* const LoadSurface(SDL_Surface* surface);
-	bool UnLoad(SDL_Texture* texture);
-	void GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
 
 	iPoint position;
 

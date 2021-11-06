@@ -296,7 +296,7 @@ bool Player::PostUpdate()
 	contact = false;
 	sidesR = false;
 	sidesL = false;
-	if (contact = false) { LOG("hhhhh"); }
+	if (contact == false) { LOG("hhhhh"); }
 	else if (contact != false) { LOG("cccccc"); }
 	/*contact == false;*/
 	
@@ -320,25 +320,25 @@ bool Player::CleanUp()
 	return true;
 }
 
-bool Player::LoadState(pugi::xml_node& data)
-{
-	position.x = data.child("position").attribute("x").as_int();
-	position.y = data.child("position").attribute("y").as_int();
-
-	return true;
-}
-
-// L02: DONE 8: Create a method to save the state of the renderer
-// Save Game State
-bool Player::SaveState(pugi::xml_node& data) const
-{
-	pugi::xml_node pla = data.child("position");
-
-	pla.attribute("x").set_value(position.x);
-	pla.attribute("y").set_value(position.y);
-
-	return true;
-}
+//bool Player::LoadState(pugi::xml_node& data)
+//{
+//	position.x = data.child("position").attribute("x").as_int();
+//	position.y = data.child("position").attribute("y").as_int();
+//
+//	return true;
+//}
+//
+//// L02: DONE 8: Create a method to save the state of the renderer
+//// Save Game State
+//bool Player::SaveState(pugi::xml_node& data) const
+//{
+//	pugi::xml_node pla = data.child("position");
+//
+//	pla.attribute("x").set_value(position.x);
+//	pla.attribute("y").set_value(position.y);
+//
+//	return true;
+//}
 
 void Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type==Collider::Type::PLAYER && c2->type == Collider::Type::SUELO /*&& god == false*/ ) {

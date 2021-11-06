@@ -2,7 +2,7 @@
 <!-- L01: DONE 1: Create configuration file-->
 <config>
   <app>
-    <title>Game Development Testbed</title>
+    <title>Kirby's New Adventure</title>
     <organization>UPC</organization>
   </app>
 
