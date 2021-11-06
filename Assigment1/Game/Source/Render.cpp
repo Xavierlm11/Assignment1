@@ -1,10 +1,11 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
-
+#include"player.h"
 #include "Defs.h"
 #include "Log.h"
 
+#include "scene.h"
 #define VSYNC true
 
 Render::Render( ) : Module()
@@ -70,6 +71,10 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	if(app->scene->currentScene=SCENE){
+	camera.x = ((app->player->position.x - app->player->position.x * 2) * 5) + (app->win->screenSurface->w / 2 - 24 * 5);
+	camera.y = ((app->player->position.y - app->player->position.y * 2) * 5) + (app->win->screenSurface->h / 2 - 24 * 5);
+	}
 	return true;
 }
 

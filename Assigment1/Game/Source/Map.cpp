@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "Map.h"
+#include "player.h"
 #include "ModuleCollisions.h"
 
 #include "Defs.h"
@@ -142,17 +143,6 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 		if (id >= set->firstgid && id < set->firstgid + set->tilecount)
 			return set;
 	}
-
-	/*while (item)
-	{
-		if (id < item->data->firstgid)
-		{
-			set = item->prev->data;
-			break;
-		}
-		set = item->data;
-		item = item->next;
-	}*/
 
 	return set;
 }
@@ -457,7 +447,11 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 }
 
 bool Map::Start() {
-	CreateColliders();
+	if (app->scene->currentScene = SCENE)
+	{
+		CreateColliders();
+	}
+	
 	return true;
 }
 

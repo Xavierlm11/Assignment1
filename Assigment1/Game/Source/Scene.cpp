@@ -200,7 +200,7 @@ bool Scene::Update(float dt)
 	case GAME_OVER:
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
-		app->audio->PlayMusic("pinball/audio/music/silence.ogg");
+		app->audio->PlayMusic("Assets/audio/music/silence.ogg");
 		Press.Update();
 		app->render->DrawTexture(GameOver, 0, 0);
 		app->render->DrawTexture(Enter, 62, 100, &(Press.GetCurrentFrame()));

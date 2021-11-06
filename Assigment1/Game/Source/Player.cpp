@@ -95,19 +95,24 @@ bool Player::Start()
 	texture = app->tex->Load("Assets/textures/PlayerKirby.png");
 	LOG("start Player");
 	bool ret = true;
-	currentAnimation = &idleAnimR;
-	app->player->position.x = 50;
-	app->player->position.y = 0;
-	PlayerPosition = true;
+	
+	if (app->scene->currentScene == State::SCENE)
+	{
+		currentAnimation = &idleAnimR;
 
-	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
-	colliderPlayerR = app->coll->AddCollider({ position.x+16,position.y-16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
-	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
+		app->player->position.x = 0;
+		app->player->position.y = 0;
+		PlayerPosition = true;
 
-	contact = false;
-	death = false;
-	sidesR = false;
-	sidesL = false;
+		colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
+		colliderPlayerR = app->coll->AddCollider({ position.x + 16,position.y - 16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
+		colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
+
+		contact = false;
+		death = false;
+		sidesR = false;
+		sidesL = false;
+	}
 	return ret;
 }
 
@@ -191,8 +196,8 @@ bool Player::Update(float dt) {
 		//if (position.y > 800) { //bottom
 		//	position.y = 840;
 		//}
-		if (position.y < 20) {//top
-			position.y = 20;
+		if (position.y < 0) {//top
+			position.y = 0;
 		}
 		if (position.x < 20) {
 			position.x = 20;
@@ -200,18 +205,17 @@ bool Player::Update(float dt) {
 
 		currentAnimation->Update();
 
+		if (death == true)
+		{
+		
+			app->scene->currentScene = GAME_OVER;
 		}
-	if (death == true)
-	{
 		
-		app->scene->currentScene = GAME_OVER;
-	}
-		
-	if (contact == false) {
-		position.y += 3;
-	}
+		if (contact == false) {
+			position.y += 3;
+		}
 
-	
+	}
 	
 	return ret;
 }
@@ -237,15 +241,15 @@ bool Player::PostUpdate()
 			app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
 		
 		/*app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);*/
-	}
+	
 	contact = false;
 	sidesR = false;
 	sidesL = false;
 	if (contact = false) { LOG("hhhhh"); }
 	else if (contact != false) { LOG("cccccc"); }
 	/*contact == false;*/
-	int i = 0;
-	i++;
+	
+	}
 	return ret;
 }
 
