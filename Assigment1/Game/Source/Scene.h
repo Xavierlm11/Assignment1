@@ -69,7 +69,8 @@ private:
 	Animation Press;
 	Animation intro;
 	
-	//The intro animation 
+	//Fx
+	uint wasted=0;
 	
 };
 

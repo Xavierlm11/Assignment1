@@ -18,7 +18,7 @@ Scene::Scene( ) : Module()
 	name.Create("scene");
 	//death scene animation
 	Press.PushBack({ 0,0,115,55 });
-	Press.PushBack({ 0,0,1,1 });
+	Press.PushBack({ 0,0,0,0 });
 	Press.loop = true;
 	Press.speed = 0.01f;
 
@@ -73,13 +73,12 @@ bool Scene::Start()
 	//Paral = app->tex->Load("Assets/textures/Fondo.png");
 	bgpa = app->tex->Load("Assets/textures/backgroundParallax.png");
 	bgpa1 = app->tex->Load("Assets/textures/backgroundParallax.png");
-	// Load music
-	/*if (app->player->ActivePlayer == true) {
-		app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
-	}*/
 	bgTexture = app->tex->Load("Assets/textures/IntroMenu.png");
 	GameOver = app->tex->Load("Assets/textures/Wasted.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
+
+	//Fx
+	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 
 	currentScene = TITLE_SCREEN;
 	startTitle = true;
@@ -189,6 +188,7 @@ bool Scene::Update(float dt)
 
 	case GAME_OVER:
 
+		app->audio->PlayFx(wasted);
 		app->player->death = false;
 		app->player->position.y = 20000;
 		app->player->position.x = 20000;
