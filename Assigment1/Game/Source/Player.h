@@ -87,6 +87,9 @@ private:
 	bool sidesR;
 	bool sidesL;
 
+	bool startjump = false;
+	int jumpVel = 0;
+	int maxjumpheight = 0;
 };
 
 

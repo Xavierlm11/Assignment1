@@ -162,9 +162,7 @@ bool Player::Update(float dt) {
 			position.y += speed;
 
 		}
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			/*position.y += speed;*/
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			if (PlayerPosition == false) {
 				jumpAnimL.Reset();
 				currentAnimation = &jumpAnimL;
@@ -173,6 +171,59 @@ bool Player::Update(float dt) {
 			{
 				jumpAnimR.Reset();
 				currentAnimation = &jumpAnimR;
+			}
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			if (PlayerPosition == false) {
+				jumpAnimL.Reset();
+				currentAnimation = &jumpAnimL;
+			}
+			if (PlayerPosition == true)
+			{
+				jumpAnimR.Reset();
+				currentAnimation = &jumpAnimR;
+			}
+		}
+
+		//Salto
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
+		{
+
+			startjump = true;
+			if (startjump == true) {
+
+				position.y -= 20;
+
+			}
+
+			if (PlayerPosition == false) {
+				jumpAnimL.Reset();
+				currentAnimation = &jumpAnimL;
+			}
+			if (PlayerPosition == true)
+			{
+				jumpAnimR.Reset();
+				currentAnimation = &jumpAnimR;
+			}
+
+
+			if (startjump) //If is jumping
+			{
+				position.y += jumpVel;
+				jumpVel -= gravity;
+				maxjumpheight++;
+			}
+
+			if (maxjumpheight >= 40)
+			{
+				position.y += maxjumpheight;
+
+				startjump = false;
+				if (maxjumpheight == 40)
+				{
+					maxjumpheight == 0;
+				}
 			}
 		}
 
