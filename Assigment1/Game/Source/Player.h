@@ -51,6 +51,13 @@ public:
 
 	bool ActivePlayer = false;
 
+	bool contact;
+
+	bool god = false;
+	bool death;
+	bool sidesR;
+	bool sidesL;
+
 public:
 	List<SDL_Texture*> player;
 
@@ -79,12 +86,7 @@ private:
 	//gravity
 	int gravity = 1;
 
-	bool contact ;
-
-	bool god = false;
-	bool death;
-	bool sidesR;
-	bool sidesL;
+	
 
 	bool startjump = false;
 	int jumpVel = 0;

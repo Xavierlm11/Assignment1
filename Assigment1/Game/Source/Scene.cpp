@@ -66,8 +66,8 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
 	app->map->Load("level1.tmx");
-	if(currentScene==SCENE)
-		app->map->CreateColliders();
+	
+	app->map->CreateColliders();
 	
 
 	//Paral = app->tex->Load("Assets/textures/Fondo.png");
@@ -81,7 +81,7 @@ bool Scene::Start()
 	GameOver = app->tex->Load("Assets/textures/Wasted.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
 
-	currentScene = SCENE;
+	currentScene = TITLE_SCREEN;
 	startTitle = true;
 	silence = true;
 	app->render->camera.x = 0;
@@ -109,24 +109,18 @@ bool Scene::Update(float dt)
 			silence = false;
 			app->audio->PlayMusic("Assets/audio/music/silence.ogg");
 		}
-		//if (startTitle)
-		//{
-		//	startTitle = false;
-		//	/*app->audio->PlayMusic("pinball/audio/music/TitleScreen.ogg", 0.0f);*/
-		//}
-
-		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		if ((app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)||(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)) {
 			startTitle = true;
 
 			app->render->camera.y = 0;
 			app->render->camera.x = 0;
 
-			app->player->position.y = 0;
-			app->player->position.x = 0;
+			app->player->position.x = 50;
+			app->player->position.y = 20;
+			
 
 			currentScene = SCENE;
-			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
-			//app->fade->FadeToBlack((Module*)app->intro, (Module*)app->scene, 90);
+			
 		}
 
 		app->render->DrawTexture(bgTexture, 0, 0, &(intro.GetCurrentFrame()));
@@ -138,47 +132,43 @@ bool Scene::Update(float dt)
 			startTitle = false;
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 		}
-
-
-		/*if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
-			app->coll->DebugDraw();
-		}*/
-
+		//SCROLLER
 		scrollerX -= 0.2069;
 		scrollerX1 -= 0.2069;
+
 		if (scrollerX < -1550) {
 			scrollerX = 1600;
 		}
 		if (scrollerX1 < -1550) {
 			scrollerX1 = 1600;
 		}
-		//app->render->DrawTexture(Paral, 0, 0);
+	
 		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
 
 		app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
 
 		{int speed = 8; 
-		// L02: DONE 3: Request Load / Save when pressing L/S
+		
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
 
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 			app->SaveGameRequest();
 
+		//CAMERA MOVEMENT
 		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
 			app->render->camera.y += speed;
 
 		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
 			app->render->camera.y -= speed;
 
-		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && app->render->camera.x < 0)
+		if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
 			app->render->camera.x += speed;
 
-		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && app->render->camera.x > -2200)
+		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
 			app->render->camera.x -= speed;
          }
-		//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
-
+		
 		// Draw map
 		app->map->Draw();
 
@@ -188,33 +178,38 @@ bool Scene::Update(float dt)
 
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
-		
-			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
-		/*	app->fade->FadeToBlack((Module*)app->scene, (Module*)app->intro, 90);*/
 		}
-		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-			currentScene =GAME_OVER;
-
-			/*app->audio->PlayMusic("pinball/audio/music/silence.ogg");*/
-		/*	app->fade->FadeToBlack((Module*)app->scene, (Module*)app->intro, 90);*/
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {currentScene =GAME_OVER;}
+			
+		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+			app->player->position.y = 20;
+			app->player->position.x = 50;
 		}
 		break;
 
 	case GAME_OVER:
+
+		app->player->death = false;
+		app->player->position.y = 20000;
+		app->player->position.x = 20000;
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
-		app->audio->PlayMusic("Assets/audio/music/silence.ogg");
+		if (silence)
+		{
+			silence = false;
+			app->audio->PlayMusic("Assets/audio/music/silence.ogg");
+		}
 		Press.Update();
 		app->render->DrawTexture(GameOver, 0, 0);
 		app->render->DrawTexture(Enter, 62, 100, &(Press.GetCurrentFrame()));
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			startTitle = true;
 			currentScene = SCENE;
 			app->render->camera.y = 0;
 			app->render->camera.x = 0;
-
-			app->player->position.y = 0;
-			app->player->position.x = 0;
+			app->player->position.y = 20;
+			app->player->position.x = 50;
 			
 		}
 
@@ -236,9 +231,6 @@ bool Scene::Update(float dt)
 // Called each loop iteration
 bool Scene::PostUpdate()
 {
-
-	
-
 	bool ret = true;
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

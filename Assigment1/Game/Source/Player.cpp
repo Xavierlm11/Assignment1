@@ -96,12 +96,12 @@ bool Player::Start()
 	LOG("start Player");
 	bool ret = true;
 	
-	if (app->scene->currentScene == State::SCENE)
-	{
+	/*if (app->scene->currentScene == State::SCENE)
+	{*/
 		currentAnimation = &idleAnimR;
 
-		app->player->position.x = 0;
-		app->player->position.y = 0;
+		app->player->position.x = 30000;
+		app->player->position.y = 30000;
 		PlayerPosition = true;
 
 		colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
@@ -112,7 +112,7 @@ bool Player::Start()
 		death = false;
 		sidesR = false;
 		sidesL = false;
-	}
+		god = true;
 	return ret;
 }
 
@@ -125,12 +125,19 @@ bool Player::Update(float dt) {
 	bool ret = true;
 	int speed = 2;
 
-	//Gravity
-	/*position.y += 2;*/
 	
-	if (app->scene->currentScene == State::SCENE)
-	{
-
+	/*if (app->scene->currentScene == State::SCENE)
+	{*/
+		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) )
+		{
+			
+			if (currentAnimation != &walkAnimR)
+			{
+				walkAnimR.Reset();
+				currentAnimation = &walkAnimR;
+				PlayerPosition = true;
+			}
+		}
 		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR==false)
 		{
 			position.x += speed;
@@ -152,12 +159,12 @@ bool Player::Update(float dt) {
 				PlayerPosition = false;
 			}
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) )
+		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false)  && god == true)
 		{
-			position.y -= speed;
+			position.y -= speed*2;
 			
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT))
+		if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && (sidesL == false || sidesR == false) && contact == false && god == true)
 		{
 			position.y += speed;
 
@@ -239,15 +246,12 @@ bool Player::Update(float dt) {
 				}
 			}
 		}
-
+		//PPLAYER LIMITS
 		if (position.x > 660)
 		{
 			position.x = 660;
 		}
-		//if (position.y > 800) { //bottom
-		//	position.y = 840;
-		//}
-		if (position.y < 0) {//top
+		if (position.y < 0) {
 			position.y = 0;
 		}
 		if (position.x < 20) {
@@ -256,51 +260,38 @@ bool Player::Update(float dt) {
 
 		currentAnimation->Update();
 
-		if (death == true)
+		if (death == true && god==false )
 		{
-		
+			death = false;
+			app->scene->silence = true;
 			app->scene->currentScene = GAME_OVER;
 		}
 		
-		if (contact == false) {
+		if (contact == false && god == false) {
 			position.y += 3;
 		}
 
-	}
-	
 	return ret;
 }
 
 bool Player::PostUpdate()
 {
 	bool ret = true;
-	if (app->scene->currentScene == State::SCENE)
-	{
-		colliderPlayer->SetPos(position.x - 8, position.y + 33);
-		colliderPlayerR->SetPos(position.x + 4, position.y + 21);
-		colliderPlayerL->SetPos(position.x - 9, position.y + 21);
-		Uint8 alpha = 80;
+	
+	colliderPlayer->SetPos(position.x - 8, position.y + 33);
+	colliderPlayerR->SetPos(position.x + 4, position.y + 21);
+	colliderPlayerL->SetPos(position.x - 9, position.y + 21);
+	Uint8 alpha = 80;
+	
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();	
 
-		/*if (app->input->GetKey(SDL_SCANCODE_F1 == KEY_DOWN)) {*/
+	app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
 
-		/*}*/
-
-		bool ret = true;
-		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		
-
-			app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
-		
-		/*app->render->DrawRectangle(colliderPlayer->rect, 0, 255, 255, alpha);*/
 	
 	contact = false;
 	sidesR = false;
 	sidesL = false;
-	if (contact == false) { LOG("hhhhh"); }
-	else if (contact != false) { LOG("cccccc"); }
-	/*contact == false;*/
 	
-	}
 	return ret;
 }
 
@@ -341,57 +332,30 @@ bool Player::CleanUp()
 //}
 
 void Player::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type==Collider::Type::PLAYER && c2->type == Collider::Type::SUELO /*&& god == false*/ ) {
-		/*contact = true;
-			*/
-		contact = true;
-		
-		LOG("AAAA " );
-		/*if (c1->rect.y + c1->rect.h <= c2->rect.y  && c1->rect.y + c1->rect.h >= c2->rect.y) {
-			
-			position.y = c2->rect.y - 48;
+	
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::SUELO )
+		{
+			contact = true;
+			LOG("AAAA ");
+		}
 
-			
-			if (c1->rect.x < c2->rect.x + c2->rect.w) {
-				
-				c1->rect.y = c2->rect.y - c1->rect.h ;
-			}
+		if ((c1->type == Collider::Type::PLAYERRIGHT) && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO))
+		{
+			LOG("CCCCCCCC ");
+			sidesR = true;
+		}
 
-		}*/
-		/*else { contact = false; LOG("cccccc"); }*/
-
-
-		
-
-	}
-	if ((c1->type == Collider::Type::PLAYERRIGHT) &&( c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO) /*&& god == false*/) {
-		
-		
-
-		LOG("CCCCCCCC ");
-		sidesR = true;
-		
-
-
-	}
-	if ( c1->type == Collider::Type::PLAYERLEFT && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO) /*&& god == false*/) {
-
-
-
-		LOG("CCCCCCCC ");
-		sidesL = true;
-
-
-
-	}
-	if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA /*&& god == false*/) {
-		/*contact = true;
-			*/
-		LOG("MORISTE PUTOOOOOOOOOOOOO");
-		/*app->scene->currentScene = GAME_OVER;*/
-		death = true;
-
-	}
-
+		if (c1->type == Collider::Type::PLAYERLEFT && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO) )
+		{
+			LOG("CCCCCCCC ");
+			sidesL = true;
+		}
+	
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )
+		{
+			LOG("MORISTE PUTOOOOOOOOOOOOO");
+			death = true;
+		}
+	
 	
 }

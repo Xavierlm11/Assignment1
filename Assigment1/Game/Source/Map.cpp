@@ -447,7 +447,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 }
 
 bool Map::Start() {
-	if (app->scene->currentScene = SCENE)
+	if (app->scene->currentScene == SCENE)
 	{
 		CreateColliders();
 	}

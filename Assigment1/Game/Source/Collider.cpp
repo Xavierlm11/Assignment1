@@ -7,8 +7,12 @@ Collider::Collider(SDL_Rect rectangle, Type type, Module* listener): rect(rectan
 
 void Collider::SetPos(int x, int y)
 {
-	rect.x = x;
-	rect.y = y;
+	
+	if (this != nullptr) {
+		rect.x = x;
+		rect.y = y;
+	}
+
 }
 
 bool Collider::Intersects(const SDL_Rect& r) const

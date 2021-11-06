@@ -1,6 +1,7 @@
 #include "ModuleCollisions.h"
 
 #include "App.h"
+#include "scene.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -225,7 +226,7 @@ bool ModuleCollisions::Update(float dt)
 {
 	// Get gamepad info
 	/*GamePad& pad = app->input->pads[0];*/
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+	if ((app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) ) {
 		debug = !debug;
 	}
 	
@@ -236,7 +237,7 @@ bool ModuleCollisions::Update(float dt)
 
 bool ModuleCollisions::PostUpdate()
 {
-	if (debug) {
+	if (debug && app->scene->currentScene == SCENE) {
 		DebugDraw();
 	}
 
