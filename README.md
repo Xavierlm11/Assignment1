@@ -21,10 +21,12 @@ Keyboard
 - F1 - Start level
 - F2 - Start intro
 - F3 - Direct loose
-- F4 - View colliders / logic
+- F4 - Restart level
 - F5 - Save the current game state
 - F6 - Load the previous state (even across levels)
-- F7 - God Mode (fly around, cannot be killed)
+- F9 - View Collider / Logic
+- F10 - God Mode (fly around, cannot be killed)
+
 
 
 ## Developers
