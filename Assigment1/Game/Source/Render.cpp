@@ -71,12 +71,9 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	//camera follows player
 	if(app->scene->currentScene==SCENE){
-	/*camera.x = ((app->player->position.x - app->player->position.x * 2) * 5) + (app->win->screenSurface->w / 2 - 24 * 5);
-	camera.y = ((app->player->position.y - app->player->position.y * 2) * 5) + (app->win->screenSurface->h / 2 - 24 * 5);
-	*/
-		/*camera.x =-(app->player->position.x + app->win->screenSurface->w/5);
-		camera.y = -(app->player->position.y + app->win->screenSurface->h/5);*/
+
 		camera.x = (-app->player->position.x)* 5 + app->win->screenSurface->w / 2 -30;
 		camera.y = (-app->player->position.y* 5) + app->win->screenSurface->h / 3;
 	}

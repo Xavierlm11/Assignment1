@@ -111,6 +111,7 @@ bool Player::Start()
 	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
 	colliderPlayerR = app->coll->AddCollider({ position.x + 16,position.y - 16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
 	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
+	//colliderplayerR y colliderplayerL solo colisionan para las paredes
 
 	contact = false;
 	death = false;
@@ -161,7 +162,7 @@ bool Player::Update(float dt) {
 	{
 		position.y -= speed*2;		
 	}
-	if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && /*(sidesL == false || sidesR == false) &&*/ contact == false && god == true)
+	if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && contact == false && god == true)
 	{
 		position.y += speed;
 	}

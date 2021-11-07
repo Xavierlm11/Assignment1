@@ -6,6 +6,6 @@
 	<audio />
 	<scene />
 	<renderer>
-		<position x="162" y="275" />
+		<position x="114" y="20" />
 	</renderer>
 </game_state>

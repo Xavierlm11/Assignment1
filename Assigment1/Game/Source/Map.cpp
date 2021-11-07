@@ -58,7 +58,7 @@ void Map::Draw()
 
 	while (mapLayerItem != NULL) {
 
-		if (mapLayerItem->data->properties.GetProperty("Draw") == 1) 
+		if (mapLayerItem->data->properties.GetProperty("Draw") == 1)//dinuja solo las capas con a propiedad draw
 		{
 			for (int x = 0; x < mapLayerItem->data->width; x++)
 			{
@@ -440,7 +440,7 @@ void Map::CreateColliders() {
 	while (mapLayerItem != NULL) {
 
 		//suelo
-		if (mapLayerItem->data->properties.GetProperty("collider") == 1) {
+		if (mapLayerItem->data->properties.GetProperty("collider") == 1) {//crea colliders de tipo suelo con las tiles de tipo collider
 
 
 			for (int x = 0; x < mapLayerItem->data->width; x++) {
@@ -452,7 +452,6 @@ void Map::CreateColliders() {
 
 					if (gid > 0) {
 
-						
 						//now we always use the firt tileset in the list
 						TileSet* tileset = mapData.tilesets.start->data;
 						/*TileSet* tileset = GetTilesetFromTileId(gid);*/
