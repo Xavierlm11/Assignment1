@@ -55,23 +55,23 @@ bool Scene::Start()
 {
 
 	// L03: DONE: Load map
-	//app->map->Load("hello.tmx");
 	app->map->Load("level1.tmx");
 	
 	app->map->CreateColliders();
 	
-	//Paral = app->tex->Load("Assets/textures/Fondo.png");
-	bgpa = app->tex->Load("Assets/textures/backgroundParallax.png");
-	bgpa1 = app->tex->Load("Assets/textures/backgroundParallax.png");
+	//Textures
+	bgpa = app->tex->Load("Assets/textures/BackgroundParallax.png");
+	bgpa1 = app->tex->Load("Assets/textures/BackgroundParallax.png");
 	bgTexture = app->tex->Load("Assets/textures/IntroMenu.png");
-	GameOver = app->tex->Load("Assets/textures/Wasted.png");
+	GameOver = app->tex->Load("Assets/textures/Wasted.png");//Game over
 	EnterStartTex = app->tex->Load("Assets/textures/PressEnter.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
 
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 
-	currentScene = TITLE_SCREEN;
+	currentScene = TITLE_SCREEN; //Game starts with Title Screen
+
 	startTitle = true;
 	silence = true;
 	app->render->camera.x = 0;
@@ -98,7 +98,7 @@ bool Scene::Update(float dt)
 		if (silence)
 		{
 			silence = false;
-			app->audio->PlayMusic("Assets/audio/music/silence.ogg");
+			app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
 		}
 		if ((app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)||(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)) {
 			startTitle = true;
@@ -176,7 +176,11 @@ bool Scene::Update(float dt)
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {currentScene =GAME_OVER;}
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+			app->audio->PlayFx(wasted);
+			silence = true;
+			currentScene =GAME_OVER;
+		}
 			
 		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 			app->player->position.y = 20;
@@ -192,11 +196,12 @@ bool Scene::Update(float dt)
 		app->player->position.x = 20000;
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
+
 		if (silence)
 		{
 			app->audio->PlayFx(wasted);
 			silence = false;
-			app->audio->PlayMusic("Assets/audio/music/silence.ogg");
+			app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
 		}
 		Press.Update();
 		app->render->DrawTexture(GameOver, 0, 0);
@@ -216,13 +221,6 @@ bool Scene::Update(float dt)
 		
 
 	}
-	// L03: DONE 7: Set the window title with map/tileset info
-		/*SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-			app->map->mapData.width, app->map->mapData.height,
-			app->map->mapData.tileWidth, app->map->mapData.tileHeight,
-			app->map->mapData.tilesets.count());
-
-		app->win->SetTitle(title.GetString());*/
 
 	return true;
 }

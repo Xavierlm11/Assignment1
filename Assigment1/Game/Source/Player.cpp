@@ -22,6 +22,8 @@ Player::Player( ) : Module()
 {
 	name.Create("player");
 
+	//Player Animations
+
 	idleAnimR.PushBack({8,11,21,19});
 	idleAnimR.PushBack({ 8,11,21,19 });
 	idleAnimR.PushBack({ 8,11,21,19 });
@@ -87,9 +89,6 @@ bool Player::Awake(pugi::xml_node& config)
 	LOG("Init Image library");
 	bool ret = true;
 	
-	// Load support for the PNG image format
-	
-
 	return ret;
 }
 
@@ -100,23 +99,25 @@ bool Player::Start()
 	LOG("start Player");
 	bool ret = true;
 	
-	/*if (app->scene->currentScene == State::SCENE)
-	{*/
-		currentAnimation = &idleAnimR;
+	
+	currentAnimation = &idleAnimR; //player start with idle anim
 
-		app->player->position.x = 30000;
-		app->player->position.y = 30000;
-		PlayerPosition = true;
+	app->player->position.x = 30000;
+	app->player->position.y = 30000;
 
-		colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
-		colliderPlayerR = app->coll->AddCollider({ position.x + 16,position.y - 16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
-		colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
+	PlayerPosition = true;//if its true, player will be looking at the right, if not, player will be looking at the left
 
-		contact = false;
-		death = false;
-		sidesR = false;
-		sidesL = false;
-		god = false;
+	//add colliders
+	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
+	colliderPlayerR = app->coll->AddCollider({ position.x + 16,position.y - 16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
+	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
+
+	contact = false;
+	death = false;
+	sidesR = false;
+	sidesL = false;
+	god = false;
+
 	return ret;
 }
 
@@ -128,112 +129,107 @@ bool Player::PreUpdate()
 bool Player::Update(float dt) {
 	bool ret = true;
 	int speed = 2;
-
 	
-	/*if (app->scene->currentScene == State::SCENE)
-	{*/
-		if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) )
-		{
-			if (god) { god = false; }
-			else if (!god) { god = true; }
+	if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) )
+	{
+		if (god) { god = false; }
+		else if (!god) { god = true; }
 		
-		}
-		if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR==false)
+	}
+	if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR==false)
+	{
+		position.x += speed;
+		if (currentAnimation != &walkAnimR)
 		{
-			position.x += speed;
-			if (currentAnimation != &walkAnimR)
-			{
-				walkAnimR.Reset();
-				currentAnimation = &walkAnimR;
-				PlayerPosition = true;
-			}
+			walkAnimR.Reset();
+			currentAnimation = &walkAnimR;
+			PlayerPosition = true;
 		}
+	}
 
-		if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
+	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
+	{
+		position.x -= speed;
+		if (currentAnimation != &walkAnimL)
 		{
-			position.x -= speed;
-			if (currentAnimation != &walkAnimL)
-			{
-				walkAnimL.Reset();
-				currentAnimation = &walkAnimL;
-				PlayerPosition = false;
-			}
+			walkAnimL.Reset();
+			currentAnimation = &walkAnimL;
+			PlayerPosition = false;
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false)  && god == true)
+	}
+	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false)  && god == true)
+	{
+		position.y -= speed*2;		
+	}
+	if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && /*(sidesL == false || sidesR == false) &&*/ contact == false && god == true)
+	{
+		position.y += speed;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		if (PlayerPosition == false) {
+			jumpAnimL.Reset();
+			currentAnimation = &jumpAnimL;
+		}
+		if (PlayerPosition == true)
 		{
-			position.y -= speed*2;
-			
+			jumpAnimR.Reset();
+			currentAnimation = &jumpAnimR;
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && /*(sidesL == false || sidesR == false) &&*/ contact == false && god == true)
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		if (PlayerPosition == false) {
+			jumpAnimL.Reset();
+			currentAnimation = &jumpAnimL;
+		}
+		if (PlayerPosition == true)
 		{
-			position.y += speed;
+			jumpAnimR.Reset();
+			currentAnimation = &jumpAnimR;
+		}
+	}
+
+	//Salto
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
+	{
+
+		startjump = true;
+		if (startjump == true) {
+
+			position.y -= 20;
 
 		}
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			if (PlayerPosition == false) {
-				jumpAnimL.Reset();
-				currentAnimation = &jumpAnimL;
-			}
-			if (PlayerPosition == true)
-			{
-				jumpAnimR.Reset();
-				currentAnimation = &jumpAnimR;
-			}
-		}
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			if (PlayerPosition == false) {
-				jumpAnimL.Reset();
-				currentAnimation = &jumpAnimL;
-			}
-			if (PlayerPosition == true)
-			{
-				jumpAnimR.Reset();
-				currentAnimation = &jumpAnimR;
-			}
+		if (PlayerPosition == false) {
+			jumpAnimL.Reset();
+			currentAnimation = &jumpAnimL;
 		}
-
-		//Salto
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
+		if (PlayerPosition == true)
 		{
-
-			startjump = true;
-			if (startjump == true) {
-
-				position.y -= 20;
-
-			}
-
-			if (PlayerPosition == false) {
-				jumpAnimL.Reset();
-				currentAnimation = &jumpAnimL;
-			}
-			if (PlayerPosition == true)
-			{
-				jumpAnimR.Reset();
-				currentAnimation = &jumpAnimR;
-			}
-
-
-			if (startjump) //If is jumping
-			{
-				position.y += jumpVel;
-				jumpVel -= gravity;
-				maxjumpheight++;
-			}
-
-			if (maxjumpheight >= 40)
-			{
-				position.y += maxjumpheight;
-
-				startjump = false;
-				if (maxjumpheight == 40)
-				{
-					maxjumpheight == 0;
-				}
-			}
+			jumpAnimR.Reset();
+			currentAnimation = &jumpAnimR;
 		}
 
+		if (startjump) //If is jumping
+		{
+			position.y += jumpVel;
+			jumpVel -= gravity;
+			maxjumpheight++;
+		}
+
+		if (maxjumpheight >= 40)
+		{
+			position.y += maxjumpheight;
+
+			startjump = false;
+			if (maxjumpheight == 40)
+			{
+				maxjumpheight == 0;
+			}
+		}
+	}
+
+	//player animation if no movement detected
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
 			if (currentAnimation != &idleAnimR && currentAnimation != &idleAnimL && currentAnimation != &jumpAnimR && currentAnimation != &jumpAnimL) {
 				if (PlayerPosition == true) {
@@ -246,7 +242,8 @@ bool Player::Update(float dt) {
 				}
 			}
 		}
-		//PPLAYER LIMITS
+
+		//PLAYER LIMITS
 		if (position.x > 660)
 		{
 			position.x = 660;
@@ -275,6 +272,7 @@ bool Player::Update(float dt) {
 			app->scene->currentScene = GAME_OVER;
 		}
 		
+		//Gravity
 		if (contact == false && god == false) {
 			position.y += 3;
 		}
@@ -295,7 +293,6 @@ bool Player::PostUpdate()
 
 	app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
 
-	
 	contact = false;
 	sidesR = false;
 	sidesL = false;
@@ -319,25 +316,6 @@ bool Player::CleanUp()
 	return true;
 }
 
-//bool Player::LoadState(pugi::xml_node& data)
-//{
-//	position.x = data.child("position").attribute("x").as_int();
-//	position.y = data.child("position").attribute("y").as_int();
-//
-//	return true;
-//}
-//
-//// L02: DONE 8: Create a method to save the state of the renderer
-//// Save Game State
-//bool Player::SaveState(pugi::xml_node& data) const
-//{
-//	pugi::xml_node pla = data.child("position");
-//
-//	pla.attribute("x").set_value(position.x);
-//	pla.attribute("y").set_value(position.y);
-//
-//	return true;
-//}
 
 void Player::OnCollision(Collider* c1, Collider* c2) {
 	
@@ -358,7 +336,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 	
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )
 		{
-			LOG("MORISTE PUTOOOOOOOOOOOOO");
+			LOG("MORISTE");
 			death = true;
 		}
 	

@@ -37,11 +37,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Load / Save
-	//bool LoadState(pugi::xml_node&);
-	//bool SaveState(pugi::xml_node&) const;
-
-	 void OnCollision(Collider* c1, Collider* c2) override ;
+	void OnCollision(Collider* c1, Collider* c2) override ;
 	
 	// Load Texture
 	SDL_Texture* const Load(const char* path);
@@ -67,7 +63,7 @@ private:
 	//cargar textura del jugador
 	SDL_Texture* texture = nullptr;
 
-	//animation
+	//player animations
 	Animation* currentAnimation = nullptr;
 	Animation idleAnimR,
 		idleAnimL,
@@ -85,9 +81,8 @@ private:
 
 	//gravity
 	int gravity = 1;
-
 	
-
+	//salto
 	bool startjump = false;
 	int jumpVel = 0;
 	int maxjumpheight = 0;
