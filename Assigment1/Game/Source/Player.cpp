@@ -118,7 +118,8 @@ bool Player::Start()
 	sidesR = false;
 	sidesL = false;
 	god = false;
-
+	jumping = false;
+	jumped = 0;
 	return ret;
 }
 
@@ -191,45 +192,59 @@ bool Player::Update(float dt) {
 	}
 
 	//Salto
+	//if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
+	//{
+
+	//	startjump = true;
+	//	if (startjump == true) {
+
+	//		position.y -= 20;
+
+	//	}
+
+	//	if (PlayerPosition == false) {
+	//		jumpAnimL.Reset();
+	//		currentAnimation = &jumpAnimL;
+	//	}
+	//	if (PlayerPosition == true)
+	//	{
+	//		jumpAnimR.Reset();
+	//		currentAnimation = &jumpAnimR;
+	//	}
+
+	//	if (startjump) //If is jumping
+	//	{
+	//		position.y += jumpVel;
+	//		jumpVel -= gravity;
+	//		maxjumpheight++;
+	//	}
+
+	//	if (maxjumpheight >= 40)
+	//	{
+	//		position.y += maxjumpheight;
+
+	//		startjump = false;
+	//		if (maxjumpheight == 40)
+	//		{
+	//			maxjumpheight == 0;
+	//		}
+	//	}
+	//}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
 	{
-
-		startjump = true;
-		if (startjump == true) {
-
-			position.y -= 20;
-
-		}
-
-		if (PlayerPosition == false) {
-			jumpAnimL.Reset();
-			currentAnimation = &jumpAnimL;
-		}
-		if (PlayerPosition == true)
-		{
-			jumpAnimR.Reset();
-			currentAnimation = &jumpAnimR;
-		}
-
-		if (startjump) //If is jumping
-		{
-			position.y += jumpVel;
-			jumpVel -= gravity;
-			maxjumpheight++;
-		}
-
-		if (maxjumpheight >= 40)
-		{
-			position.y += maxjumpheight;
-
-			startjump = false;
-			if (maxjumpheight == 40)
-			{
-				maxjumpheight == 0;
-			}
-		}
+		jumping = true;
+		
 	}
-
+	if (jumping == true)
+	{
+		position.y -= 1;
+		jumped += 10;
+	}
+	 if (jumped>=200)
+	{
+		jumping = false;
+		jumped = 0;
+	}
 	//player animation if no movement detected
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
 			if (currentAnimation != &idleAnimR && currentAnimation != &idleAnimL && currentAnimation != &jumpAnimR && currentAnimation != &jumpAnimL) {
@@ -274,7 +289,7 @@ bool Player::Update(float dt) {
 		}
 		
 		//Gravity
-		if (contact == false && god == false) {
+		if (contact == false && god == false&&jumping==false) {
 			position.y += 3;
 		}
 

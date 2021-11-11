@@ -53,6 +53,8 @@ public:
 	bool death;
 	bool sidesR;
 	bool sidesL;
+	bool jumping;
+	int jumped;
 
 public:
 	List<SDL_Texture*> player;
