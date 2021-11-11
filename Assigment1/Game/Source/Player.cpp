@@ -237,10 +237,10 @@ bool Player::Update(float dt) {
 	}
 	if (jumping == true)
 	{
-		position.y -= 1;
+		position.y -= 3;
 		jumped += 10;
 	}
-	 if (jumped>=200)
+	 if (jumped>=100)
 	{
 		jumping = false;
 		jumped = 0;
