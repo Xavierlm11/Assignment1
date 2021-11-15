@@ -55,7 +55,7 @@ public:
 	bool sidesL;
 	bool jumping;
 	int jumped;
-
+	bool dbjump;
 public:
 	List<SDL_Texture*> player;
 

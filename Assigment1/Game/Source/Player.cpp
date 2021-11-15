@@ -119,6 +119,7 @@ bool Player::Start()
 	sidesL = false;
 	god = false;
 	jumping = false;
+	dbjump = false;
 	jumped = 0;
 	return ret;
 }
@@ -233,7 +234,7 @@ bool Player::Update(float dt) {
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
 	{
 		jumping = true;
-		
+		dbjump = true;
 	}
 	if (jumping == true)
 	{
@@ -245,6 +246,11 @@ bool Player::Update(float dt) {
 		jumping = false;
 		jumped = 0;
 	}
+	 if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN  && dbjump==true)
+	 { 
+		 jumped = 0;
+		 dbjump = false;
+	 }
 	//player animation if no movement detected
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
 			if (currentAnimation != &idleAnimR && currentAnimation != &idleAnimL && currentAnimation != &jumpAnimR && currentAnimation != &jumpAnimL) {
