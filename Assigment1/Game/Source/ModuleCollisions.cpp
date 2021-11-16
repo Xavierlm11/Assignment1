@@ -20,6 +20,7 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::LAVA] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::SUELO] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::PARED] = false;
@@ -29,6 +30,7 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::LAVA] = false;
+	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::PARED] = true;
 	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::SUELO] = false;
 
@@ -36,15 +38,17 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYERLEFT][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PLAYERLEFT][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::PLAYERLEFT][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::PLAYERLEFT][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::PLAYERLEFT][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::PLAYERLEFT][Collider::Type::PARED] = true;
-	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::SUELO] = false;
+	matrix[Collider::Type::PLAYERLEFT][Collider::Type::SUELO] = false;
 
 	//SUELO
 	matrix[Collider::Type::SUELO][Collider::Type::SUELO] = false;
 	matrix[Collider::Type::SUELO][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::SUELO][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::SUELO][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::SUELO][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::SUELO][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::SUELO][Collider::Type::PARED] = false;
 	
@@ -53,6 +57,7 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PARED][Collider::Type::PLAYER] = false;
 	matrix[Collider::Type::PARED][Collider::Type::PLAYERRIGHT] = true;
 	matrix[Collider::Type::PARED][Collider::Type::PLAYERLEFT] = true;
+	matrix[Collider::Type::PARED][Collider::Type::PLAYERHEAD] = true;
 	matrix[Collider::Type::PARED][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::PARED][Collider::Type::PARED] = false;
 
@@ -60,9 +65,19 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::LAVA][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::LAVA][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::LAVA][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::LAVA][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::LAVA][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::LAVA][Collider::Type::PARED] = false;
 	matrix[Collider::Type::LAVA][Collider::Type::SUELO] = false;
+
+	//PLAYER HEAD
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::LAVA] = false;
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::PARED] = true;
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::SUELO] = false;
 }
 
 // Destructor
@@ -154,6 +169,9 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::PLAYERLEFT: //
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+			case Collider::Type::PLAYERHEAD: //
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
 			case Collider::Type::SUELO: // blue
 			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);

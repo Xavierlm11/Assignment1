@@ -13,6 +13,7 @@ struct Collider
 		PLAYER,
 		PLAYERRIGHT,
 		PLAYERLEFT,
+		PLAYERHEAD,
 		SUELO,
 		PARED,
 		LAVA,

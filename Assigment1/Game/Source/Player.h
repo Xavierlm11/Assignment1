@@ -48,6 +48,7 @@ public:
 	bool ActivePlayer = false;
 
 	bool contact;
+	
 
 	bool god = false;
 	bool death;
@@ -80,6 +81,7 @@ private:
 	Collider* colliderPlayer = nullptr;
 	Collider* colliderPlayerR = nullptr;
 	Collider* colliderPlayerL = nullptr;
+	Collider* colliderHead = nullptr;
 
 	//gravity
 	int gravity = 1;

@@ -109,8 +109,10 @@ bool Player::Start()
 
 	//add colliders
 	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
-	colliderPlayerR = app->coll->AddCollider({ position.x + 16,position.y - 16, 5,12 }, Collider::Type::PLAYERRIGHT, this);
-	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,12 }, Collider::Type::PLAYERLEFT, this);
+	colliderPlayerR = app->coll->AddCollider({ position.x + 16,position.y - 16, 5,9 }, Collider::Type::PLAYERRIGHT, this);
+	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,9 }, Collider::Type::PLAYERLEFT, this);
+	colliderHead = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYERHEAD, this);
+
 	//colliderplayerR y colliderplayerL solo colisionan para las paredes
 
 	contact = false;
@@ -307,8 +309,9 @@ bool Player::PostUpdate()
 	bool ret = true;
 	
 	colliderPlayer->SetPos(position.x - 8, position.y + 33);
-	colliderPlayerR->SetPos(position.x + 4, position.y + 21);
-	colliderPlayerL->SetPos(position.x - 9, position.y + 21);
+	colliderPlayerR->SetPos(position.x + 4, position.y + 26);
+	colliderPlayerL->SetPos(position.x - 9, position.y + 26);
+	colliderHead->SetPos(position.x -8, position.y + 21);
 	Uint8 alpha = 80;
 	
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();	
@@ -344,6 +347,11 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::SUELO )
 		{
 			contact = true;
+		}
+		if (c1->type == Collider::Type::PLAYERHEAD && c2->type == Collider::Type::PARED)
+		{
+			/*contact = true;*/
+			position.y += 1;
 		}
 
 		if ((c1->type == Collider::Type::PLAYERRIGHT) && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO))
