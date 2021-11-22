@@ -14,7 +14,7 @@ struct Collider;
 
 class Player :public Module {
 public:
-	Player( );
+	Player();
 
 	// Destructor
 	virtual ~Player();

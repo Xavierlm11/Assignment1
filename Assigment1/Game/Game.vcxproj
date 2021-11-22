@@ -96,6 +96,7 @@
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
+    <ClCompile Include="Source\ModuleEnemies.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
+    <ClInclude Include="Source\ModuleEnemies.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Audio.h" />

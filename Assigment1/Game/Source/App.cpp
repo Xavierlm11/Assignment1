@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Animation.h"
 #include "ModuleCollisions.h"
+#include "ModuleEnemies.h"
 
 
 #include "Defs.h"
@@ -30,6 +31,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	player = new Player();
 	coll = new ModuleCollisions();
+	enemies = new ModuleEnemies();
 
 	render = new Render();
 	// Ordered for awake / Start / Update
@@ -42,6 +44,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(player);
 	AddModule(coll);
+	AddModule(enemies);
 
 	// Render last to swap buffer
 	AddModule(render);
