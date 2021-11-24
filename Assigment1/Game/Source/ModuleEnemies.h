@@ -17,7 +17,7 @@ class ModuleEnemies :public Module {
 public:
 	ModuleEnemies();
 
-	~ModuleEnemies();
+	virtual ~ModuleEnemies();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -38,5 +38,16 @@ public:
 	bool SaveState(pugi::xml_node& data) const;
 
 	iPoint positionEnemy;
+
+	List<SDL_Texture*>enemy;
+
+private:
+	SDL_Texture* WaddleDeeTex = nullptr;
+
+	Animation* currentEnemyAnimation = nullptr;
+	Animation WalkWaddleR,
+		WalkWaddleL,
+		AttackWaddleR,
+		AttackWaddleL;
 };
 #endif

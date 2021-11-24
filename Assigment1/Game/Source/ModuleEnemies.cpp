@@ -20,7 +20,25 @@
 
 ModuleEnemies::ModuleEnemies() :Module() {
 	name.Create("enemy");
+
+	WalkWaddleR.PushBack({14,26,19,16});
+	WalkWaddleR.PushBack({35,26,19,16});
+	WalkWaddleR.PushBack({ 57,26,19,16 });
+	WalkWaddleR.PushBack({ 78,26,19,16 });
+	WalkWaddleR.loop = true;
+	WalkWaddleR.speed = 0.080f;
+
+	WalkWaddleL.PushBack({334,25,19,16});
+	WalkWaddleL.PushBack({ 355,25,19,16 });
+	WalkWaddleL.PushBack({ 377,25,19,16 });
+	WalkWaddleL.PushBack({ 398,25,19,16 });
+	WalkWaddleL.loop = true;
+	WalkWaddleL.speed = 0.080f;
+
 }
+
+ModuleEnemies::~ModuleEnemies()
+{}
 
 // Called before render is available
 bool ModuleEnemies::Awake(pugi::xml_node&) {
@@ -32,6 +50,7 @@ bool ModuleEnemies::Awake(pugi::xml_node&) {
 bool ModuleEnemies::Start() {
 	positionEnemy.x = 10;
 	positionEnemy.y = 10;
+	WaddleDeeTex = app->tex->Load("Assets/textures/WaddleDeeEnemies.png");
 
 	return true;
 }
@@ -40,12 +59,18 @@ bool ModuleEnemies::Start() {
 bool ModuleEnemies::PreUpdate(){
 	return true;
 }
+
 bool ModuleEnemies::Update(float dt){
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {
 		positionEnemy.x += 2;
+		
+		WalkWaddleR.Reset();
+		currentEnemyAnimation = &WalkWaddleR;		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) {
 		positionEnemy.x -= 2;
+		WalkWaddleL.Reset();
+		currentEnemyAnimation = &WalkWaddleL;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {
 		positionEnemy.y += 2;
@@ -55,15 +80,29 @@ bool ModuleEnemies::Update(float dt){
 	}
 	return true;
 }
+
 bool ModuleEnemies::PostUpdate(){
 	Uint8 alpha = 80;
 	app->render->DrawRectangle({ positionEnemy.x,positionEnemy.y,20,20}, 250, 0, 250, alpha);
+	//Draw Waddle Dee
+	/*app->render->DrawTexture(WaddleDeeTex, positionEnemy.x - 10, positionEnemy.y + 20);*/
 
 	return true;
 }
 
 // Called before quitting
 bool ModuleEnemies::CleanUp(){
+	LOG("Freeing textures and Image library");
+	ListItem<SDL_Texture*>* item;
+
+	for (item = enemy.start; item != NULL; item = item->next)
+	{
+		SDL_DestroyTexture(item->data);
+	}
+
+	enemy.clear();
+	IMG_Quit();
+	return true;
 	return true;
 }
 
