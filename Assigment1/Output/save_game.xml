@@ -5,7 +5,10 @@
 	<textures />
 	<audio />
 	<scene />
+	<enemy>
+		<enemypos x="true" y="true" />
+	</enemy>
 	<renderer>
-		<position x="114" y="20" />
+		<position x="84" y="23" />
 	</renderer>
 </game_state>

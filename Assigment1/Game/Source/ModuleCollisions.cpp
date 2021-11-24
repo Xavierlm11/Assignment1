@@ -13,6 +13,7 @@
 
 ModuleCollisions::ModuleCollisions( ) : Module()
 {
+
 	for(uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
