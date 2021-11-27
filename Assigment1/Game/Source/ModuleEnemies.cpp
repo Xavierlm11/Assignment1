@@ -18,7 +18,8 @@
 
 #include "SDL_image/include/SDL_image.h"
 
-ModuleEnemies::ModuleEnemies() :Module() {
+ModuleEnemies::ModuleEnemies() :Module() 
+{
 	name.Create("enemy");
 
 	WalkWaddleR.PushBack({14,26,19,16});
@@ -26,14 +27,14 @@ ModuleEnemies::ModuleEnemies() :Module() {
 	WalkWaddleR.PushBack({ 57,26,19,16 });
 	WalkWaddleR.PushBack({ 78,26,19,16 });
 	WalkWaddleR.loop = true;
-	WalkWaddleR.speed = 0.080f;
+	WalkWaddleR.speed = 0.1f;
 
 	WalkWaddleL.PushBack({334,25,19,16});
 	WalkWaddleL.PushBack({ 355,25,19,16 });
 	WalkWaddleL.PushBack({ 377,25,19,16 });
 	WalkWaddleL.PushBack({ 398,25,19,16 });
 	WalkWaddleL.loop = true;
-	WalkWaddleL.speed = 0.080f;
+	WalkWaddleL.speed = 0.1f;
 
 }
 
@@ -43,7 +44,10 @@ ModuleEnemies::~ModuleEnemies()
 // Called before render is available
 bool ModuleEnemies::Awake(pugi::xml_node&) {
 
-	return true;
+	LOG("Init Image library");
+	bool ret = true;
+
+	return ret;
 }
 
 // Called before the first frame
@@ -52,6 +56,7 @@ bool ModuleEnemies::Start() {
 	positionEnemy.y = 10;
 	WaddleDeeTex = app->tex->Load("Assets/textures/WaddleDeeEnemies.png");
 
+	currentEnemyAnimation = &WalkWaddleL;
 	return true;
 }
 
@@ -78,6 +83,9 @@ bool ModuleEnemies::Update(float dt){
 	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) {
 		positionEnemy.y -= 2;
 	}
+
+	currentEnemyAnimation->Update();
+
 	return true;
 }
 
@@ -85,7 +93,8 @@ bool ModuleEnemies::PostUpdate(){
 	Uint8 alpha = 80;
 	app->render->DrawRectangle({ positionEnemy.x,positionEnemy.y,20,20}, 250, 0, 250, alpha);
 	//Draw Waddle Dee
-	/*app->render->DrawTexture(WaddleDeeTex, positionEnemy.x - 10, positionEnemy.y + 20);*/
+	SDL_Rect rect = currentEnemyAnimation->GetCurrentFrame();
+	app->render->DrawTexture(WaddleDeeTex, positionEnemy.x - 10, positionEnemy.y + 20, &rect);
 
 	return true;
 }
@@ -102,7 +111,6 @@ bool ModuleEnemies::CleanUp(){
 
 	enemy.clear();
 	IMG_Quit();
-	return true;
 	return true;
 }
 
