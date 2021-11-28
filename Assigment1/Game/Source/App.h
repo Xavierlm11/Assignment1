@@ -2,7 +2,9 @@
 #define __APP_H__
 
 #include "Module.h"
+#include "PerfTimer.h"
 #include "List.h"
+#include "Timer.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -107,10 +109,27 @@ private:
 
 
 	uint frames;
-	float dt;
 
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
+
+	// L07: DONE 4: Calculate some timing measures
+	// required variables are provided:
+	PerfTimer* ptimer;
+	PerfTimer* frameDuration;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+
+	uint64 frameCount = 0;
+	uint32 framesPerSecond = 0;
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+	float dt = 0.0f;
+
+	uint32 maxFrameRate = 0;
 };
 
 extern App* app;
