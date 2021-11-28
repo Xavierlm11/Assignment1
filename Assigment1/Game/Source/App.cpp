@@ -331,28 +331,30 @@ bool App::LoadGame()
 
 bool App::SaveGame() const
 {
-	bool ret = true;
+	bool ret = false;
 	pugi::xml_document gameStateFile;
-	pugi::xml_node result = gameStateFile.append_child("save_game.xml");
+	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 
 	if (result == NULL)
 	{
-		LOG("could not Load xml file savegame.xml. pugi error: %s");
+		LOG("could not Load xml file savegame.xml. pugi error: %s", result.description());
 		ret = false;
 	}
-
+	
 	ListItem<Module*>* item;
 	item = modules.start;
-	while (item != NULL && ret == true)
+	while (item != NULL)
 	{
-		item->data->SaveState(result.append_child(item->data->name.GetString()));
+		item->data->SaveState(gameStateFile.child("game_state").append_child(item->data->name.GetString()));
 		item = item->next;
 		LOG("could Load xml file savegame.xml. pugi error");
-
+		
 	}
-
 	saveGameRequested = false;
-	/*gameStateFile.save_file("save_game.xml");*/ //esta funcion borra todo el xml :)
+	/*gameStateFile.save_file("save_game.xml");*/
 
 	return ret;
 }
+
+
+
