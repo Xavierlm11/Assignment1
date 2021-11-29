@@ -133,7 +133,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt) {
 	bool ret = true;
-	int speed = 2;
+	float speed = 2;
 	
 	if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) )
 	{
@@ -150,6 +150,7 @@ bool Player::Update(float dt) {
 			currentAnimation = &walkAnimR;
 			PlayerPosition = true;
 		}
+		app->scene->scrollerX -= speed / 6;
 	}
 
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
@@ -161,6 +162,7 @@ bool Player::Update(float dt) {
 			currentAnimation = &walkAnimL;
 			PlayerPosition = false;
 		}
+		app->scene->scrollerX += speed / 6;
 	}
 	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false)  && god == true)
 	{

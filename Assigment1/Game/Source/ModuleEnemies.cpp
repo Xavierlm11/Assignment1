@@ -149,8 +149,8 @@ bool ModuleEnemies::LoadState(pugi::xml_node& data){
 bool ModuleEnemies::SaveState(pugi::xml_node& data) const{
 	pugi::xml_node posenemy = data.child("enemypos");
 
-	posenemy.attribute("x").set_value(posenemy);
-	posenemy.attribute("y").set_value(posenemy);
+	posenemy.attribute("x").set_value(positionEnemy.x);
+	posenemy.attribute("y").set_value(positionEnemy.y);
 
 	return true;
 }

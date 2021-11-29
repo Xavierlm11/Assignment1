@@ -47,6 +47,8 @@ public:
 	bool LoseScreen;
 	bool silence;
 	
+	float scrollerX = 0;
+	float scrollerX1 = 1600;
 
 private:
 	//scenes
@@ -62,8 +64,7 @@ private:
 	SDL_Texture* PressEnterTex;
 	SDL_Texture* EnterStartTex;
 
-	float scrollerX = 0;
-	float scrollerX1 = 1600;
+	
 
 	//scenes animations
 	Animation Press;

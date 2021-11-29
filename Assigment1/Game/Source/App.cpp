@@ -218,6 +218,7 @@ void App::FinishUpdate()
 
 	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
 	float delay = float(maxFrameRate) - frameDuration->ReadMs();
+	
 	//LOG("F: %f Delay:%f", frameDuration->ReadMs(), delay);
 
 	// L08: DONE 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
@@ -393,7 +394,7 @@ bool App::SaveGame() const
 	}
 	
 	ListItem<Module*>* item;
-	item = modules.end;
+	item = modules.start;
 	while (item != NULL && ret == true)
 	{
 		item->data->SaveState(gameStateFile.child("game_state").child(item->data->name.GetString()));

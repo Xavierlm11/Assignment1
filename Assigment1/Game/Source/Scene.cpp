@@ -127,7 +127,7 @@ bool Scene::Update(float dt)
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 		}
 		//SCROLLER
-		scrollerX -= 0.2069;
+		/*scrollerX -= 0.2069;
 		scrollerX1 -= 0.2069;
 
 		if (scrollerX < -1550) {
@@ -135,11 +135,11 @@ bool Scene::Update(float dt)
 		}
 		if (scrollerX1 < -1550) {
 			scrollerX1 = 1600;
-		}
+		}*/
 	
 		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
 
-		app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
+		//app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
 
 		{int speed = 8; 
 		
@@ -149,6 +149,8 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 			app->SaveGameRequest();
 
+
+		
 		//CAMERA MOVEMENT
 		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
 			app->render->camera.y += speed;
