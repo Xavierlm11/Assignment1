@@ -27,26 +27,26 @@ ModuleEnemies::ModuleEnemies() :Module()
 	WalkWaddleR.PushBack({ 57,26,19,16 });
 	WalkWaddleR.PushBack({ 78,26,19,16 });
 	WalkWaddleR.loop = true;
-	WalkWaddleR.speed = 0.1f;
+	WalkWaddleR.speed = 0.080f;
 
 	WalkWaddleL.PushBack({270,24,19,16});
 	WalkWaddleL.PushBack({291,25,19,16 });
 	WalkWaddleL.PushBack({ 313,25,19,16 });
 	WalkWaddleL.PushBack({ 334,25,19,16 });
 	WalkWaddleL.loop = true;
-	WalkWaddleL.speed = 0.1f;
+	WalkWaddleL.speed = 0.080f;
 
 	FlyingBooL.PushBack({ 1,4,24,20 });
 	FlyingBooL.PushBack({ 1,36,24,20 });
 	FlyingBooL.PushBack({ 1,68,24,20 });
 	FlyingBooL.loop = true;
-	FlyingBooL.speed = 0.1f;
+	FlyingBooL.speed = 0.080f;
 
 	FlyingBooR.PushBack({ 34,2,24,20 });
 	FlyingBooR.PushBack({ 34,34,24,20 });
 	FlyingBooR.PushBack({ 34,66,24,20 });
 	FlyingBooR.loop = true;
-	FlyingBooR.speed = 0.1f;
+	FlyingBooR.speed = 0.080f;
 
 }
 

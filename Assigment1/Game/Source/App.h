@@ -125,11 +125,12 @@ private:
 	uint64 frameCount = 0;
 	uint32 framesPerSecond = 0;
 	uint32 lastSecFrameCount = 0;
+	bool vsyncbool;
 
 	float averageFps = 0.0f;
 	float dt = 0.0f;
 
-	uint32 maxFrameRate = 0;
+	uint32 maxFrameRate = 60;
 };
 
 extern App* app;
