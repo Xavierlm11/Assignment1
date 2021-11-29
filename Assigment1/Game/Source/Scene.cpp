@@ -139,7 +139,7 @@ bool Scene::Update(float dt)
 		}*/
 	
 		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
-		app->render->DrawTexture(GalaxyTex, scrollerX, 0, NULL);
+		app->render->DrawTexture(GalaxyTex, scrollerX1, 0, NULL);
 
 		//app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
 
