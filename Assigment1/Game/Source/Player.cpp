@@ -151,6 +151,7 @@ bool Player::Update(float dt) {
 			PlayerPosition = true;
 		}
 		app->scene->scrollerX -= speed / 6;
+		app->scene->scrollerX1 -= speed /24;
 	}
 
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
@@ -163,6 +164,7 @@ bool Player::Update(float dt) {
 			PlayerPosition = false;
 		}
 		app->scene->scrollerX += speed / 6;
+		app->scene->scrollerX1 += speed / 24;
 	}
 	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false)  && god == true)
 	{

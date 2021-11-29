@@ -48,7 +48,7 @@ public:
 	bool silence;
 	
 	float scrollerX = 0;
-	float scrollerX1 = 1600;
+	float scrollerX1 = 0;
 
 private:
 	//scenes
