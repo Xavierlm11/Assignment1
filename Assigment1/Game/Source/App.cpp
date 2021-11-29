@@ -97,6 +97,7 @@ bool App::Awake()
 	
 		// L08: DONE 1: Read from config file your framerate cap
 		maxFrameRate = configApp.child("frcap").attribute("value").as_int();
+		//maxFrameRate = 16;
 	}
 
 	if (ret == true)

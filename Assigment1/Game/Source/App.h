@@ -129,7 +129,7 @@ private:
 	float averageFps = 0.0f;
 	float dt = 0.0f;
 
-	uint32 maxFrameRate = 0;
+	uint32 maxFrameRate = 16;
 };
 
 extern App* app;
