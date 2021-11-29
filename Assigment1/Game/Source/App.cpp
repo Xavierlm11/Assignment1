@@ -190,7 +190,11 @@ void App::FinishUpdate()
 		LoadGame();
 		loadGameRequested == false;
 	}
-	if (saveGameRequested == true) SaveGame();
+	if (saveGameRequested == true) { 
+		SaveGame(); 
+		saveGameRequested == false;
+	}
+
 
 	// L07: DONE 4: Now calculate:
 	// Amount of frames since startup

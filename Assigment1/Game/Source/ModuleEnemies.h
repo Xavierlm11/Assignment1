@@ -43,11 +43,16 @@ public:
 
 private:
 	SDL_Texture* WaddleDeeTex = nullptr;
+	SDL_Texture* BooTex = nullptr;
 
-	Animation* currentEnemyAnimation = nullptr;
+	Animation* currentWaddleAnimation = nullptr;
 	Animation WalkWaddleR,
 		WalkWaddleL,
 		AttackWaddleR,
 		AttackWaddleL;
+
+	Animation* currentBooAnimation = nullptr;
+	Animation FlyingBooR,
+		FlyingBooL;
 };
 #endif

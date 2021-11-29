@@ -29,12 +29,24 @@ ModuleEnemies::ModuleEnemies() :Module()
 	WalkWaddleR.loop = true;
 	WalkWaddleR.speed = 0.1f;
 
-	WalkWaddleL.PushBack({334,25,19,16});
-	WalkWaddleL.PushBack({ 355,25,19,16 });
-	WalkWaddleL.PushBack({ 377,25,19,16 });
-	WalkWaddleL.PushBack({ 398,25,19,16 });
+	WalkWaddleL.PushBack({270,24,19,16});
+	WalkWaddleL.PushBack({291,25,19,16 });
+	WalkWaddleL.PushBack({ 313,25,19,16 });
+	WalkWaddleL.PushBack({ 334,25,19,16 });
 	WalkWaddleL.loop = true;
 	WalkWaddleL.speed = 0.1f;
+
+	FlyingBooL.PushBack({ 1,4,24,20 });
+	FlyingBooL.PushBack({ 1,36,24,20 });
+	FlyingBooL.PushBack({ 1,68,24,20 });
+	FlyingBooL.loop = true;
+	FlyingBooL.speed = 0.1f;
+
+	FlyingBooR.PushBack({ 34,2,24,20 });
+	FlyingBooR.PushBack({ 34,34,24,20 });
+	FlyingBooR.PushBack({ 34,66,24,20 });
+	FlyingBooR.loop = true;
+	FlyingBooR.speed = 0.1f;
 
 }
 
@@ -55,8 +67,10 @@ bool ModuleEnemies::Start() {
 	positionEnemy.x = 10;
 	positionEnemy.y = 10;
 	WaddleDeeTex = app->tex->Load("Assets/textures/WaddleDeeEnemies.png");
+	BooTex = app->tex->Load("Assets/textures/BooSheet.png");
 
-	currentEnemyAnimation = &WalkWaddleL;
+	currentWaddleAnimation = &WalkWaddleL;
+	currentBooAnimation = &FlyingBooL;
 	return true;
 }
 
@@ -70,12 +84,19 @@ bool ModuleEnemies::Update(float dt){
 		positionEnemy.x += 2;
 		
 		WalkWaddleR.Reset();
-		currentEnemyAnimation = &WalkWaddleR;		
+		currentWaddleAnimation = &WalkWaddleR;
+
+		FlyingBooR.Reset();
+		currentBooAnimation = &FlyingBooR;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) {
 		positionEnemy.x -= 2;
+
 		WalkWaddleL.Reset();
-		currentEnemyAnimation = &WalkWaddleL;
+		currentWaddleAnimation = &WalkWaddleL;
+
+		FlyingBooL.Reset();
+		currentBooAnimation = &FlyingBooL;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {
 		positionEnemy.y += 2;
@@ -84,17 +105,21 @@ bool ModuleEnemies::Update(float dt){
 		positionEnemy.y -= 2;
 	}
 
-	currentEnemyAnimation->Update();
+	currentWaddleAnimation->Update();
+	currentBooAnimation->Update();
 
 	return true;
 }
 
 bool ModuleEnemies::PostUpdate(){
-	Uint8 alpha = 80;
-	app->render->DrawRectangle({ positionEnemy.x,positionEnemy.y,20,20}, 250, 0, 250, alpha);
+	/*Uint8 alpha = 80;
+	app->render->DrawRectangle({ positionEnemy.x,positionEnemy.y,20,20}, 250, 0, 250, alpha);*/
 	//Draw Waddle Dee
-	SDL_Rect rect = currentEnemyAnimation->GetCurrentFrame();
+	SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
 	app->render->DrawTexture(WaddleDeeTex, positionEnemy.x - 10, positionEnemy.y + 20, &rect);
+	//Draw Boo
+	SDL_Rect Boo = currentBooAnimation->GetCurrentFrame();
+	app->render->DrawTexture(BooTex, positionEnemy.x - 40, positionEnemy.y + 30, &Boo);
 
 	return true;
 }
