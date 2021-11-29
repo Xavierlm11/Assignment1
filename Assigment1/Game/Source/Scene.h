@@ -63,6 +63,7 @@ private:
 	SDL_Texture* bgpa1;
 	SDL_Texture* PressEnterTex;
 	SDL_Texture* EnterStartTex;
+	SDL_Texture* GalaxyTex;
 
 	
 

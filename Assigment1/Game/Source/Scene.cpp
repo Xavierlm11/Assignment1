@@ -65,6 +65,7 @@ bool Scene::Start()
 	GameOver = app->tex->Load("Assets/textures/Wasted.png");//Game over
 	EnterStartTex = app->tex->Load("Assets/textures/PressEnter.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
+	GalaxyTex= app->tex->Load("Assets/textures/GalaxyTex.png");
 
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
@@ -138,6 +139,7 @@ bool Scene::Update(float dt)
 		}*/
 	
 		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
+		app->render->DrawTexture(GalaxyTex, scrollerX, 0, NULL);
 
 		//app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
 
