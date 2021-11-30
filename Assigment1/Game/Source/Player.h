@@ -77,6 +77,11 @@ private:
 		PlayerDeathR,
 		PlayerDeathL;
 
+	//Lifes
+	SDL_Texture* HealthBarTex = nullptr;
+	Animation Bar5, Bar4, Bar3, Bar2, Bar1;
+	int PlayerLives=5;
+
 	//Declarar colisiones del jugador
 	Collider* colliderPlayer = nullptr;
 	Collider* colliderPlayerR = nullptr;

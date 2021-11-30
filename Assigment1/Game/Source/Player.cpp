@@ -77,6 +77,15 @@ Player::Player( ) : Module()
 	PlayerDeathR.PushBack({37,101,24,24});
 
 	PlayerDeathL.PushBack({788,342,24,24});
+
+	//HealthBar Animation
+	Bar5.PushBack({ 10,16,59,8 });
+	Bar4.PushBack({ 78,16,47,8 });
+	Bar3.PushBack({ 130,16,35,8 });
+	Bar2.PushBack({ 174,16,23,8 });
+	Bar1.PushBack({ 202,16,11,8 });
+
+	
 }
 
 // Destructor
@@ -95,11 +104,12 @@ bool Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Player::Start()
 {
-	texture = app->tex->Load("Assets/textures/PlayerKirby.png");
 	LOG("start Player");
 	bool ret = true;
-	
-	
+
+	texture = app->tex->Load("Assets/textures/PlayerKirby.png");
+	HealthBarTex = app->tex->Load("Assets/textures/HealthBarTex.png");
+
 	currentAnimation = &idleAnimR; //player start with idle anim
 
 	app->player->position.x = 30000;
@@ -123,6 +133,7 @@ bool Player::Start()
 	jumping = false;
 	dbjump = false;
 	jumped = 0;
+
 	return ret;
 }
 
@@ -303,6 +314,39 @@ bool Player::Update(float dt) {
 		//Gravity
 		if (contact == false && god == false&&jumping==false) {
 			position.y += 3;
+		}
+
+		//Lifes
+		if (PlayerLives > 5) {
+			PlayerLives = 5;
+		}
+
+		if (app->scene->currentScene == SCENE){
+			if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+			{
+				PlayerLives -= 1;
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+			{
+				PlayerLives += 1;
+			}
+
+			if (PlayerLives == 5) {
+				app->render->DrawTexture(HealthBarTex, 5 ,10,&(Bar5.GetCurrentFrame()),0);
+			}
+			if (PlayerLives == 4) {
+				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar4.GetCurrentFrame()), 0);
+			}
+			if (PlayerLives == 3) {
+				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar3.GetCurrentFrame()), 0);
+			}
+			if (PlayerLives == 2) {
+				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar2.GetCurrentFrame()), 0);
+			}
+			if (PlayerLives == 1) {
+				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar1.GetCurrentFrame()), 0);
+			}
 		}
 
 	return ret;

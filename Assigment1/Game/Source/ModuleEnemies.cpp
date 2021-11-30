@@ -114,12 +114,15 @@ bool ModuleEnemies::Update(float dt){
 bool ModuleEnemies::PostUpdate(){
 	/*Uint8 alpha = 80;
 	app->render->DrawRectangle({ positionEnemy.x,positionEnemy.y,20,20}, 250, 0, 250, alpha);*/
-	//Draw Waddle Dee
-	SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
-	app->render->DrawTexture(WaddleDeeTex, positionEnemy.x - 10, positionEnemy.y + 20, &rect);
-	//Draw Boo
-	SDL_Rect Boo = currentBooAnimation->GetCurrentFrame();
-	app->render->DrawTexture(BooTex, positionEnemy.x - 40, positionEnemy.y + 30, &Boo);
+	if (app->scene->currentScene == SCENE) {
+		//Draw Waddle Dee
+		SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
+		app->render->DrawTexture(WaddleDeeTex, positionEnemy.x - 10, positionEnemy.y + 20, &rect);
+		//Draw Boo
+		SDL_Rect Boo = currentBooAnimation->GetCurrentFrame();
+		app->render->DrawTexture(BooTex, positionEnemy.x - 40, positionEnemy.y + 30, &Boo);
+	}
+	
 
 	return true;
 }
