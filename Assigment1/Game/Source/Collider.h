@@ -4,7 +4,7 @@
 #include "SDL/include/SDL_Rect.h"
 
 class Module;
-#define MAX_LISTENERS 1000
+#define MAX_LISTENERS 5000
 struct Collider
 {
 	enum Type
