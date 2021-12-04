@@ -18,7 +18,7 @@
 #include "SDL_image/include/SDL_image.h"
 //#pragma comment(lib, "../Game/Source/External/SDL_image/libx86/SDL2_image.lib")
 
-Player::Player() : Module()
+Player::Player( ) : Module()
 {
 	name.Create("player");
 
@@ -31,7 +31,7 @@ Player::Player() : Module()
 	idleAnimR.PushBack({405,72,20,18});
 	idleAnimR.PushBack({ 405,72,20,18 });
 	idleAnimR.loop = true;
-	
+	idleAnimR.speed = 0.069f;
 
 	idleAnimL.PushBack({ 944,338,20,18 });
 	idleAnimL.PushBack({ 944,338,20,18 });
@@ -40,7 +40,7 @@ Player::Player() : Module()
 	idleAnimL.PushBack({ 971,338,20,18 });
 	idleAnimL.PushBack({ 971,338,20,18 });
 	idleAnimL.loop = true;
-	
+	idleAnimL.speed = 0.069f;
 
 	walkAnimR.PushBack({ 254,11,20,18 });
 	walkAnimR.PushBack({ 276,10,22,19 });
@@ -49,7 +49,7 @@ Player::Player() : Module()
 	walkAnimR.PushBack({ 342,11,18,18 });
 	walkAnimR.PushBack({ 361,11,20,18 });
 	walkAnimR.loop = true;
-	
+	walkAnimR.speed = 0.1f;
 
 	walkAnimL.PushBack({ 971,313,20,18 });
 	walkAnimL.PushBack({ 948,312,21,19 });
@@ -58,20 +58,21 @@ Player::Player() : Module()
 	walkAnimL.PushBack({ 886,314,19,18 });
 	walkAnimL.PushBack({ 867,313,19,18 });
 	walkAnimL.loop = true;
-
+	walkAnimL.speed = 0.1f;
 
 	jumpAnimR.PushBack({ 107,7,20,22 });
 	jumpAnimR.PushBack({ 130,14,24,15 });
 	jumpAnimR.PushBack({ 156,8,20,21 });
 	jumpAnimR.PushBack({ 8,11,21,19 });
 	jumpAnimR.loop = false;
-
+	jumpAnimR.speed = 0.080f;
 
 	jumpAnimL.PushBack({ 839,311,20,22 });
 	jumpAnimL.PushBack({ 812,318,24,15 });
 	jumpAnimL.PushBack({ 790,312,20,21 });
 	jumpAnimL.PushBack({ 944,338,20,18 });
 	jumpAnimL.loop = false;
+	jumpAnimL.speed = 0.080f;
 
 	PlayerDeathR.PushBack({37,101,24,24});
 
@@ -133,7 +134,6 @@ bool Player::Start()
 	dbjump = false;
 	jumped = 0;
 
-
 	return ret;
 }
 
@@ -144,9 +144,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt) {
 	bool ret = true;
-	float speed = 2*dt*0.06;
-
-
+	float speed = 2;
 	
 	if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) )
 	{
@@ -285,9 +283,9 @@ bool Player::Update(float dt) {
 		}
 
 		//PLAYER LIMITS
-		if (position.x > 1220)
+		if (position.x > 660)
 		{
-			position.x = 1220;
+			position.x = 660;
 		}
 		if (position.y < 0) {
 			position.y = 0;
@@ -350,14 +348,6 @@ bool Player::Update(float dt) {
 				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar1.GetCurrentFrame()), 0);
 			}
 		}
-
-		//Animations Speed
-		idleAnimR.speed = 0.069f * dt * 0.06;
-		walkAnimR.speed = 0.1f * dt * 0.06;
-		jumpAnimL.speed = 0.080f * dt * 0.06;
-		jumpAnimR.speed = 0.080f * dt * 0.06;
-		walkAnimL.speed = 0.1f * dt * 0.06;
-		idleAnimL.speed = 0.069f * dt * 0.06;
 
 	return ret;
 }
