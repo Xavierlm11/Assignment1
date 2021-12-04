@@ -11,6 +11,7 @@ enum State
 {
 	TITLE_SCREEN,
 	SCENE,
+	SCENE2,
 	GAME_OVER
 };
 
@@ -47,6 +48,8 @@ public:
 	bool startTitle;
 	bool LoseScreen;
 	bool silence;
+	bool level1;
+	bool level2;
 	
 	float scrollerX = 0;
 	float scrollerX1 = 0;
@@ -55,6 +58,11 @@ public:
 	bool CheckUsed1 = false;
 	bool Point2 = false;
 	bool CheckUsed2 = false;
+	bool Point3 = false;
+	bool CheckUsed3 = false;
+	SDL_Texture* NameCheckTex1 = nullptr;
+	SDL_Texture* NameCheckTex2 = nullptr;
+	SDL_Texture* NameCheckTex3 = nullptr;
 
 private:
 	//scenes
@@ -83,6 +91,7 @@ private:
 	Animation CheckPoint, CheckpointUsed;
 	Collider* Check1 = nullptr;
 	Collider* Check2 = nullptr;
+	Collider* Check3 = nullptr;
 	
 
 	SDL_Texture* pathTex;

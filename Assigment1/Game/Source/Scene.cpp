@@ -86,6 +86,9 @@ bool Scene::Start()
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
 	GalaxyTex= app->tex->Load("Assets/textures/GalaxyTex.png");
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
+	NameCheckTex1 = app->tex->Load("Assets/textures/Checkpoint1Tex.png");
+	NameCheckTex2 = app->tex->Load("Assets/textures/Checkpoint2Tex.png");
+	NameCheckTex3 = app->tex->Load("Assets/textures/Checkpoint3Tex.png");
 
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
@@ -94,10 +97,13 @@ bool Scene::Start()
 
 	//collider
 	Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
-	Check2 = app->coll->AddCollider({ 233, 22, 20,20 }, Collider::Type::CHECKPOINT2, this);
+	Check2 = app->coll->AddCollider({ 233, 26, 20,20 }, Collider::Type::CHECKPOINT2, this);
+	Check3 = app->coll->AddCollider({ 590, 218, 20,20 }, Collider::Type::CHECKPOINT3, this);
 
 	startTitle = true;
 	silence = true;
+	level1 = true;
+	level2 = false;
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
@@ -139,6 +145,16 @@ bool Scene::PreUpdate()
 			originSelected = true;
 		}
 	}
+
+	if (level1) {
+		level1 = false;
+		app->map->Load("level1.tmx");
+	}
+	if (level2) {
+		level2 = false;
+		app->map->Load("level2.tmx");
+	}
+
 	return true;
 }
 
@@ -186,16 +202,7 @@ bool Scene::Update(float dt)
 		{
 			app->map->CreateColliders();
 		}
-		//SCROLLER
-		/*scrollerX -= 0.2069;
-		scrollerX1 -= 0.2069;
 
-		if (scrollerX < -1550) {
-			scrollerX = 1600;
-		}
-		if (scrollerX1 < -1550) {
-			scrollerX1 = 1600;
-		}*/
 	
 		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
 		app->render->DrawTexture(GalaxyTex, scrollerX1, 0, NULL);
@@ -260,6 +267,11 @@ bool Scene::Update(float dt)
 			Point2 = false;
 			CheckUsed2 = true;
 		}
+		if (Point3 == true && CheckUsed3 == false) {
+			app->SaveGameRequest();
+			Point3 = false;
+			CheckUsed3 = true;
+		}
 
 		if (Point1 == false) {
 			app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckPoint.GetCurrentFrame()));
@@ -272,6 +284,25 @@ bool Scene::Update(float dt)
 		}
 		if (Point2 == true) {
 			app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckpointUsed.GetCurrentFrame()));
+		}
+		if (Point3 == false) {
+			app->render->DrawTexture(CheckpointTex, 590, 214, &(CheckPoint.GetCurrentFrame()));
+		}
+		if (Point3 == true) {
+			app->render->DrawTexture(CheckpointTex, 590, 214, &(CheckpointUsed.GetCurrentFrame()));
+		}
+
+		if (app->player->CheckActive1 == true) {
+			app->render->DrawTexture(NameCheckTex1, app->player->position.x - 20, app->player->position.y + 95, NULL);
+			app->player->CheckActive1 = false;
+		}
+		if (app->player->CheckActive2 == true) {
+			app->render->DrawTexture(NameCheckTex2, app->player->position.x - 20, app->player->position.y + 95, NULL);
+			app->player->CheckActive2 = false;
+		}
+		if (app->player->CheckActive3 == true) {
+			app->render->DrawTexture(NameCheckTex3, app->player->position.x - 20, app->player->position.y + 95, NULL);
+			app->player->CheckActive3 = false;
 		}
 		CheckPoint.Update();
 		CheckpointUsed.Update();
@@ -301,8 +332,25 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
 		}
 
-		break;
+		//if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+		//	app->coll->CleanUp();
+		//	app->map->CleanUp();
+		//	currentScene = SCENE2;
+		//	level2 = true;
+		//}		
 
+		break;
+		//case SCENE2:
+		//	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		//		app->coll->CleanUp();
+		//		app->map->CleanUp();
+		//		currentScene = SCENE;
+		//		level1 = true;	
+
+		//	}	
+		//	app->map->Draw();
+		//	app->map->CreateColliders();
+		//	break;
 	case GAME_OVER:
 
 		app->player->death = false;

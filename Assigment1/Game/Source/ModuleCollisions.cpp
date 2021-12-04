@@ -27,6 +27,7 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::PARED] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT1] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT2] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT3] = true;
 
 	//PLAYER RIGHT
 	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::PLAYER] = false;
@@ -95,6 +96,13 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::CHECKPOINT2][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::CHECKPOINT2][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::CHECKPOINT2][Collider::Type::CHECKPOINT2] = false;
+
+	//CHECKPOINT 3
+	matrix[Collider::Type::CHECKPOINT3][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::CHECKPOINT3][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::CHECKPOINT3][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::CHECKPOINT3][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::CHECKPOINT3][Collider::Type::CHECKPOINT3] = false;
 }
 
 // Destructor
@@ -205,7 +213,9 @@ void ModuleCollisions::DebugDraw()
 			case Collider::Type::CHECKPOINT2: // red
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
-			
+			case Collider::Type::CHECKPOINT3: // red
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			break;			
 		}
 	}
 }

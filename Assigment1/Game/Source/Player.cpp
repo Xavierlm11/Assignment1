@@ -415,10 +415,17 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT1)
 		{
 			app->scene->Point1 = true;
+			CheckActive1 = true;
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT2)
 		{
 			app->scene->Point2 = true;
+			CheckActive2 = true;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT3)
+		{
+			app->scene->Point3 = true;
+			CheckActive3 = true;
 		}
 	
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )

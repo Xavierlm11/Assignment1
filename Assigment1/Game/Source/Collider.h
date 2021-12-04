@@ -19,6 +19,7 @@ struct Collider
 		LAVA,
 		CHECKPOINT1,
 		CHECKPOINT2,
+		CHECKPOINT3,
 
 		MAX
 	};

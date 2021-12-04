@@ -57,6 +57,10 @@ public:
 	bool jumping;
 	int jumped;
 	bool dbjump;
+	bool CheckActive1 = false;
+	bool CheckActive2 = false;
+	bool CheckActive3 = false;
+
 public:
 	List<SDL_Texture*> player;
 
