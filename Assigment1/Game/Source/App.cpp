@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Pathfinding.h"
 #include "Audio.h"
 #include "Scene.h"
 #include "Map.h"
@@ -27,6 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	input = new Input();
 	tex = new Textures();
 	audio = new Audio();
+	pathfinding = new PathFinding();
 	scene = new Scene();
 	map = new Map();
 	player = new Player();
@@ -40,6 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(pathfinding);
 	AddModule(scene);
 	AddModule(map);
 	AddModule(player);

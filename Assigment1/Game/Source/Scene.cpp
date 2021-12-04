@@ -10,6 +10,8 @@
 #include "Defs.h"
 #include "Log.h"
 #include "ModuleCollisions.h"
+#include "PathFinding.h"
+
 
 Scene::Scene() : Module()
 {
@@ -71,7 +73,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 
-	app->map->Load("level1.tmx");
+	//app->map->Load("level1.tmx");
 	
 	/*app->map->CreateColliders();*/
 	
@@ -99,12 +101,44 @@ bool Scene::Start()
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
+
+	if (app->map->Load("level1.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+
+		if (app->map->CreateWalkabilityMap(w, h, &data)) app->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+	pathTex = app->tex->Load("Assets/maps/path2.png");
+	originTex = app->tex->Load("Assets/maps/x.png");
+
 	return true;
 }
 
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+
+	int mouseX, mouseY;
+	app->input->GetMousePosition(mouseX, mouseY);
+	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+	p = app->map->WorldToMap(p.x, p.y);
+
+	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		if (originSelected == true)
+		{
+			app->pathfinding->CreatePath(origin1, p);
+			originSelected = false;
+		}
+		else
+		{
+			origin1 = p;
+			originSelected = true;
+		}
+	}
 	return true;
 }
 
@@ -241,6 +275,31 @@ bool Scene::Update(float dt)
 		}
 		CheckPoint.Update();
 		CheckpointUsed.Update();
+
+
+		// L12b: Debug pathfinding
+		{int mouseX, mouseY;
+		app->input->GetMousePosition(mouseX, mouseY);
+		iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
+
+		app->input->GetMousePosition(mouseX, mouseY);
+		iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+		p = app->map->WorldToMap(p.x, p.y);
+		p = app->map->MapToWorld(p.x, p.y);
+
+		app->render->DrawTexture(pathTex, p.x, p.y);
+
+		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawTexture(pathTex, pos.x, pos.y);
+		}
+
+		iPoint originScreen = app->map->MapToWorld(origin1.x, origin1.y);
+		app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
+		}
 
 		break;
 

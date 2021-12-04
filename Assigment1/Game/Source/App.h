@@ -23,6 +23,7 @@ class Map;
 class Player;
 class ModuleCollisions;
 class ModuleEnemies;
+class PathFinding;
 
 class App
 {
@@ -92,6 +93,7 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	PathFinding* pathfinding;
 	Scene* scene;
 	Map* map;
 	Player* player;

@@ -145,6 +145,10 @@ public:
 
 	bool StartColliders();
 
+	// L12b: Create walkability map for pathfinding
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+
+
 private:
 
 	// L03: Methods to load all required map data

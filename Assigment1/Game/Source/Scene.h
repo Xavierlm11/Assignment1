@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "Point.h"
 struct SDL_Texture;
 
 
@@ -83,6 +84,13 @@ private:
 	Collider* Check1 = nullptr;
 	Collider* Check2 = nullptr;
 	
+
+	SDL_Texture* pathTex;
+	SDL_Texture* originTex;
+
+	// L12b: Debug pathfing
+	iPoint origin1;
+	bool originSelected = false;
 };
 
 #endif // __SCENE_H__
