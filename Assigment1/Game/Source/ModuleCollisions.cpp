@@ -24,7 +24,9 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::PLAYER][Collider::Type::LAVA] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::SUELO] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::PARED] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::PARED] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT1] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT2] = true;
 
 	//PLAYER RIGHT
 	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::PLAYER] = false;
@@ -79,6 +81,20 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYERHEAD][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::PLAYERHEAD][Collider::Type::PARED] = true;
 	matrix[Collider::Type::PLAYERHEAD][Collider::Type::SUELO] = false;
+
+	//CHECKPOINT 1
+	matrix[Collider::Type::CHECKPOINT1][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::CHECKPOINT1][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::CHECKPOINT1][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::CHECKPOINT1][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::CHECKPOINT1][Collider::Type::CHECKPOINT1] = false;
+
+	//CHECKPOINT 2
+	matrix[Collider::Type::CHECKPOINT2][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::CHECKPOINT2][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::CHECKPOINT2][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::CHECKPOINT2][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::CHECKPOINT2][Collider::Type::CHECKPOINT2] = false;
 }
 
 // Destructor
@@ -181,6 +197,12 @@ void ModuleCollisions::DebugDraw()
 			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 			case Collider::Type::LAVA: // red
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+			case Collider::Type::CHECKPOINT1: // red
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+			case Collider::Type::CHECKPOINT2: // red
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 			

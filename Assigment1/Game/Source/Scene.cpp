@@ -11,7 +11,7 @@
 #include "Log.h"
 #include "ModuleCollisions.h"
 
-Scene::Scene( ) : Module()
+Scene::Scene() : Module()
 {
 	name.Create("scene");
 	//death scene animation
@@ -22,8 +22,8 @@ Scene::Scene( ) : Module()
 
 	//Press Enter Anim
 	EnterStart.PushBack({ 0,0,0,0 });
-	EnterStart.PushBack({0,0,85,26});
-	EnterStart.PushBack({0,0,0,0});
+	EnterStart.PushBack({ 0,0,85,26 });
+	EnterStart.PushBack({ 0,0,0,0 });
 	EnterStart.PushBack({ 0,0,85,26 });
 	EnterStart.loop = true;
 	EnterStart.speed = 0.01f;
@@ -35,6 +35,23 @@ Scene::Scene( ) : Module()
 	intro.loop = false;
 	intro.speed = 0.01f;
 
+	CheckPoint.PushBack({ 0,1,20,26 });
+	CheckPoint.PushBack({ 22,1,20,26 });
+	CheckPoint.PushBack({ 44,1,20,26 });
+	CheckPoint.PushBack({ 66,1,20,26 });
+	CheckPoint.PushBack({ 90,1,20,26 });
+	CheckPoint.PushBack({ 112,1,20,26 });
+	CheckPoint.loop = true;
+	CheckPoint.speed = 0.15f;
+
+	CheckpointUsed.PushBack({ 1,39,20,26 });
+	CheckpointUsed.PushBack({ 24,39,20,26 });
+	CheckpointUsed.PushBack({ 46,39,20,26 });
+	CheckpointUsed.PushBack({ 68,39,20,26 });
+	CheckpointUsed.PushBack({ 92,39,20,26 });
+	CheckpointUsed.PushBack({ 114,39,20,26 });
+	CheckpointUsed.loop = true;
+	CheckpointUsed.speed = 0.15f;
 }
 
 // Destructor
@@ -56,7 +73,7 @@ bool Scene::Start()
 
 	app->map->Load("level1.tmx");
 	
-	app->map->CreateColliders();
+	/*app->map->CreateColliders();*/
 	
 	//Textures
 	bgpa = app->tex->Load("Assets/textures/BackgroundParallax.png");
@@ -66,11 +83,16 @@ bool Scene::Start()
 	EnterStartTex = app->tex->Load("Assets/textures/PressEnter.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
 	GalaxyTex= app->tex->Load("Assets/textures/GalaxyTex.png");
+	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
 
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
+
+	//collider
+	Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
+	Check2 = app->coll->AddCollider({ 233, 22, 20,20 }, Collider::Type::CHECKPOINT2, this);
 
 	startTitle = true;
 	silence = true;
@@ -107,25 +129,28 @@ bool Scene::Update(float dt)
 			app->render->camera.x = 0;
 
 			app->player->position.x = 50;
-			app->player->position.y = 20;
+			app->player->position.y = 15;
 			
 
 			currentScene = SCENE;
 			
 		}
 
-		
-		
 		app->render->DrawTexture(bgTexture, 0, 0, &(intro.GetCurrentFrame()));
 		app->render->DrawTexture(EnterStartTex,80, 140, &(EnterStart.GetCurrentFrame()));
 		
-
 		break;
 	case SCENE:
+	
 		if (startTitle)
 		{
 			startTitle = false;
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
+		}
+
+		if (app->scene->currentScene == SCENE)
+		{
+			app->map->CreateColliders();
 		}
 		//SCROLLER
 		/*scrollerX -= 0.2069;
@@ -189,11 +214,38 @@ bool Scene::Update(float dt)
 			app->player->position.y = 20;
 			app->player->position.x = 50;
 		}
+
+		//Checkpoints
+		if (Point1 == true && CheckUsed1 == false) {
+			app->SaveGameRequest();
+			Point1 = false;
+			CheckUsed1 = true;
+		}
+		if (Point2 == true && CheckUsed2 == false) {
+			app->SaveGameRequest();
+			Point2 = false;
+			CheckUsed2 = true;
+		}
+
+		if (Point1 == false) {
+			app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckPoint.GetCurrentFrame()));
+		}
+		if (Point1 == true) {
+			app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckpointUsed.GetCurrentFrame()));
+		}
+		if (Point2 == false) {
+			app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckPoint.GetCurrentFrame()));
+		}
+		if (Point2 == true) {
+			app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckpointUsed.GetCurrentFrame()));
+		}
+		CheckPoint.Update();
+		CheckpointUsed.Update();
+
 		break;
 
 	case GAME_OVER:
 
-		
 		app->player->death = false;
 		app->player->position.y = 20000;
 		app->player->position.x = 20000;
@@ -213,16 +265,14 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			startTitle = true;
 			currentScene = SCENE;
-			app->render->camera.y = 0;
-			app->render->camera.x = 0;
-			app->player->position.y = 20;
-			app->player->position.x = 50;
-			
+			/*app->render->camera.y = 0;
+			app->render->camera.x = 0;*/
+			//app->player->position.y = 20;
+			//app->player->position.x = 50;
+			app->LoadGameRequest();
 		}
 
 		break;
-		
-
 	}
 
 	return true;

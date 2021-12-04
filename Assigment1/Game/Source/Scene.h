@@ -50,6 +50,11 @@ public:
 	float scrollerX = 0;
 	float scrollerX1 = 0;
 
+	bool Point1 = false;
+	bool CheckUsed1 = false;
+	bool Point2 = false;
+	bool CheckUsed2 = false;
+
 private:
 	//scenes
 	SDL_Texture* bgTexture;
@@ -64,9 +69,6 @@ private:
 	SDL_Texture* PressEnterTex;
 	SDL_Texture* EnterStartTex;
 	SDL_Texture* GalaxyTex;
-
-	
-
 	//scenes animations
 	Animation Press;
 	Animation intro;
@@ -74,6 +76,12 @@ private:
 	
 	//Fx
 	uint wasted=0;
+
+	//CheckPoint
+	SDL_Texture* CheckpointTex = nullptr;
+	Animation CheckPoint, CheckpointUsed;
+	Collider* Check1 = nullptr;
+	Collider* Check2 = nullptr;
 	
 };
 

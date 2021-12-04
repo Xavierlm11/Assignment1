@@ -6,9 +6,9 @@
 	<audio />
 	<scene />
 	<enemy>
-		<enemypos x="550" y="154" />
+		<enemypos x="10" y="10" />
 	</enemy>
 	<renderer>
-		<position x="510" y="195" />
+		<position x="63" y="245" />
 	</renderer>
 </game_state>

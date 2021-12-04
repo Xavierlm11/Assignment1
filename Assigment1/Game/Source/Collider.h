@@ -17,6 +17,8 @@ struct Collider
 		SUELO,
 		PARED,
 		LAVA,
+		CHECKPOINT1,
+		CHECKPOINT2,
 
 		MAX
 	};

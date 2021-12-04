@@ -3,6 +3,7 @@
 #include "Textures.h"
 #include "Input.h"
 #include "Player.h"
+#include "Scene.h"
 #include "Animation.h"
 #include "Audio.h"
 #include "ModuleCollisions.h"
@@ -144,7 +145,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt) {
 	bool ret = true;
-	float speed = 2;
+	float speed = 2*dt*0.09;
 	
 	if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) )
 	{
@@ -410,6 +411,14 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYERLEFT && (c2->type == Collider::Type::PARED || c2->type == Collider::Type::SUELO) )
 		{
 			sidesL = true;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT1)
+		{
+			app->scene->Point1 = true;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT2)
+		{
+			app->scene->Point2 = true;
 		}
 	
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )
