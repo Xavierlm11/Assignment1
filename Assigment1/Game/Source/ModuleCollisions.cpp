@@ -103,6 +103,15 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::CHECKPOINT3][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::CHECKPOINT3][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::CHECKPOINT3][Collider::Type::CHECKPOINT3] = false;
+
+	//AIR
+	matrix[Collider::Type::AIR][Collider::Type::SUELO] = false;
+	matrix[Collider::Type::AIR][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::AIR][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::AIR][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::AIR][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::AIR][Collider::Type::LAVA] = false;
+	matrix[Collider::Type::AIR][Collider::Type::PARED] = false;
 }
 
 // Destructor
@@ -215,7 +224,10 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::CHECKPOINT3: // red
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
-			break;			
+			break;
+			case Collider::Type::AIR: // red
+			app->render->DrawRectangle(colliders[i]->rect, 0, 200,20, alpha);
+			break;
 		}
 	}
 }

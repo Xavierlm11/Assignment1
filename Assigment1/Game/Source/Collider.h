@@ -17,6 +17,7 @@ struct Collider
 		SUELO,
 		PARED,
 		LAVA,
+		AIR,
 		CHECKPOINT1,
 		CHECKPOINT2,
 		CHECKPOINT3,

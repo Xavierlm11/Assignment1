@@ -1,7 +1,7 @@
 #ifndef __MODULE_COLLISIONS_H__
 #define __MODULE_COLLISIONS_H__
 
-#define MAX_COLLIDERS 3000
+#define MAX_COLLIDERS 2000
 
 #include "Module.h"
 #include "Collider.h"
@@ -53,4 +53,4 @@ private:
 	bool debug = false;
 };
 
-#endif // __MODULE_COLLISIONS_H__
+#endif // __MODULE_COLLISIONS_H

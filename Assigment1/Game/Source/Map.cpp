@@ -543,6 +543,38 @@ void Map::CreateColliders() {
 			}
 
 		}
+		//air
+		if (mapLayerItem->data->properties.GetProperty("air") == 1) {
+			for (int x = 0; x < mapLayerItem->data->width; x++) {
+				for (int y = 0; y < mapLayerItem->data->height; y++) {
+
+					int gid = mapLayerItem->data->Get(x, y);
+
+
+					if (gid > 0) {
+
+
+						//now we always use the firt tileset in the list
+						TileSet* tileset = mapData.tilesets.start->data;
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
+
+						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::AIR, this);
+						i++;
+
+
+
+					}
+				}
+			}
+
+		}
 		mapLayerItem = mapLayerItem->next;
 	}
 }
@@ -557,7 +589,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	{
 		MapLayer* layer = item->data;
 
-		if (layer->properties.GetProperty("collider") == 1)
+		if (layer->properties.GetProperty("air") == 1)
 			continue;
 
 		uchar* map = new uchar[layer->width * layer->height];
