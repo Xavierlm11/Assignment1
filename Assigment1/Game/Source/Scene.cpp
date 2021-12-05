@@ -75,7 +75,7 @@ bool Scene::Start()
 
 	//app->map->Load("level1.tmx");
 	
-	/*app->map->CreateColliders();*/
+	//app->map->CreateColliders();
 	
 	//Textures
 	bgpa = app->tex->Load("Assets/textures/BackgroundParallax.png");
@@ -89,6 +89,9 @@ bool Scene::Start()
 	NameCheckTex1 = app->tex->Load("Assets/textures/Checkpoint1Tex.png");
 	NameCheckTex2 = app->tex->Load("Assets/textures/Checkpoint2Tex.png");
 	NameCheckTex3 = app->tex->Load("Assets/textures/Checkpoint3Tex.png");
+	Teleport1Tex= app->tex->Load("Assets/textures/TeleportTo1Tex.png");
+	Teleport2Tex = app->tex->Load("Assets/textures/TeleportTo2Tex.png");
+	Teleport3Tex = app->tex->Load("Assets/textures/TeleportTo3Tex.png");
 
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
@@ -98,7 +101,7 @@ bool Scene::Start()
 	//collider
 	Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
 	Check2 = app->coll->AddCollider({ 233, 26, 20,20 }, Collider::Type::CHECKPOINT2, this);
-	Check3 = app->coll->AddCollider({ 590, 218, 20,20 }, Collider::Type::CHECKPOINT3, this);
+	Check3 = app->coll->AddCollider({ 590, 220, 20,20 }, Collider::Type::CHECKPOINT3, this);
 
 	startTitle = true;
 	silence = true;
@@ -198,10 +201,10 @@ bool Scene::Update(float dt)
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 		}
 
-		if (app->scene->currentScene == SCENE)
-		{
-			app->map->CreateColliders();
-		}
+		//if (app->scene->currentScene == SCENE)
+		//{
+		//	app->map->CreateColliders();
+		//}
 
 	
 		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
@@ -209,8 +212,8 @@ bool Scene::Update(float dt)
 
 		//app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
 
-		{int speed = 8; 
-		
+		{int speed = 8;
+
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
 
@@ -218,20 +221,20 @@ bool Scene::Update(float dt)
 			app->SaveGameRequest();
 
 
-		
-		//CAMERA MOVEMENT
-		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
-			app->render->camera.y += speed;
+		}
+		////CAMERA MOVEMENT
+		//if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
+		//	app->render->camera.y += speed;
 
-		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
-			app->render->camera.y -= speed;
+		//if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
+		//	app->render->camera.y -= speed;
 
-		if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
-			app->render->camera.x += speed;
+		//if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
+		//	app->render->camera.x += speed;
 
-		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
-			app->render->camera.x -= speed;
-         }
+		//if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
+		//	app->render->camera.x -= speed;
+  //       }
 		
 		// Draw map
 		app->map->Draw();
@@ -286,26 +289,110 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckpointUsed.GetCurrentFrame()));
 		}
 		if (Point3 == false) {
-			app->render->DrawTexture(CheckpointTex, 590, 214, &(CheckPoint.GetCurrentFrame()));
+			app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckPoint.GetCurrentFrame()));
 		}
 		if (Point3 == true) {
-			app->render->DrawTexture(CheckpointTex, 590, 214, &(CheckpointUsed.GetCurrentFrame()));
+			app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckpointUsed.GetCurrentFrame()));
 		}
 
 		if (app->player->CheckActive1 == true) {
-			app->render->DrawTexture(NameCheckTex1, app->player->position.x - 20, app->player->position.y + 95, NULL);
+			app->render->DrawTexture(NameCheckTex1, app->player->position.x - 20, app->player->position.y + 100, NULL);
 			app->player->CheckActive1 = false;
 		}
 		if (app->player->CheckActive2 == true) {
-			app->render->DrawTexture(NameCheckTex2, app->player->position.x - 20, app->player->position.y + 95, NULL);
+			app->render->DrawTexture(NameCheckTex2, app->player->position.x - 20, app->player->position.y + 100, NULL);
 			app->player->CheckActive2 = false;
 		}
 		if (app->player->CheckActive3 == true) {
-			app->render->DrawTexture(NameCheckTex3, app->player->position.x - 20, app->player->position.y + 95, NULL);
+			app->render->DrawTexture(NameCheckTex3, app->player->position.x - 20, app->player->position.y + 100, NULL);
 			app->player->CheckActive3 = false;
 		}
 		CheckPoint.Update();
 		CheckpointUsed.Update();
+
+		if (ActiveTeleport1 == true) { //TP 1
+			if (tps1 == 1) {
+				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (tps1 == 2) {
+				app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+				tps1 += 1;
+			}
+			if (tps1 == 3) {
+				tps1 = 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 1&& Point2==true) {//Checkpoint 2 from 1
+				app->player->position.x = 233;
+				app->player->position.y = 5;
+				ActiveTeleport1 = false;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 2 && Point3 == true) {//Checkpoint 3 from 1
+				app->player->position.x = 590;
+				app->player->position.y = 200;
+				ActiveTeleport1 = false;
+			}
+			ActiveTeleport1 = false;
+		}
+
+		if (ActiveTeleport2 == true) { //TP 2
+			if (tps2 == 1) {
+				app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (tps2 == 2) {
+				app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+				tps2 += 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+				tps2 -= 1;
+			}
+			if (tps2 == 3||tps2==0) {
+				tps2 = 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 1 && Point1 == true) {//Checkpoint 1 from 2
+				app->player->position.x = 70;
+				app->player->position.y = 240;
+				ActiveTeleport2 = false;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 2 && Point3 == true) {//Checkpoint 3 from 2
+				app->player->position.x = 590;
+				app->player->position.y = 200;
+				ActiveTeleport2 = false;
+			}
+			ActiveTeleport2 = false;
+		}
+
+		if (ActiveTeleport3 == true) { //TP 3
+			if (tps3 == 1) {
+				app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (tps3 == 2) {
+				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+				tps3 += 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+				tps3 -= 1;
+			}
+			if (tps3 == 3||tps3==0) {
+				tps3 = 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 1 && Point1 == true) {//Checkpoint 1 from 3
+				app->player->position.x = 70;
+				app->player->position.y = 240;
+				ActiveTeleport3 = false;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 2 && Point2 == true) {//Checkpoint 2 from 3
+				app->player->position.x = 233;
+				app->player->position.y = 5;
+				ActiveTeleport3 = false;
+			}
+			ActiveTeleport3 = false;
+		}
 
 
 		// L12b: Debug pathfinding
@@ -331,6 +418,8 @@ bool Scene::Update(float dt)
 		iPoint originScreen = app->map->MapToWorld(origin1.x, origin1.y);
 		app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
 		}
+
+		
 
 		//if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
 		//	app->coll->CleanUp();

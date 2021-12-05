@@ -422,6 +422,9 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 bool Map::Start() {
 
+
+	CreateColliders();
+	
 	
 	return true;
 }

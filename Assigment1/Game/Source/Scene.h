@@ -60,9 +60,13 @@ public:
 	bool CheckUsed2 = false;
 	bool Point3 = false;
 	bool CheckUsed3 = false;
-	SDL_Texture* NameCheckTex1 = nullptr;
-	SDL_Texture* NameCheckTex2 = nullptr;
-	SDL_Texture* NameCheckTex3 = nullptr;
+
+	bool ActiveTeleport1 = false;
+	int tps1 = 1;
+	bool ActiveTeleport2 = false;
+	int tps2 = 1;
+	bool ActiveTeleport3 = false;
+	int tps3 = 1;
 
 private:
 	//scenes
@@ -92,6 +96,14 @@ private:
 	Collider* Check1 = nullptr;
 	Collider* Check2 = nullptr;
 	Collider* Check3 = nullptr;
+	SDL_Texture* NameCheckTex1 = nullptr;
+	SDL_Texture* NameCheckTex2 = nullptr;
+	SDL_Texture* NameCheckTex3 = nullptr;
+	//Teleports
+	SDL_Texture* Teleport1Tex = nullptr;
+	SDL_Texture* Teleport2Tex = nullptr;
+	SDL_Texture* Teleport3Tex = nullptr;
+	
 	
 
 	SDL_Texture* pathTex;

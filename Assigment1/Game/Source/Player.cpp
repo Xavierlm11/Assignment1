@@ -416,18 +416,23 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			app->scene->Point1 = true;
 			CheckActive1 = true;
+			app->scene->ActiveTeleport1 = true;
+			app->scene->tps1 == 1;
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT2)
 		{
 			app->scene->Point2 = true;
 			CheckActive2 = true;
+			app->scene->ActiveTeleport2 = true;
+			app->scene->tps2 == 1;
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT3)
 		{
 			app->scene->Point3 = true;
 			CheckActive3 = true;
+			app->scene->ActiveTeleport3 = true;
+			app->scene->tps3 == 1;
 		}
-	
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )
 		{
 			LOG("MORISTE");
