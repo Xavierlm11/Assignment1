@@ -85,6 +85,8 @@ bool Scene::Start()
 	EnterStartTex = app->tex->Load("Assets/textures/PressEnter.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
 	GalaxyTex= app->tex->Load("Assets/textures/GalaxyTex.png");
+
+	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
 	NameCheckTex1 = app->tex->Load("Assets/textures/Checkpoint1Tex.png");
 	NameCheckTex2 = app->tex->Load("Assets/textures/Checkpoint2Tex.png");
@@ -93,15 +95,23 @@ bool Scene::Start()
 	Teleport2Tex = app->tex->Load("Assets/textures/TeleportTo2Tex.png");
 	Teleport3Tex = app->tex->Load("Assets/textures/TeleportTo3Tex.png");
 
+	//Items
+	ItemHealth1Tex = app->tex->Load("Assets/textures/CakeTex.png");
+	ItemHealth2Tex = app->tex->Load("Assets/textures/PeachTex.png");
+
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
 
-	//collider
+	//Checkpoints colliders
 	Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
 	Check2 = app->coll->AddCollider({ 233, 26, 20,20 }, Collider::Type::CHECKPOINT2, this);
 	Check3 = app->coll->AddCollider({ 590, 220, 20,20 }, Collider::Type::CHECKPOINT3, this);
+
+	//Item Collider
+	Item1 = app->coll->AddCollider({ 460, 214, 14,14 }, Collider::Type::ITEM1, this);
+	Item2 = app->coll->AddCollider({ 200, 287, 14,14 }, Collider::Type::ITEM2, this);
 
 	startTitle = true;
 	silence = true;
@@ -186,6 +196,8 @@ bool Scene::Update(float dt)
 			
 
 			currentScene = SCENE;
+
+			app->SaveGameRequest();
 			
 		}
 
@@ -394,6 +406,13 @@ bool Scene::Update(float dt)
 			ActiveTeleport3 = false;
 		}
 
+		//Draw Items
+		if (app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] == true) {
+			app->render->DrawTexture(ItemHealth1Tex, 460, 214, NULL);
+		}
+		if (app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] == true) {
+			app->render->DrawTexture(ItemHealth2Tex, 200, 285, NULL);
+		}
 
 		// L12b: Debug pathfinding
 		{int mouseX, mouseY;
@@ -489,6 +508,24 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	return true;
+}
+
+// Load / Save
+bool Scene::LoadState(pugi::xml_node& data) {
+	CheckUsed1 = data.child("teleport").attribute("check1").as_bool();
+	CheckUsed2 = data.child("teleport").attribute("check2").as_bool();
+	CheckUsed3 = data.child("teleport").attribute("check3").as_bool();
+
+	return true;
+}
+bool Scene::SaveState(pugi::xml_node& data) const {
+	pugi::xml_node teleports = data.child("teleport");
+
+	teleports.attribute("check1").set_value(CheckUsed1);
+	teleports.attribute("check2").set_value(CheckUsed2);
+	teleports.attribute("check3").set_value(CheckUsed3);
 
 	return true;
 }

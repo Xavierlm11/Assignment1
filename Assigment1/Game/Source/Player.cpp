@@ -251,6 +251,16 @@ bool Player::Update(float dt) {
 	//}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
 	{
+		if (PlayerPosition == false) {
+			jumpAnimL.Reset();
+			currentAnimation = &jumpAnimL;
+		}
+		if (PlayerPosition == true)
+		{
+			jumpAnimR.Reset();
+			currentAnimation = &jumpAnimR;
+		}
+
 		jumping = true;
 		dbjump = true;
 	}
@@ -348,6 +358,14 @@ bool Player::Update(float dt) {
 			if (PlayerLives == 1) {
 				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar1.GetCurrentFrame()), 0);
 			}
+			if (item1Used == true && PlayerLives < 5) {
+				PlayerLives += 1;
+				item1Used = false;
+			}
+			if (item2Used == true && PlayerLives < 5) {
+				PlayerLives += 1;
+				item2Used = false;
+			}
 		}
 
 	return ret;
@@ -432,6 +450,27 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			CheckActive3 = true;
 			app->scene->ActiveTeleport3 = true;
 			app->scene->tps3 == 1;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM1)
+		{
+			item1Used = true;
+			if (PlayerLives < 5) {
+				app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] = false;
+			}
+			if (PlayerLives >= 5) {
+				item1Used = false;
+			}
+			
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM2)
+		{
+			item2Used = true;
+			if (PlayerLives < 5) {
+				app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] = false;
+			}
+			if (PlayerLives >= 5) {
+				item1Used = false;
+			}
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )
 		{

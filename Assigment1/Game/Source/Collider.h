@@ -21,6 +21,8 @@ struct Collider
 		CHECKPOINT1,
 		CHECKPOINT2,
 		CHECKPOINT3,
+		ITEM1,
+		ITEM2,
 
 		MAX
 	};

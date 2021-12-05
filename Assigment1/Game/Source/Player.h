@@ -61,6 +61,9 @@ public:
 	bool CheckActive2 = false;
 	bool CheckActive3 = false;
 
+	bool item1Used = false;
+	bool item2Used = false;
+
 public:
 	List<SDL_Texture*> player;
 

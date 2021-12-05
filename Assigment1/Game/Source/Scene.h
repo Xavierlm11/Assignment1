@@ -43,6 +43,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Load / Save
+	bool LoadState(pugi::xml_node& data);
+	bool SaveState(pugi::xml_node& data) const;
+
 	State currentScene;
 
 	bool startTitle;
@@ -67,6 +71,9 @@ public:
 	int tps2 = 1;
 	bool ActiveTeleport3 = false;
 	int tps3 = 1;
+
+	SDL_Texture* ItemHealth1Tex = nullptr;
+	SDL_Texture* ItemHealth2Tex = nullptr;
 
 private:
 	//scenes
@@ -103,6 +110,8 @@ private:
 	SDL_Texture* Teleport1Tex = nullptr;
 	SDL_Texture* Teleport2Tex = nullptr;
 	SDL_Texture* Teleport3Tex = nullptr;
+	Collider* Item1 = nullptr;
+	Collider* Item2 = nullptr;
 	
 	
 

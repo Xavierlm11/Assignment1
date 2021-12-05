@@ -4,11 +4,13 @@
 	<window />
 	<textures />
 	<audio />
-	<scene />
+	<scene>
+		<teleport check1="false" check2="false" check3="false" />
+	</scene>
 	<enemy>
 		<enemypos x="10" y="10" />
 	</enemy>
 	<renderer>
-		<position x="260" y="9" />
+		<position x="50" y="18" />
 	</renderer>
 </game_state>
