@@ -24,6 +24,9 @@ struct Collider
 		ITEM1,
 		ITEM2,
 		KEY,
+		COIN1,
+		COIN2,
+		COIN3,
 
 		MAX
 	};

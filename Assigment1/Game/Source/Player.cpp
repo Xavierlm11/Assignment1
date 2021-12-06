@@ -125,7 +125,7 @@ bool Player::Start()
 	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
 	colliderPlayerR = app->coll->AddCollider({ position.x + 16,position.y - 16, 5,9 }, Collider::Type::PLAYERRIGHT, this);
 	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,9 }, Collider::Type::PLAYERLEFT, this);
-	colliderHead = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYERHEAD, this);
+	colliderHead = app->coll->AddCollider({ position.x,position.y, 8,5 }, Collider::Type::PLAYERHEAD, this);
 
 	//colliderplayerR y colliderplayerL solo colisionan para las paredes
 
@@ -386,7 +386,7 @@ bool Player::PostUpdate()
 	colliderPlayer->SetPos(position.x - 8, position.y + 33);
 	colliderPlayerR->SetPos(position.x + 4, position.y + 26);
 	colliderPlayerL->SetPos(position.x - 9, position.y + 26);
-	colliderHead->SetPos(position.x -8, position.y + 21);
+	colliderHead->SetPos(position.x-4, position.y + 26);
 	Uint8 alpha = 80;
 	
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();	
@@ -496,6 +496,27 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->audio->PlayFx(GetKey);
 			}
 			Key = true;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN1)
+		{
+			if (app->scene->CoinUsed1 == false) {
+				app->audio->PlayFx(GetCheckpoint);
+			}
+			app->scene->CoinUsed1 = true;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN2)
+		{
+			if (app->scene->CoinUsed2 == false) {
+				app->audio->PlayFx(GetCheckpoint);
+			}
+			app->scene->CoinUsed2 = true;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN3)
+		{
+			if (app->scene->CoinUsed3 == false) {
+				app->audio->PlayFx(GetCheckpoint);
+			}
+			app->scene->CoinUsed3 = true;
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )
 		{

@@ -76,6 +76,10 @@ public:
 	SDL_Texture* ItemHealth2Tex = nullptr;
 	SDL_Texture* YellowKeyTex = nullptr;
 
+	bool CoinUsed1 = false;
+	bool CoinUsed2 = false;
+	bool CoinUsed3 = false;
+
 private:
 	//scenes
 	SDL_Texture* bgTexture;
@@ -99,7 +103,6 @@ private:
 	uint wasted=0;
 	uint teleportFx = 0;
 	
-
 	//CheckPoint
 	SDL_Texture* CheckpointTex = nullptr;
 	Animation CheckPoint, CheckpointUsed;
@@ -122,6 +125,12 @@ private:
 	Animation KeyAnim;
 	Collider* KeyColl = nullptr;
 
+	//Coins
+	SDL_Texture* CoinTex = nullptr;
+	Animation CoinAnim, GetCoin;
+	Collider* CoinColl1 = nullptr;
+	Collider* CoinColl2 = nullptr;
+	Collider* CoinColl3 = nullptr;
 	
 	SDL_Texture* pathTex;
 	SDL_Texture* originTex;

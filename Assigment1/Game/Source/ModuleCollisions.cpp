@@ -130,6 +130,24 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::KEY][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::KEY][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::KEY][Collider::Type::PLAYERHEAD] = false;
+
+	//COIN1
+	matrix[Collider::Type::COIN1][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::COIN1][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::COIN1][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::COIN1][Collider::Type::PLAYERHEAD] = false;
+
+	//COIN2
+	matrix[Collider::Type::COIN2][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::COIN2][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::COIN2][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::COIN2][Collider::Type::PLAYERHEAD] = false;
+
+	//COIN3
+	matrix[Collider::Type::COIN3][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::COIN3][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::COIN3][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::COIN3][Collider::Type::PLAYERHEAD] = false;
 }
 
 // Destructor
@@ -254,6 +272,15 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::KEY: // red
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 200, alpha);
+			break;
+			case Collider::Type::COIN1: // red
+			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 200, alpha);
+			break;
+			case Collider::Type::COIN2: // red
+			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 200, alpha);
+			break;
+			case Collider::Type::COIN3: // red
+			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 200, alpha);
 			break;
 		}
 	}

@@ -67,6 +67,22 @@ Scene::Scene() : Module()
 	KeyAnim.PushBack({ 99,1,10,19 });
 	KeyAnim.loop = true;
 	KeyAnim.speed = 0.1f;
+
+	//Coin
+	CoinAnim.PushBack({1,1,20,20});
+	CoinAnim.PushBack({ 25,1,20,20 });
+	CoinAnim.PushBack({ 47,1,20,20 });
+	CoinAnim.PushBack({ 69,1,20,20 });
+	CoinAnim.PushBack({ 93,1,20,20 });
+	CoinAnim.PushBack({ 117,1,20,20 });
+	CoinAnim.PushBack({ 139,1,20,20 });
+	CoinAnim.PushBack({ 162,1,20,20 });
+	CoinAnim.PushBack({ 186,1,20,20 });
+	CoinAnim.loop = true;
+	CoinAnim.speed = 0.15f;
+
+	GetCoin.PushBack({ 219,2,13,12 });
+	GetCoin.loop = false;
 }
 
 // Destructor
@@ -114,6 +130,9 @@ bool Scene::Start()
 	KeyTex = app->tex->Load("Assets/textures/KeyTex.png");
 	YellowKeyTex = app->tex->Load("Assets/textures/YellowKeyTex.png");
 
+	//Coins
+	CoinTex = app->tex->Load("Assets/textures/CoinTex.png");
+
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 	teleportFx = app->audio->LoadFx("Assets/audio/fx/TeleportFx.wav");
@@ -130,6 +149,11 @@ bool Scene::Start()
 	Item1 = app->coll->AddCollider({ 460, 214, 14,14 }, Collider::Type::ITEM1, this);
 	Item2 = app->coll->AddCollider({ 200, 287, 14,14 }, Collider::Type::ITEM2, this);
 	KeyColl= app->coll->AddCollider({ 206, 140, 14,14 }, Collider::Type::KEY, this);
+
+	//Coin Collider
+	CoinColl1= app->coll->AddCollider({ 20,175, 14,14 }, Collider::Type::COIN1, this);
+	CoinColl2 = app->coll->AddCollider({ 540, 135, 14,14 }, Collider::Type::COIN2, this);
+	CoinColl3 = app->coll->AddCollider({ 293, 178, 14,14 }, Collider::Type::COIN3, this);
 
 	startTitle = true;
 	silence = true;
@@ -430,6 +454,7 @@ bool Scene::Update(float dt)
 			ActiveTeleport3 = false;
 		}
 
+		//Key
 		if (app->player->Key == false) {
 			app->render->DrawTexture(KeyTex, 206, 140, &(KeyAnim.GetCurrentFrame()));
 		}
@@ -437,6 +462,20 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(YellowKeyTex, app->player->position.x+106, app->player->position.y - 54, NULL);
 		}
 		KeyAnim.Update();
+
+		//Coins
+		if (CoinUsed1 == false) {
+				app->render->DrawTexture(CoinTex, 18, 172, &(CoinAnim.GetCurrentFrame()));
+		}
+		if (CoinUsed2 == false) {
+			app->render->DrawTexture(CoinTex, 540, 135, &(CoinAnim.GetCurrentFrame()));
+		}
+		if (CoinUsed3 == false) {
+			app->render->DrawTexture(CoinTex, 290, 174, &(CoinAnim.GetCurrentFrame()));
+		}
+		CoinAnim.Update();
+
+		app->render->DrawTexture(CoinTex, app->player->position.x + 90 , app->player->position.y -54 , &(GetCoin.GetCurrentFrame()));
 
 		//Draw Items
 		if (app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] == true) {
