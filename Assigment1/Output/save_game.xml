@@ -5,12 +5,12 @@
 	<textures />
 	<audio />
 	<scene>
-		<teleport check1="true" check2="false" check3="false" />
+		<teleport check1="false" check2="false" check3="false" />
 	</scene>
 	<enemy>
 		<enemypos x="10" y="10" />
 	</enemy>
 	<renderer>
-		<position x="66" y="243" />
+		<position x="50" y="18" />
 	</renderer>
 </game_state>

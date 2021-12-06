@@ -113,6 +113,7 @@ bool Player::Start()
 	GetItem = app->audio->LoadFx("Assets/audio/fx/GetItemFx.wav");
 	GetCheckpoint = app->audio->LoadFx("Assets/audio/fx/GetCheckpointFx.wav");
 	GetKey = app->audio->LoadFx("Assets/audio/fx/GetKeyFx.wav");
+	GetCoin = app->audio->LoadFx("Assets/audio/fx/GetCoinFx.wav");
 
 	currentAnimation = &idleAnimR; //player start with idle anim
 
@@ -500,21 +501,28 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN1)
 		{
 			if (app->scene->CoinUsed1 == false) {
-				app->audio->PlayFx(GetCheckpoint);
+
+				app->coll->matrix[Collider::Type::COIN1][Collider::Type::PLAYER] = false;
+				Money += 1;
+				app->audio->PlayFx(GetCoin);
 			}
 			app->scene->CoinUsed1 = true;
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN2)
 		{
 			if (app->scene->CoinUsed2 == false) {
-				app->audio->PlayFx(GetCheckpoint);
+				app->coll->matrix[Collider::Type::COIN2][Collider::Type::PLAYER] = false;
+				Money += 1;
+				app->audio->PlayFx(GetCoin);
 			}
 			app->scene->CoinUsed2 = true;
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN3)
 		{
 			if (app->scene->CoinUsed3 == false) {
-				app->audio->PlayFx(GetCheckpoint);
+				app->coll->matrix[Collider::Type::COIN3][Collider::Type::PLAYER] = false;
+				Money += 1;
+				app->audio->PlayFx(GetCoin);
 			}
 			app->scene->CoinUsed3 = true;
 		}

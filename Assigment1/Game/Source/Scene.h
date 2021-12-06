@@ -127,7 +127,7 @@ private:
 
 	//Coins
 	SDL_Texture* CoinTex = nullptr;
-	Animation CoinAnim, GetCoin;
+	Animation CoinAnim, GetCoin1, GetCoin2, GetCoin3;
 	Collider* CoinColl1 = nullptr;
 	Collider* CoinColl2 = nullptr;
 	Collider* CoinColl3 = nullptr;

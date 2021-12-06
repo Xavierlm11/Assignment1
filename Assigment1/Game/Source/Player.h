@@ -66,6 +66,9 @@ public:
 
 	bool Key = false;
 
+	int Money = 0;
+	uint GetCoin = 0;
+
 	//Player Lives
 	int PlayerLives = 5;
 
