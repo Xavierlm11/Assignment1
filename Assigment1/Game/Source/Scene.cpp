@@ -157,7 +157,6 @@ bool Scene::Start()
 
 	startTitle = true;
 	silence = true;
-	level1 = true;
 	level2 = false;
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -174,7 +173,7 @@ bool Scene::Start()
 	}
 	pathTex = app->tex->Load("Assets/maps/cuad.png");
 	originTex = app->tex->Load("Assets/maps/a.png");
-
+	//app->map->CreateColliders();
 	return true;
 }
 
@@ -202,12 +201,16 @@ bool Scene::PreUpdate()
 	}
 
 	if (level1) {
-		level1 = false;
 		app->map->Load("level1.tmx");
+		
+		level1 = false;
+		
 	}
 	if (level2) {
-		level2 = false;
 		app->map->Load("level2.tmx");
+		app->map->CreateColliders();
+		level2 = false;
+		
 	}
 
 	return true;
@@ -248,10 +251,13 @@ bool Scene::Update(float dt)
 		
 		break;
 	case SCENE:
-	
+		
+		
 		if (startTitle)
 		{
 			startTitle = false;
+			level1 = true;
+			app->map->CreateColliders();
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 		}
 
@@ -509,27 +515,35 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
 		}
 
-		
+		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
+			app->map->CreateColliders();
 
-		//if (app->input->GetItem(SDL_SCANCODE_U) == KEY_DOWN) {
-		//	app->coll->CleanUp();
-		//	app->map->CleanUp();
-		//	currentScene = SCENE2;
-		//	level2 = true;
-		//}		
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+			app->coll->clean();
+			app->map->CleanUp();
+			level2 = true;
+
+			currentScene = SCENE2;
+			
+		}		
 
 		break;
-		//case SCENE2:
-		//	if (app->input->GetItem(SDL_SCANCODE_M) == KEY_DOWN) {
-		//		app->coll->CleanUp();
-		//		app->map->CleanUp();
-		//		currentScene = SCENE;
-		//		level1 = true;	
+		case SCENE2:
+			if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+				app->coll->clean();
+				app->map->CleanUp();
+				level1 = true;
+				startTitle = true;
+				app->map->CreateColliders();
+				currentScene = SCENE;
+					
 
-		//	}	
-		//	app->map->Draw();
-		//	app->map->CreateColliders();
-		//	break;
+			}	
+			app->map->Draw();
+			
+			break;
 	case GAME_OVER:
 
 		app->player->death = false;

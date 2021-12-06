@@ -423,7 +423,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 bool Map::Start() {
 
 
-	CreateColliders();
+	/*CreateColliders();*/
 	
 	
 	return true;
@@ -589,7 +589,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	{
 		MapLayer* layer = item->data;
 
-		if (layer->properties.GetProperty("air") == 1)
+		if (layer->properties.GetProperty("air") == 0)
 			continue;
 
 		uchar* map = new uchar[layer->width * layer->height];
@@ -621,3 +621,4 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
 	return ret;
 }
+
