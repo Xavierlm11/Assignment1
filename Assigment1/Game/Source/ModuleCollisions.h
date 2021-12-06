@@ -44,6 +44,8 @@ public:
 // If set two false, collider 1 will ignore collider 2
 	bool matrix[Collider::Type::MAX][Collider::Type::MAX];
 
+	void clean();
+
 private:
 	// All existing colliders in the scene
 	

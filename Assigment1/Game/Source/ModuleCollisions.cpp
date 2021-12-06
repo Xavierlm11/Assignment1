@@ -211,7 +211,7 @@ bool ModuleCollisions::Update(float dt)
 
 bool ModuleCollisions::PostUpdate()
 {
-	if (debug && app->scene->currentScene == SCENE) {
+	if (debug && (app->scene->currentScene == SCENE|| app->scene->currentScene == SCENE2)) {
 		DebugDraw();
 	}
 
@@ -317,4 +317,19 @@ Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Modu
 	}
 
 	return ret;
+}
+
+void ModuleCollisions::clean()
+{
+	LOG("Freeing all colliders");
+
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] != nullptr && (colliders[i]->type!= Collider::Type::PLAYER && colliders[i]->type != Collider::Type::PLAYERHEAD && colliders[i]->type != Collider::Type::PLAYERLEFT && colliders[i]->type != Collider::Type::PLAYERRIGHT))
+		{
+			delete colliders[i];
+			colliders[i] = nullptr;
+		}
+	}
+
 }

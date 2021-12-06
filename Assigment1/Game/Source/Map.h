@@ -149,6 +149,9 @@ public:
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 
+	
+
+
 private:
 
 	// L03: Methods to load all required map data
@@ -168,6 +171,8 @@ private:
 
 	// L06: TODO 3: Pick the right Tileset based on a tile id
 	TileSet* GetTilesetFromTileId(int id) const;
+
+	
 
 public:
 
