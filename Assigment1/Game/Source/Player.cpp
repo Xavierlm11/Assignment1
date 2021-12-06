@@ -110,7 +110,9 @@ bool Player::Start()
 
 	texture = app->tex->Load("Assets/textures/PlayerKirby.png");
 	HealthBarTex = app->tex->Load("Assets/textures/HealthBarTex.png");
-	GetKey = app->audio->LoadFx("Assets/audio/fx/GetItemFx.wav");
+	GetItem = app->audio->LoadFx("Assets/audio/fx/GetItemFx.wav");
+	GetCheckpoint = app->audio->LoadFx("Assets/audio/fx/GetCheckpointFx.wav");
+	GetKey = app->audio->LoadFx("Assets/audio/fx/GetKeyFx.wav");
 
 	currentAnimation = &idleAnimR; //player start with idle anim
 
@@ -212,7 +214,7 @@ bool Player::Update(float dt) {
 	}
 
 	//Salto
-	//if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
+	//if (app->input->GetItem(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
 	//{
 
 	//	startjump = true;
@@ -438,6 +440,9 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT1)
 		{
+			if (app->scene->Point1 == false) {
+				app->audio->PlayFx(GetCheckpoint);
+			}
 			app->scene->Point1 = true;
 			CheckActive1 = true;
 			app->scene->ActiveTeleport1 = true;
@@ -445,6 +450,9 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT2)
 		{
+			if (app->scene->Point2 == false) {
+				app->audio->PlayFx(GetCheckpoint);
+			}
 			app->scene->Point2 = true;
 			CheckActive2 = true;
 			app->scene->ActiveTeleport2 = true;
@@ -452,6 +460,9 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT3)
 		{
+			if (app->scene->Point3 == false) {
+				app->audio->PlayFx(GetCheckpoint);
+			}
 			app->scene->Point3 = true;
 			CheckActive3 = true;
 			app->scene->ActiveTeleport3 = true;
@@ -462,7 +473,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			item1Used = true;
 			if (PlayerLives < 5) {
 				app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] = false;
-				app->audio->PlayFx(GetKey);
+				app->audio->PlayFx(GetItem);
 			}
 			if (PlayerLives >= 5) {
 				item1Used = false;
@@ -473,7 +484,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			item2Used = true;
 			if (PlayerLives < 5) {
 				app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] = false;
-				app->audio->PlayFx(GetKey);
+				app->audio->PlayFx(GetItem);
 			}
 			if (PlayerLives >= 5) {
 				item2Used = false;
@@ -481,6 +492,9 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::KEY)
 		{
+			if (Key == false) {
+				app->audio->PlayFx(GetKey);
+			}
 			Key = true;
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )

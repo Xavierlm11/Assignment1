@@ -49,7 +49,6 @@ public:
 
 	bool contact;
 	
-
 	bool god = false;
 	bool death;
 	bool sidesR;
@@ -57,6 +56,7 @@ public:
 	bool jumping;
 	int jumped;
 	bool dbjump;
+
 	bool CheckActive1 = false;
 	bool CheckActive2 = false;
 	bool CheckActive3 = false;
@@ -66,6 +66,7 @@ public:
 
 	bool Key = false;
 
+	//Player Lives
 	int PlayerLives = 5;
 
 public:
@@ -92,6 +93,8 @@ private:
 	SDL_Texture* HealthBarTex = nullptr;
 	Animation Bar5, Bar4, Bar3, Bar2, Bar1;
 
+	uint GetItem = 0;
+	uint GetCheckpoint = 0;
 	uint GetKey = 0;
 
 	//Declarar colisiones del jugador

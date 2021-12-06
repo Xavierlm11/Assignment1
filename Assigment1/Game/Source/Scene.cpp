@@ -253,16 +253,16 @@ bool Scene::Update(float dt)
 
 		}
 		////CAMERA MOVEMENT
-		//if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
+		//if ((app->input->GetItem(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
 		//	app->render->camera.y += speed;
 
-		//if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
+		//if ((app->input->GetItem(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
 		//	app->render->camera.y -= speed;
 
-		//if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
+		//if ((app->input->GetItem(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
 		//	app->render->camera.x += speed;
 
-		//if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
+		//if ((app->input->GetItem(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
 		//	app->render->camera.x -= speed;
   //       }
 		
@@ -472,7 +472,7 @@ bool Scene::Update(float dt)
 
 		
 
-		//if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+		//if (app->input->GetItem(SDL_SCANCODE_U) == KEY_DOWN) {
 		//	app->coll->CleanUp();
 		//	app->map->CleanUp();
 		//	currentScene = SCENE2;
@@ -481,7 +481,7 @@ bool Scene::Update(float dt)
 
 		break;
 		//case SCENE2:
-		//	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		//	if (app->input->GetItem(SDL_SCANCODE_M) == KEY_DOWN) {
 		//		app->coll->CleanUp();
 		//		app->map->CleanUp();
 		//		currentScene = SCENE;
