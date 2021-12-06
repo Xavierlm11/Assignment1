@@ -110,6 +110,7 @@ bool Player::Start()
 
 	texture = app->tex->Load("Assets/textures/PlayerKirby.png");
 	HealthBarTex = app->tex->Load("Assets/textures/HealthBarTex.png");
+	GetKey = app->audio->LoadFx("Assets/audio/fx/GetItemFx.wav");
 
 	currentAnimation = &idleAnimR; //player start with idle anim
 
@@ -344,19 +345,19 @@ bool Player::Update(float dt) {
 			}
 
 			if (PlayerLives == 5) {
-				app->render->DrawTexture(HealthBarTex, 5 ,10,&(Bar5.GetCurrentFrame()),0);
+				app->render->DrawTexture(HealthBarTex, 5 ,5,&(Bar5.GetCurrentFrame()),0);
 			}
 			if (PlayerLives == 4) {
-				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar4.GetCurrentFrame()), 0);
+				app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar4.GetCurrentFrame()), 0);
 			}
 			if (PlayerLives == 3) {
-				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar3.GetCurrentFrame()), 0);
+				app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar3.GetCurrentFrame()), 0);
 			}
 			if (PlayerLives == 2) {
-				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar2.GetCurrentFrame()), 0);
+				app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar2.GetCurrentFrame()), 0);
 			}
 			if (PlayerLives == 1) {
-				app->render->DrawTexture(HealthBarTex, 5, 10, &(Bar1.GetCurrentFrame()), 0);
+				app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar1.GetCurrentFrame()), 0);
 			}
 			if (item1Used == true && PlayerLives < 5) {
 				PlayerLives += 1;
@@ -366,7 +367,12 @@ bool Player::Update(float dt) {
 				PlayerLives += 1;
 				item2Used = false;
 			}
+			if (PlayerLives == 0) {
+				LOG("MORISTE");
+				death = true;
+			}
 		}
+
 
 	return ret;
 }
@@ -456,21 +462,26 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			item1Used = true;
 			if (PlayerLives < 5) {
 				app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] = false;
+				app->audio->PlayFx(GetKey);
 			}
 			if (PlayerLives >= 5) {
 				item1Used = false;
 			}
-			
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM2)
 		{
 			item2Used = true;
 			if (PlayerLives < 5) {
 				app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] = false;
+				app->audio->PlayFx(GetKey);
 			}
 			if (PlayerLives >= 5) {
-				item1Used = false;
+				item2Used = false;
 			}
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::KEY)
+		{
+			Key = true;
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )
 		{

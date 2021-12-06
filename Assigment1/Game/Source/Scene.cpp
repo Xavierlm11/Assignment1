@@ -30,7 +30,6 @@ Scene::Scene() : Module()
 	EnterStart.loop = true;
 	EnterStart.speed = 0.01f;
 
-
 	//intro animation
 	intro.PushBack({ 0,0,240,168 });
 	intro.PushBack({ 240,168,240,168 });
@@ -54,6 +53,20 @@ Scene::Scene() : Module()
 	CheckpointUsed.PushBack({ 114,39,20,26 });
 	CheckpointUsed.loop = true;
 	CheckpointUsed.speed = 0.15f;
+
+	//Key
+	KeyAnim.PushBack({ 1,1,10,19 });
+	KeyAnim.PushBack({ 12,1,10,19 });
+	KeyAnim.PushBack({ 23,1,10,19 });
+	KeyAnim.PushBack({ 34,1,10,19 });
+	KeyAnim.PushBack({ 45,1,10,19 });
+	KeyAnim.PushBack({ 56,1,10,19 });
+	KeyAnim.PushBack({ 66,1,10,19 });
+	KeyAnim.PushBack({ 77,1,10,19 });
+	KeyAnim.PushBack({ 88,1,10,19 });
+	KeyAnim.PushBack({ 99,1,10,19 });
+	KeyAnim.loop = true;
+	KeyAnim.speed = 0.1f;
 }
 
 // Destructor
@@ -98,9 +111,13 @@ bool Scene::Start()
 	//Items
 	ItemHealth1Tex = app->tex->Load("Assets/textures/CakeTex.png");
 	ItemHealth2Tex = app->tex->Load("Assets/textures/PeachTex.png");
+	KeyTex = app->tex->Load("Assets/textures/KeyTex.png");
+	YellowKeyTex = app->tex->Load("Assets/textures/YellowKeyTex.png");
 
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
+	teleportFx = app->audio->LoadFx("Assets/audio/fx/TeleportFx.wav");
+	
 
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
 
@@ -112,6 +129,7 @@ bool Scene::Start()
 	//Item Collider
 	Item1 = app->coll->AddCollider({ 460, 214, 14,14 }, Collider::Type::ITEM1, this);
 	Item2 = app->coll->AddCollider({ 200, 287, 14,14 }, Collider::Type::ITEM2, this);
+	KeyColl= app->coll->AddCollider({ 206, 140, 14,14 }, Collider::Type::KEY, this);
 
 	startTitle = true;
 	silence = true;
@@ -339,11 +357,13 @@ bool Scene::Update(float dt)
 				app->player->position.x = 233;
 				app->player->position.y = 5;
 				ActiveTeleport1 = false;
+				app->audio->PlayFx(teleportFx);
 			}
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 2 && Point3 == true) {//Checkpoint 3 from 1
 				app->player->position.x = 590;
 				app->player->position.y = 200;
 				ActiveTeleport1 = false;
+				app->audio->PlayFx(teleportFx);
 			}
 			ActiveTeleport1 = false;
 		}
@@ -368,11 +388,13 @@ bool Scene::Update(float dt)
 				app->player->position.x = 70;
 				app->player->position.y = 240;
 				ActiveTeleport2 = false;
+				app->audio->PlayFx(teleportFx);
 			}
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 2 && Point3 == true) {//Checkpoint 3 from 2
 				app->player->position.x = 590;
 				app->player->position.y = 200;
 				ActiveTeleport2 = false;
+				app->audio->PlayFx(teleportFx);
 			}
 			ActiveTeleport2 = false;
 		}
@@ -397,14 +419,24 @@ bool Scene::Update(float dt)
 				app->player->position.x = 70;
 				app->player->position.y = 240;
 				ActiveTeleport3 = false;
+				app->audio->PlayFx(teleportFx);
 			}
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 2 && Point2 == true) {//Checkpoint 2 from 3
 				app->player->position.x = 233;
 				app->player->position.y = 5;
 				ActiveTeleport3 = false;
+				app->audio->PlayFx(teleportFx);
 			}
 			ActiveTeleport3 = false;
 		}
+
+		if (app->player->Key == false) {
+			app->render->DrawTexture(KeyTex, 206, 140, &(KeyAnim.GetCurrentFrame()));
+		}
+		if (app->player->Key == true) {
+			app->render->DrawTexture(YellowKeyTex, app->player->position.x+106, app->player->position.y - 54, NULL);
+		}
+		KeyAnim.Update();
 
 		//Draw Items
 		if (app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] == true) {
@@ -480,6 +512,7 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			startTitle = true;
 			currentScene = SCENE;
+			app->player->PlayerLives = 5;
 			/*app->render->camera.y = 0;
 			app->render->camera.x = 0;*/
 			//app->player->position.y = 20;

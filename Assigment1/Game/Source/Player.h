@@ -64,6 +64,10 @@ public:
 	bool item1Used = false;
 	bool item2Used = false;
 
+	bool Key = false;
+
+	int PlayerLives = 5;
+
 public:
 	List<SDL_Texture*> player;
 
@@ -87,7 +91,8 @@ private:
 	//Lifes
 	SDL_Texture* HealthBarTex = nullptr;
 	Animation Bar5, Bar4, Bar3, Bar2, Bar1;
-	int PlayerLives=5;
+
+	uint GetKey = 0;
 
 	//Declarar colisiones del jugador
 	Collider* colliderPlayer = nullptr;

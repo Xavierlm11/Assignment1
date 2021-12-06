@@ -74,6 +74,7 @@ public:
 
 	SDL_Texture* ItemHealth1Tex = nullptr;
 	SDL_Texture* ItemHealth2Tex = nullptr;
+	SDL_Texture* YellowKeyTex = nullptr;
 
 private:
 	//scenes
@@ -96,6 +97,8 @@ private:
 	
 	//Fx
 	uint wasted=0;
+	uint teleportFx = 0;
+	
 
 	//CheckPoint
 	SDL_Texture* CheckpointTex = nullptr;
@@ -106,15 +109,20 @@ private:
 	SDL_Texture* NameCheckTex1 = nullptr;
 	SDL_Texture* NameCheckTex2 = nullptr;
 	SDL_Texture* NameCheckTex3 = nullptr;
+
 	//Teleports
 	SDL_Texture* Teleport1Tex = nullptr;
 	SDL_Texture* Teleport2Tex = nullptr;
 	SDL_Texture* Teleport3Tex = nullptr;
 	Collider* Item1 = nullptr;
 	Collider* Item2 = nullptr;
-	
-	
 
+	//Key
+	SDL_Texture* KeyTex = nullptr;
+	Animation KeyAnim;
+	Collider* KeyColl = nullptr;
+
+	
 	SDL_Texture* pathTex;
 	SDL_Texture* originTex;
 
