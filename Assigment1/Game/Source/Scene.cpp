@@ -178,6 +178,8 @@ bool Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+	//app->map->Load("level1.tmx");
+	app->map->CreateColliders();
 	pathTex = app->tex->Load("Assets/maps/cuad.png");
 	originTex = app->tex->Load("Assets/maps/a.png");
 	//app->map->CreateColliders();
@@ -209,7 +211,21 @@ bool Scene::PreUpdate()
 
 	if (level1) {
 		app->map->Load("level1.tmx");
-		
+		Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
+		Check2 = app->coll->AddCollider({ 233, 26, 20,20 }, Collider::Type::CHECKPOINT2, this);
+		Check3 = app->coll->AddCollider({ 590, 220, 20,20 }, Collider::Type::CHECKPOINT3, this);
+
+		//Item Collider
+		Item1 = app->coll->AddCollider({ 460, 214, 14,14 }, Collider::Type::ITEM1, this);
+		Item2 = app->coll->AddCollider({ 200, 287, 14,14 }, Collider::Type::ITEM2, this);
+		KeyColl = app->coll->AddCollider({ 206, 140, 14,14 }, Collider::Type::KEY, this);
+
+		//Coin Collider
+		CoinColl1 = app->coll->AddCollider({ 18,171, 12,12 }, Collider::Type::COIN1, this);
+		CoinColl2 = app->coll->AddCollider({ 540, 135, 12,12 }, Collider::Type::COIN2, this);
+		CoinColl3 = app->coll->AddCollider({ 289, 175, 12,12 }, Collider::Type::COIN3, this);
+		app->map->CreateColliders();
+
 		level1 = false;
 		
 	}
@@ -263,8 +279,7 @@ bool Scene::Update(float dt)
 		if (startTitle)
 		{
 			startTitle = false;
-			level1 = true;
-			app->map->CreateColliders();
+			
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 		}
 
@@ -307,7 +322,7 @@ bool Scene::Update(float dt)
 			app->coll->clean();
 			app->map->CleanUp();
 			level2 = true;
-
+			actualScene = 2;
 			currentScene = SCENE2;	
 		}		
 
@@ -318,7 +333,8 @@ bool Scene::Update(float dt)
 				app->map->CleanUp();
 				level1 = true;
 				startTitle = true;
-				app->map->CreateColliders();
+				/*app->map->CreateColliders();*/
+				actualScene = 1; 
 				currentScene = SCENE;
 			}	
 			app->map->Draw();
@@ -329,14 +345,28 @@ bool Scene::Update(float dt)
 		SetGameOver();
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-			startTitle = true;
-			currentScene = SCENE;
-			app->player->PlayerLives = 5;
-			/*app->render->camera.y = 0;
-			app->render->camera.x = 0;*/
-			//app->player->position.y = 20;
-			//app->player->position.x = 50;
-			app->LoadGameRequest();
+			if (actualScene == 1) 
+			{
+				startTitle = true;
+				currentScene = SCENE;
+				app->player->PlayerLives = 5;
+				/*app->render->camera.y = 0;
+				app->render->camera.x = 0;*/
+				//app->player->position.y = 20;
+				//app->player->position.x = 50;
+				app->LoadGameRequest();
+			}
+			if (actualScene == 2)
+			{
+				startTitle = true;
+				currentScene = SCENE2;
+				app->player->PlayerLives = 5;
+				/*app->render->camera.y = 0;
+				app->render->camera.x = 0;*/
+				//app->player->position.y = 20;
+				//app->player->position.x = 50;
+				app->LoadGameRequest();
+			}
 		}
 		break;
 	}

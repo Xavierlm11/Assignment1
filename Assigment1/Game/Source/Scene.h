@@ -52,7 +52,7 @@ public:
 	bool startTitle;
 	bool LoseScreen;
 	bool silence;
-	bool level1;
+	bool level1=false;
 	bool level2;
 	
 	float scrollerX = 0;
@@ -88,6 +88,8 @@ public:
 	void Health();
 	void Pathfinding();
 	void SetGameOver();
+
+	int actualScene = 1;
 	//void;
 private:
 	//scenes
