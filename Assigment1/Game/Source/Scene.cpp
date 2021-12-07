@@ -268,17 +268,6 @@ bool Scene::Update(float dt)
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 		}
 
-		//if (app->scene->currentScene == SCENE)
-		//{
-		//	app->map->CreateColliders();
-		//}
-
-	
-		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
-		app->render->DrawTexture(GalaxyTex, scrollerX1, 0, NULL);
-
-		//app->render->DrawTexture(bgpa1, scrollerX1, 0, NULL);
-
 		{int speed = 8;
 
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -289,250 +278,29 @@ bool Scene::Update(float dt)
 
 
 		}
-		////CAMERA MOVEMENT
-		//if ((app->input->GetItem(SDL_SCANCODE_UP) == KEY_REPEAT) && app->render->camera.y < 0)
-		//	app->render->camera.y += speed;
-
-		//if ((app->input->GetItem(SDL_SCANCODE_DOWN) == KEY_REPEAT) && app->render->camera.y > -1160)
-		//	app->render->camera.y -= speed;
-
-		//if ((app->input->GetItem(SDL_SCANCODE_LEFT) == KEY_REPEAT) && app->render->camera.x < 0)
-		//	app->render->camera.x += speed;
-
-		//if ((app->input->GetItem(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && app->render->camera.x > -2200)
-		//	app->render->camera.x -= speed;
-  //       }
-		
 		// Draw map
-		app->map->Draw();
-
-		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-			silence = true;
-			currentScene = TITLE_SCREEN;
-
-			app->player->position.x = 50000;
-			app->player->position.y = 20000;
-			app->render->camera.x = 0;
-			app->render->camera.y = 0;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-			app->audio->PlayFx(wasted);
-			silence = true;
-			currentScene =GAME_OVER;
-		}
-			
-		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
-			app->player->position.y = 20;
-			app->player->position.x = 50;
-		}
+		DrawScene();
 
 		//Checkpoints
-		if (Point1 == true && CheckUsed1 == false) {
-			app->SaveGameRequest();
-			Point1 = false;
-			CheckUsed1 = true;
-		}
-		if (Point2 == true && CheckUsed2 == false) {
-			app->SaveGameRequest();
-			Point2 = false;
-			CheckUsed2 = true;
-		}
-		if (Point3 == true && CheckUsed3 == false) {
-			app->SaveGameRequest();
-			Point3 = false;
-			CheckUsed3 = true;
-		}
-
-		if (Point1 == false) {
-			app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckPoint.GetCurrentFrame()));
-		}
-		if (Point1 == true) {
-			app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckpointUsed.GetCurrentFrame()));
-		}
-		if (Point2 == false) {
-			app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckPoint.GetCurrentFrame()));
-		}
-		if (Point2 == true) {
-			app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckpointUsed.GetCurrentFrame()));
-		}
-		if (Point3 == false) {
-			app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckPoint.GetCurrentFrame()));
-		}
-		if (Point3 == true) {
-			app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckpointUsed.GetCurrentFrame()));
-		}
-
-		if (app->player->CheckActive1 == true) {
-			app->render->DrawTexture(NameCheckTex1, app->player->position.x - 20, app->player->position.y + 100, NULL);
-			app->player->CheckActive1 = false;
-		}
-		if (app->player->CheckActive2 == true) {
-			app->render->DrawTexture(NameCheckTex2, app->player->position.x - 20, app->player->position.y + 100, NULL);
-			app->player->CheckActive2 = false;
-		}
-		if (app->player->CheckActive3 == true) {
-			app->render->DrawTexture(NameCheckTex3, app->player->position.x - 20, app->player->position.y + 100, NULL);
-			app->player->CheckActive3 = false;
-		}
-		CheckPoint.Update();
-		CheckpointUsed.Update();
-
-		if (ActiveTeleport1 == true) { //TP 1
-			if (tps1 == 1) {
-				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-			}
-			if (tps1 == 2) {
-				app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
-				tps1 += 1;
-			}
-			if (tps1 == 3) {
-				tps1 = 1;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 1&& Point2==true) {//Checkpoint 2 from 1
-				app->player->position.x = 233;
-				app->player->position.y = 5;
-				ActiveTeleport1 = false;
-				app->audio->PlayFx(teleportFx);
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 2 && Point3 == true) {//Checkpoint 3 from 1
-				app->player->position.x = 590;
-				app->player->position.y = 200;
-				ActiveTeleport1 = false;
-				app->audio->PlayFx(teleportFx);
-			}
-			ActiveTeleport1 = false;
-		}
-
-		if (ActiveTeleport2 == true) { //TP 2
-			if (tps2 == 1) {
-				app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-			}
-			if (tps2 == 2) {
-				app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
-				tps2 += 1;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
-				tps2 -= 1;
-			}
-			if (tps2 == 3||tps2==0) {
-				tps2 = 1;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 1 && Point1 == true) {//Checkpoint 1 from 2
-				app->player->position.x = 70;
-				app->player->position.y = 240;
-				ActiveTeleport2 = false;
-				app->audio->PlayFx(teleportFx);
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 2 && Point3 == true) {//Checkpoint 3 from 2
-				app->player->position.x = 590;
-				app->player->position.y = 200;
-				ActiveTeleport2 = false;
-				app->audio->PlayFx(teleportFx);
-			}
-			ActiveTeleport2 = false;
-		}
-
-		if (ActiveTeleport3 == true) { //TP 3
-			if (tps3 == 1) {
-				app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-			}
-			if (tps3 == 2) {
-				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
-				tps3 += 1;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
-				tps3 -= 1;
-			}
-			if (tps3 == 3||tps3==0) {
-				tps3 = 1;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 1 && Point1 == true) {//Checkpoint 1 from 3
-				app->player->position.x = 70;
-				app->player->position.y = 240;
-				ActiveTeleport3 = false;
-				app->audio->PlayFx(teleportFx);
-			}
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 2 && Point2 == true) {//Checkpoint 2 from 3
-				app->player->position.x = 233;
-				app->player->position.y = 5;
-				ActiveTeleport3 = false;
-				app->audio->PlayFx(teleportFx);
-			}
-			ActiveTeleport3 = false;
-		}
+		Checkpoints();
+		
+		//Teleports
+		Teleports();
 
 		//Key
-		if (app->player->Key == false) {
-			app->render->DrawTexture(KeyTex, 206, 140, &(KeyAnim.GetCurrentFrame()));
-		}
-		if (app->player->Key == true) {
-			app->render->DrawTexture(YellowKeyTex, app->player->position.x+106, app->player->position.y - 54, NULL);
-		}
-		KeyAnim.Update();
+		Keys();
 
 		//Coins
-		if (CoinUsed1 == false) {
-				app->render->DrawTexture(CoinTex, 18, 172, &(CoinAnim.GetCurrentFrame()));
-		}
-		if (CoinUsed2 == false) {
-			app->render->DrawTexture(CoinTex, 540, 135, &(CoinAnim.GetCurrentFrame()));
-		}
-		if (CoinUsed3 == false) {
-			app->render->DrawTexture(CoinTex, 290, 174, &(CoinAnim.GetCurrentFrame()));
-		}
-		CoinAnim.Update();
-
-		if (app->player->Money == 1) {
-			app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin1.GetCurrentFrame()));
-		}
-		if (app->player->Money == 2) {
-			app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin2.GetCurrentFrame()));
-		}
-		if (app->player->Money == 3) {
-			app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin3.GetCurrentFrame()));
-		}
+		Coins();
 
 		//Draw Items
-		if (app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] == true) {
-			app->render->DrawTexture(ItemHealth1Tex, 460, 214, NULL);
-		}
-		if (app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] == true) {
-			app->render->DrawTexture(ItemHealth2Tex, 200, 285, NULL);
-		}
-
+		Health();
+		
 		// L12b: Debug pathfinding
-		{int mouseX, mouseY;
-		app->input->GetMousePosition(mouseX, mouseY);
-		iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
-
-		app->input->GetMousePosition(mouseX, mouseY);
-		iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
-		p = app->map->WorldToMap(p.x, p.y);
-		p = app->map->MapToWorld(p.x, p.y);
-
-		app->render->DrawTexture(pathTex, p.x, p.y);
-
-		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-
-		for (uint i = 0; i < path->Count(); ++i)
-		{
-			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			app->render->DrawTexture(pathTex, pos.x, pos.y);
-		}
-
-		iPoint originScreen = app->map->MapToWorld(origin1.x, origin1.y);
-		app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
-		}
-
+		Pathfinding();
+		
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
 			app->map->CreateColliders();
-
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
@@ -540,8 +308,7 @@ bool Scene::Update(float dt)
 			app->map->CleanUp();
 			level2 = true;
 
-			currentScene = SCENE2;
-			
+			currentScene = SCENE2;	
 		}		
 
 		break;
@@ -553,29 +320,13 @@ bool Scene::Update(float dt)
 				startTitle = true;
 				app->map->CreateColliders();
 				currentScene = SCENE;
-					
-
 			}	
 			app->map->Draw();
 			
 			break;
 	case GAME_OVER:
 
-		app->player->death = false;
-		app->player->position.y = 20000;
-		app->player->position.x = 20000;
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-
-		if (silence)
-		{
-			app->audio->PlayFx(wasted);
-			silence = false;
-			app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
-		}
-		Press.Update();
-		app->render->DrawTexture(GameOver, 0, 0);
-		app->render->DrawTexture(Enter, 62, 100, &(Press.GetCurrentFrame()));
+		SetGameOver();
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			startTitle = true;
@@ -587,10 +338,8 @@ bool Scene::Update(float dt)
 			//app->player->position.x = 50;
 			app->LoadGameRequest();
 		}
-
 		break;
 	}
-
 	return true;
 }
 
@@ -630,3 +379,305 @@ bool Scene::SaveState(pugi::xml_node& data) const {
 
 	return true;
 }
+
+
+////++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Function calls
+////++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+void Scene::DrawScene()
+{
+	app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
+	app->render->DrawTexture(GalaxyTex, scrollerX1, 0, NULL);
+	app->map->Draw();
+
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		silence = true;
+		currentScene = TITLE_SCREEN;
+
+		app->player->position.x = 50000;
+		app->player->position.y = 20000;
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		app->audio->PlayFx(wasted);
+		silence = true;
+		currentScene = GAME_OVER;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		app->player->position.y = 20;
+		app->player->position.x = 50;
+	}
+
+}
+
+
+
+void Scene::Checkpoints()
+{
+	if (Point1 == true && CheckUsed1 == false) {
+		app->SaveGameRequest();
+		Point1 = false;
+		CheckUsed1 = true;
+	}
+	if (Point2 == true && CheckUsed2 == false) {
+		app->SaveGameRequest();
+		Point2 = false;
+		CheckUsed2 = true;
+	}
+	if (Point3 == true && CheckUsed3 == false) {
+		app->SaveGameRequest();
+		Point3 = false;
+		CheckUsed3 = true;
+	}
+
+	if (Point1 == false) {
+		app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckPoint.GetCurrentFrame()));
+	}
+	if (Point1 == true) {
+		app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckpointUsed.GetCurrentFrame()));
+	}
+	if (Point2 == false) {
+		app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckPoint.GetCurrentFrame()));
+	}
+	if (Point2 == true) {
+		app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckpointUsed.GetCurrentFrame()));
+	}
+	if (Point3 == false) {
+		app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckPoint.GetCurrentFrame()));
+	}
+	if (Point3 == true) {
+		app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckpointUsed.GetCurrentFrame()));
+	}
+
+	if (app->player->CheckActive1 == true) {
+		app->render->DrawTexture(NameCheckTex1, app->player->position.x - 20, app->player->position.y + 100, NULL);
+		app->player->CheckActive1 = false;
+	}
+	if (app->player->CheckActive2 == true) {
+		app->render->DrawTexture(NameCheckTex2, app->player->position.x - 20, app->player->position.y + 100, NULL);
+		app->player->CheckActive2 = false;
+	}
+	if (app->player->CheckActive3 == true) {
+		app->render->DrawTexture(NameCheckTex3, app->player->position.x - 20, app->player->position.y + 100, NULL);
+		app->player->CheckActive3 = false;
+	}
+	CheckPoint.Update();
+	CheckpointUsed.Update();
+
+}
+
+
+
+
+void Scene::Teleports()
+{
+	if (ActiveTeleport1 == true) { //TP 1
+		if (tps1 == 1) {
+			app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+		}
+		if (tps1 == 2) {
+			app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+			tps1 += 1;
+		}
+		if (tps1 == 3) {
+			tps1 = 1;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 1 && Point2 == true) {//Checkpoint 2 from 1
+			app->player->position.x = 233;
+			app->player->position.y = 5;
+			ActiveTeleport1 = false;
+			app->audio->PlayFx(teleportFx);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 2 && Point3 == true) {//Checkpoint 3 from 1
+			app->player->position.x = 590;
+			app->player->position.y = 200;
+			ActiveTeleport1 = false;
+			app->audio->PlayFx(teleportFx);
+		}
+		ActiveTeleport1 = false;
+	}
+
+	if (ActiveTeleport2 == true) { //TP 2
+		if (tps2 == 1) {
+			app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+		}
+		if (tps2 == 2) {
+			app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+			tps2 += 1;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+			tps2 -= 1;
+		}
+		if (tps2 == 3 || tps2 == 0) {
+			tps2 = 1;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 1 && Point1 == true) {//Checkpoint 1 from 2
+			app->player->position.x = 70;
+			app->player->position.y = 240;
+			ActiveTeleport2 = false;
+			app->audio->PlayFx(teleportFx);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 2 && Point3 == true) {//Checkpoint 3 from 2
+			app->player->position.x = 590;
+			app->player->position.y = 200;
+			ActiveTeleport2 = false;
+			app->audio->PlayFx(teleportFx);
+		}
+		ActiveTeleport2 = false;
+	}
+
+	if (ActiveTeleport3 == true) { //TP 3
+		if (tps3 == 1) {
+			app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+		}
+		if (tps3 == 2) {
+			app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+			tps3 += 1;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+			tps3 -= 1;
+		}
+		if (tps3 == 3 || tps3 == 0) {
+			tps3 = 1;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 1 && Point1 == true) {//Checkpoint 1 from 3
+			app->player->position.x = 70;
+			app->player->position.y = 240;
+			ActiveTeleport3 = false;
+			app->audio->PlayFx(teleportFx);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 2 && Point2 == true) {//Checkpoint 2 from 3
+			app->player->position.x = 233;
+			app->player->position.y = 5;
+			ActiveTeleport3 = false;
+			app->audio->PlayFx(teleportFx);
+		}
+		ActiveTeleport3 = false;
+	}
+
+}
+
+
+
+
+void Scene::Keys()
+{
+	if (app->player->Key == false) {
+		app->render->DrawTexture(KeyTex, 206, 140, &(KeyAnim.GetCurrentFrame()));
+	}
+	if (app->player->Key == true) {
+		app->render->DrawTexture(YellowKeyTex, app->player->position.x + 106, app->player->position.y - 54, NULL);
+	}
+	KeyAnim.Update();
+
+}
+
+
+
+
+void Scene::Coins()
+{
+	if (CoinUsed1 == false) {
+		app->render->DrawTexture(CoinTex, 18, 172, &(CoinAnim.GetCurrentFrame()));
+	}
+	if (CoinUsed2 == false) {
+		app->render->DrawTexture(CoinTex, 540, 135, &(CoinAnim.GetCurrentFrame()));
+	}
+	if (CoinUsed3 == false) {
+		app->render->DrawTexture(CoinTex, 290, 174, &(CoinAnim.GetCurrentFrame()));
+	}
+	CoinAnim.Update();
+
+	if (app->player->Money == 1) {
+		app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin1.GetCurrentFrame()));
+	}
+	if (app->player->Money == 2) {
+		app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin2.GetCurrentFrame()));
+	}
+	if (app->player->Money == 3) {
+		app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin3.GetCurrentFrame()));
+	}
+
+}
+
+
+
+
+void Scene::Health()
+{
+	if (app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] == true) {
+		app->render->DrawTexture(ItemHealth1Tex, 460, 214, NULL);
+	}
+	if (app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] == true) {
+		app->render->DrawTexture(ItemHealth2Tex, 200, 285, NULL);
+	}
+
+}
+
+
+
+
+void Scene::Pathfinding()
+{
+	{int mouseX, mouseY;
+	app->input->GetMousePosition(mouseX, mouseY);
+	iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
+
+	app->input->GetMousePosition(mouseX, mouseY);
+	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+	p = app->map->WorldToMap(p.x, p.y);
+	p = app->map->MapToWorld(p.x, p.y);
+
+	app->render->DrawTexture(pathTex, p.x, p.y);
+
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(pathTex, pos.x, pos.y);
+	}
+
+	iPoint originScreen = app->map->MapToWorld(origin1.x, origin1.y);
+	app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
+	}
+
+}
+
+
+
+
+void Scene::SetGameOver()
+{
+	app->player->death = false;
+	app->player->position.y = 20000;
+	app->player->position.x = 20000;
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
+
+	if (silence)
+	{
+		app->audio->PlayFx(wasted);
+		silence = false;
+		app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
+	}
+	Press.Update();
+	app->render->DrawTexture(GameOver, 0, 0);
+	app->render->DrawTexture(Enter, 62, 100, &(Press.GetCurrentFrame()));
+
+}
+
+//void Scene::()
+//{
+//
+//
+//}

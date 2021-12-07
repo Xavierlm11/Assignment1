@@ -79,7 +79,16 @@ public:
 	bool CoinUsed1 = false;
 	bool CoinUsed2 = false;
 	bool CoinUsed3 = false;
-
+public:
+	void DrawScene();
+	void Checkpoints();
+	void Teleports();
+	void Keys();
+	void Coins();
+	void Health();
+	void Pathfinding();
+	void SetGameOver();
+	//void;
 private:
 	//scenes
 	SDL_Texture* bgTexture;
