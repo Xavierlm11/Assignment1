@@ -27,7 +27,8 @@ struct Collider
 		COIN1,
 		COIN2,
 		COIN3,
-
+		VOLADOR,
+		TIERRA,
 		MAX
 	};
 

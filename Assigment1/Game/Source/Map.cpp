@@ -575,6 +575,71 @@ void Map::CreateColliders() {
 			}
 
 		}
+		//Volador
+		if (mapLayerItem->data->properties.GetProperty("vol") == 1) {
+			for (int x = 0; x < mapLayerItem->data->width; x++) {
+				for (int y = 0; y < mapLayerItem->data->height; y++) {
+
+					int gid = mapLayerItem->data->Get(x, y);
+
+
+					if (gid > 0) {
+
+
+						//now we always use the firt tileset in the list
+						TileSet* tileset = mapData.tilesets.start->data;
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
+
+						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::VOLADOR, this);
+						i++;
+
+
+
+					}
+				}
+			}
+
+		}
+		//tiesrra
+		if (mapLayerItem->data->properties.GetProperty("tier") == 1) {
+			for (int x = 0; x < mapLayerItem->data->width; x++) {
+				for (int y = 0; y < mapLayerItem->data->height; y++) {
+
+					int gid = mapLayerItem->data->Get(x, y);
+
+
+					if (gid > 0) {
+
+
+						//now we always use the firt tileset in the list
+						TileSet* tileset = mapData.tilesets.start->data;
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
+
+						collidersMap[i] = app->coll->AddCollider({ pos.x,pos.y, r.w,r.h }, Collider::Type::TIERRA, this);
+						i++;
+
+
+
+					}
+				}
+			}
+
+		}
+
 		mapLayerItem = mapLayerItem->next;
 	}
 }

@@ -148,6 +148,18 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::COIN3][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::COIN3][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::COIN3][Collider::Type::PLAYERHEAD] = false;
+
+	//voolador
+	matrix[Collider::Type::VOLADOR][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::VOLADOR][Collider::Type::PLAYERRIGHT] = true;
+	matrix[Collider::Type::VOLADOR][Collider::Type::PLAYERLEFT] = true;
+	matrix[Collider::Type::VOLADOR][Collider::Type::PLAYERHEAD] = true;
+
+	//TIERRA
+	matrix[Collider::Type::TIERRA][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::TIERRA][Collider::Type::PLAYERRIGHT] = true;
+	matrix[Collider::Type::TIERRA][Collider::Type::PLAYERLEFT] = true;
+	matrix[Collider::Type::TIERRA][Collider::Type::PLAYERHEAD] = true;
 }
 
 // Destructor
@@ -281,6 +293,12 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::COIN3: // red
 			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 200, alpha);
+			break;
+			case Collider::Type::VOLADOR: // red
+			app->render->DrawRectangle(colliders[i]->rect, 150, 150, 250, alpha);
+			break;
+			case Collider::Type::TIERRA: // red
+			app->render->DrawRectangle(colliders[i]->rect, 150, 150, 250, alpha);
 			break;
 		}
 	}
