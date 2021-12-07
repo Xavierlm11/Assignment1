@@ -147,21 +147,8 @@ bool Scene::Start()
 
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
 
-	//Checkpoints colliders
-	Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
-	Check2 = app->coll->AddCollider({ 233, 26, 20,20 }, Collider::Type::CHECKPOINT2, this);
-	Check3 = app->coll->AddCollider({ 590, 220, 20,20 }, Collider::Type::CHECKPOINT3, this);
-
-	//Item Collider
-	Item1 = app->coll->AddCollider({ 460, 214, 14,14 }, Collider::Type::ITEM1, this);
-	Item2 = app->coll->AddCollider({ 200, 287, 14,14 }, Collider::Type::ITEM2, this);
-	KeyColl= app->coll->AddCollider({ 206, 140, 14,14 }, Collider::Type::KEY, this);
-
-	//Coin Collider
-	CoinColl1 = app->coll->AddCollider({ 18,171, 12,12 }, Collider::Type::COIN1, this);
-	CoinColl2 = app->coll->AddCollider({ 540, 135, 12,12 }, Collider::Type::COIN2, this);
-	CoinColl3 = app->coll->AddCollider({ 289, 175, 12,12 }, Collider::Type::COIN3, this);
-
+	StartColliders();
+	
 	startTitle = true;
 	silence = true;
 	level2 = false;
@@ -710,8 +697,25 @@ void Scene::SetGameOver()
 
 }
 
-//void Scene::()
-//{
-//
-//
-//}
+
+
+
+void Scene::StartColliders()
+{
+	//Checkpoints colliders
+	Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
+	Check2 = app->coll->AddCollider({ 233, 26, 20,20 }, Collider::Type::CHECKPOINT2, this);
+	Check3 = app->coll->AddCollider({ 590, 220, 20,20 }, Collider::Type::CHECKPOINT3, this);
+
+	//Item Collider
+	Item1 = app->coll->AddCollider({ 460, 214, 14,14 }, Collider::Type::ITEM1, this);
+	Item2 = app->coll->AddCollider({ 200, 287, 14,14 }, Collider::Type::ITEM2, this);
+	KeyColl = app->coll->AddCollider({ 206, 140, 14,14 }, Collider::Type::KEY, this);
+
+	//Coin Collider
+	CoinColl1 = app->coll->AddCollider({ 18,171, 12,12 }, Collider::Type::COIN1, this);
+	CoinColl2 = app->coll->AddCollider({ 540, 135, 12,12 }, Collider::Type::COIN2, this);
+	CoinColl3 = app->coll->AddCollider({ 289, 175, 12,12 }, Collider::Type::COIN3, this);
+
+
+}
