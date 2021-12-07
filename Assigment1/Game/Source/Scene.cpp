@@ -323,7 +323,11 @@ bool Scene::Update(float dt)
 			app->map->CleanUp();
 			level2 = true;
 			actualScene = 2;
-			currentScene = SCENE2;	
+			app->player->position.x = 40;
+			app->player->position.y = 50;
+			app->SaveGameRequest();
+			currentScene = SCENE2;		
+
 		}		
 
 		break;

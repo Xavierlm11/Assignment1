@@ -123,7 +123,7 @@ bool Player::Start()
 	PlayerPosition = true;//if its true, player will be looking at the right, if not, player will be looking at the left
 
 	//add colliders
-	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 16,5 }, Collider::Type::PLAYER, this);
+	colliderPlayer = app->coll->AddCollider({ position.x,position.y, 12,5 }, Collider::Type::PLAYER, this);
 	colliderPlayerR = app->coll->AddCollider({ position.x + 16,position.y - 16, 5,9 }, Collider::Type::PLAYERRIGHT, this);
 	colliderPlayerL = app->coll->AddCollider({ position.x,position.y, 5,9 }, Collider::Type::PLAYERLEFT, this);
 	colliderHead = app->coll->AddCollider({ position.x,position.y, 8,5 }, Collider::Type::PLAYERHEAD, this);
@@ -297,18 +297,20 @@ bool Player::Update(float dt) {
 			}
 		}
 
-		//PLAYER LIMITS
-		if (position.x > 660)
-		{
-			position.x = 660;
+		if(app->scene->currentScene==SCENE){
+			//PLAYER LIMITS
+			if (position.x > 660)
+			{
+				position.x = 660;
+			}
+			if (position.y < 0) {
+				position.y = 0;
+			}
+			if (position.x < 20) {
+				position.x = 20;
+			}
 		}
-		if (position.y < 0) {
-			position.y = 0;
-		}
-		if (position.x < 20) {
-			position.x = 20;
-		}
-
+	
 		currentAnimation->Update();
 
 		if (death == true && god==false )
@@ -383,7 +385,7 @@ bool Player::Update(float dt) {
 bool Player::PostUpdate()
 {
 	bool ret = true;
-	colliderPlayer->SetPos(position.x - 8, position.y + 33);
+	colliderPlayer->SetPos(position.x - 5, position.y + 33);
 	colliderPlayerR->SetPos(position.x + 4, position.y + 26);
 	colliderPlayerL->SetPos(position.x - 9, position.y + 26);
 	colliderHead->SetPos(position.x - 4, position.y + 26);
