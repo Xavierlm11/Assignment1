@@ -388,7 +388,7 @@ bool Player::PostUpdate()
 	colliderPlayer->SetPos(position.x - 5, position.y + 33);
 	colliderPlayerR->SetPos(position.x + 4, position.y + 26);
 	colliderPlayerL->SetPos(position.x - 9, position.y + 26);
-	colliderHead->SetPos(position.x - 4, position.y + 26);
+	colliderHead->SetPos(position.x - 4, position.y + 24);
 	
 	Uint8 alpha = 80;
 	
