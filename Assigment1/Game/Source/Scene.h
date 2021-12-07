@@ -88,6 +88,7 @@ public:
 	void Health();
 	void Pathfinding();
 	void SetGameOver();
+	void StartColliders();
 
 	int actualScene = 1;
 	//void;
