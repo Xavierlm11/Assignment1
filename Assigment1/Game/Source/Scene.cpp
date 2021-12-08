@@ -146,7 +146,6 @@ bool Scene::Start()
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 	teleportFx = app->audio->LoadFx("Assets/audio/fx/TeleportFx.wav");
 	
-
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
 
 	StartColliders();
@@ -405,8 +404,9 @@ void Scene::DrawScene()
 		app->render->DrawTexture(GalaxyTex, scrollerX1, 0, NULL);
 	}
 	if (app->scene->currentScene == SCENE2) {
+		app->render->DrawTexture(Level2Paral2, scrollerX3 - 75, -40, NULL);
 		app->render->DrawTexture(Level2Paral1, scrollerX2-75, -40, NULL);
-		/*app->render->DrawTexture(GalaxyTex, scrollerX3, 0, NULL);*/
+		
 	}
 
 	app->map->Draw();
