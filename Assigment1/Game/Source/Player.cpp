@@ -171,15 +171,15 @@ bool Player::Update(float dt) {
 			app->scene->scrollerX1 -= speed / 24;
 		}
 		if (app->scene->currentScene == SCENE2) {
-			app->scene->scrollerX2 -= speed / 6;
-			app->scene->scrollerX3 -= speed / 12;
+			app->scene->scrollerX2 -= speed / 8;
+			app->scene->scrollerX3 -= speed / 14;
 		}		
 
 	}
 
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
 	{
-		position.x -= speed;
+		position.x -= speed*0.68;
 		if (currentAnimation != &walkAnimL)
 		{
 			walkAnimL.Reset();
@@ -191,7 +191,7 @@ bool Player::Update(float dt) {
 			app->scene->scrollerX1 += speed / 24;
 		}
 		if (app->scene->currentScene == SCENE2) {
-			app->scene->scrollerX2 += speed / 6;
+			app->scene->scrollerX2 += speed / 8;
 			app->scene->scrollerX3 += speed / 12;
 		}
 	}
