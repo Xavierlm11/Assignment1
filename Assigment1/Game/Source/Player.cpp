@@ -227,45 +227,6 @@ bool Player::Update(float dt) {
 		}
 	}
 
-	//Salto
-	//if (app->input->GetItem(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
-	//{
-
-	//	startjump = true;
-	//	if (startjump == true) {
-
-	//		position.y -= 20;
-
-	//	}
-
-	//	if (PlayerPosition == false) {
-	//		jumpAnimL.Reset();
-	//		currentAnimation = &jumpAnimL;
-	//	}
-	//	if (PlayerPosition == true)
-	//	{
-	//		jumpAnimR.Reset();
-	//		currentAnimation = &jumpAnimR;
-	//	}
-
-	//	if (startjump) //If is jumping
-	//	{
-	//		position.y += jumpVel;
-	//		jumpVel -= gravity;
-	//		maxjumpheight++;
-	//	}
-
-	//	if (maxjumpheight >= 40)
-	//	{
-	//		position.y += maxjumpheight;
-
-	//		startjump = false;
-	//		if (maxjumpheight == 40)
-	//		{
-	//			maxjumpheight == 0;
-	//		}
-	//	}
-	//}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
 	{
 		if (PlayerPosition == false) {
