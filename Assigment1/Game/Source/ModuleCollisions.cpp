@@ -104,6 +104,20 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::CHECKPOINT3][Collider::Type::PLAYERHEAD] = false;
 	matrix[Collider::Type::CHECKPOINT3][Collider::Type::CHECKPOINT3] = false;
 
+	//CHECKPOINT 4
+	matrix[Collider::Type::CHECKPOINT4][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::CHECKPOINT4][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::CHECKPOINT4][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::CHECKPOINT4][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::CHECKPOINT4][Collider::Type::CHECKPOINT4] = false;
+
+	//CHECKPOINT 5
+	matrix[Collider::Type::CHECKPOINT5][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::CHECKPOINT5][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::CHECKPOINT5][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::CHECKPOINT5][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::CHECKPOINT5][Collider::Type::CHECKPOINT5] = false;
+
 	//AIR
 	matrix[Collider::Type::AIR][Collider::Type::SUELO] = false;
 	matrix[Collider::Type::AIR][Collider::Type::PLAYER] = true;
@@ -271,6 +285,12 @@ void ModuleCollisions::DebugDraw()
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 			case Collider::Type::CHECKPOINT3: // red
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+			case Collider::Type::CHECKPOINT4: // red
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+			case Collider::Type::CHECKPOINT5: // red
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 			case Collider::Type::AIR: // red

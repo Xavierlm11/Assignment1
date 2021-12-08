@@ -148,7 +148,7 @@ bool Scene::Start()
 	
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
 
-	StartColliders();
+	StartCollidersLevel1();
 	
 	startTitle = true;
 	silence = true;
@@ -199,7 +199,7 @@ bool Scene::PreUpdate()
 
 	if (level1) {
 		app->map->Load("level1.tmx");
-		StartColliders();
+		StartCollidersLevel1();
 		app->map->CreateColliders();
 
 		level1 = false;
@@ -207,10 +207,11 @@ bool Scene::PreUpdate()
 	}
 	if (level2) {
 		app->map->Load("level2.tmx");
+		StartCollidersLevel2();
 		app->map->CreateColliders();
 		level2 = false;
-		
 	}
+
 
 	return true;
 }
@@ -697,9 +698,7 @@ void Scene::SetGameOver()
 }
 
 
-
-
-void Scene::StartColliders()
+void Scene::StartCollidersLevel1()
 {
 	//Checkpoints colliders
 	Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
@@ -715,6 +714,10 @@ void Scene::StartColliders()
 	CoinColl1 = app->coll->AddCollider({ 18,171, 12,12 }, Collider::Type::COIN1, this);
 	CoinColl2 = app->coll->AddCollider({ 540, 135, 12,12 }, Collider::Type::COIN2, this);
 	CoinColl3 = app->coll->AddCollider({ 289, 175, 12,12 }, Collider::Type::COIN3, this);
+}
 
-
+void Scene::StartCollidersLevel2() 
+{
+	Check4 = app->coll->AddCollider({ 108, 140, 20,20 }, Collider::Type::CHECKPOINT4, this);
+	Check5 = app->coll->AddCollider({ 640, 117, 20,20 }, Collider::Type::CHECKPOINT5, this);
 }

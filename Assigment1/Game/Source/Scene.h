@@ -91,7 +91,8 @@ public:
 	void Health();
 	void Pathfinding();
 	void SetGameOver();
-	void StartColliders();
+	void StartCollidersLevel1();
+	void StartCollidersLevel2();
 
 	int actualScene = 1;
 	//void;
@@ -127,6 +128,8 @@ private:
 	Collider* Check1 = nullptr;
 	Collider* Check2 = nullptr;
 	Collider* Check3 = nullptr;
+	Collider* Check4 = nullptr;
+	Collider* Check5 = nullptr;
 	SDL_Texture* NameCheckTex1 = nullptr;
 	SDL_Texture* NameCheckTex2 = nullptr;
 	SDL_Texture* NameCheckTex3 = nullptr;
