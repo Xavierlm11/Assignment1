@@ -11,6 +11,6 @@
 		<enemypos x="10" y="10" />
 	</enemy>
 	<renderer>
-		<position x="40" y="50" />
+		<position x="636" y="91" />
 	</renderer>
 </game_state>

@@ -60,6 +60,8 @@ public:
 	bool CheckActive1 = false;
 	bool CheckActive2 = false;
 	bool CheckActive3 = false;
+	bool CheckActive4 = false;
+	bool CheckActive5 = false;
 
 	bool item1Used = false;
 	bool item2Used = false;

@@ -67,6 +67,10 @@ public:
 	bool CheckUsed2 = false;
 	bool Point3 = false;
 	bool CheckUsed3 = false;
+	bool Point4 = false;
+	bool CheckUsed4 = false;
+	bool Point5= false;
+	bool CheckUsed5 = false;
 
 	bool ActiveTeleport1 = false;
 	int tps1 = 1;
@@ -74,6 +78,10 @@ public:
 	int tps2 = 1;
 	bool ActiveTeleport3 = false;
 	int tps3 = 1;
+	bool ActiveTeleport4 = false;
+	int tps4 = 1;
+	bool ActiveTeleport5 = false;
+	int tps5 = 1;
 
 	SDL_Texture* ItemHealth1Tex = nullptr;
 	SDL_Texture* ItemHealth2Tex = nullptr;

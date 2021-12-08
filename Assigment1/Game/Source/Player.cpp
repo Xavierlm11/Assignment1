@@ -445,6 +445,26 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			app->scene->ActiveTeleport3 = true;
 			app->scene->tps3 == 1;
 		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT4)
+		{
+			if (app->scene->Point4 == false) {
+				app->audio->PlayFx(GetCheckpoint);
+			}
+			app->scene->Point4 = true;
+			CheckActive4 = true;
+			app->scene->ActiveTeleport4 = true;
+			app->scene->tps4 == 1;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT5)
+		{
+			if (app->scene->Point5 == false) {
+				app->audio->PlayFx(GetCheckpoint);
+			}
+			app->scene->Point5 = true;
+			CheckActive5 = true;
+			app->scene->ActiveTeleport5 = true;
+			app->scene->tps5 == 1;
+		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM1)
 		{
 			item1Used = true;

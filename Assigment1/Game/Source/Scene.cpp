@@ -321,6 +321,7 @@ bool Scene::Update(float dt)
 			app->map->Draw();
 			// Draw map
 			DrawScene();
+			Checkpoints();
 			
 			break;
 	case GAME_OVER:
@@ -438,55 +439,94 @@ void Scene::DrawScene()
 
 void Scene::Checkpoints()
 {
-	if (Point1 == true && CheckUsed1 == false) {
-		app->SaveGameRequest();
-		Point1 = false;
-		CheckUsed1 = true;
-	}
-	if (Point2 == true && CheckUsed2 == false) {
-		app->SaveGameRequest();
-		Point2 = false;
-		CheckUsed2 = true;
-	}
-	if (Point3 == true && CheckUsed3 == false) {
-		app->SaveGameRequest();
-		Point3 = false;
-		CheckUsed3 = true;
-	}
+	if (actualScene == 1) {
+		if (Point1 == true && CheckUsed1 == false) {
+			app->SaveGameRequest();
+			Point1 = false;
+			CheckUsed1 = true;
+		}
+		if (Point2 == true && CheckUsed2 == false) {
+			app->SaveGameRequest();
+			Point2 = false;
+			CheckUsed2 = true;
+		}
+		if (Point3 == true && CheckUsed3 == false) {
+			app->SaveGameRequest();
+			Point3 = false;
+			CheckUsed3 = true;
+		}
 
-	if (Point1 == false) {
-		app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckPoint.GetCurrentFrame()));
-	}
-	if (Point1 == true) {
-		app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckpointUsed.GetCurrentFrame()));
-	}
-	if (Point2 == false) {
-		app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckPoint.GetCurrentFrame()));
-	}
-	if (Point2 == true) {
-		app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckpointUsed.GetCurrentFrame()));
-	}
-	if (Point3 == false) {
-		app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckPoint.GetCurrentFrame()));
-	}
-	if (Point3 == true) {
-		app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckpointUsed.GetCurrentFrame()));
-	}
+		if (Point1 == false) {
+			app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckPoint.GetCurrentFrame()));
+		}
+		if (Point1 == true) {
+			app->render->DrawTexture(CheckpointTex, 70, 255, &(CheckpointUsed.GetCurrentFrame()));
+		}
+		if (Point2 == false) {
+			app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckPoint.GetCurrentFrame()));
+		}
+		if (Point2 == true) {
+			app->render->DrawTexture(CheckpointTex, 233, 23, &(CheckpointUsed.GetCurrentFrame()));
+		}
+		if (Point3 == false) {
+			app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckPoint.GetCurrentFrame()));
+		}
+		if (Point3 == true) {
+			app->render->DrawTexture(CheckpointTex, 590, 216, &(CheckpointUsed.GetCurrentFrame()));
+		}
 
-	if (app->player->CheckActive1 == true) {
-		app->render->DrawTexture(NameCheckTex1, app->player->position.x - 20, app->player->position.y + 100, NULL);
-		app->player->CheckActive1 = false;
+		if (app->player->CheckActive1 == true) {
+			app->render->DrawTexture(NameCheckTex1, app->player->position.x - 20, app->player->position.y + 100, NULL);
+			app->player->CheckActive1 = false;
+		}
+		if (app->player->CheckActive2 == true) {
+			app->render->DrawTexture(NameCheckTex2, app->player->position.x - 20, app->player->position.y + 100, NULL);
+			app->player->CheckActive2 = false;
+		}
+		if (app->player->CheckActive3 == true) {
+			app->render->DrawTexture(NameCheckTex3, app->player->position.x - 20, app->player->position.y + 100, NULL);
+			app->player->CheckActive3 = false;
+		}
+		CheckPoint.Update();
+		CheckpointUsed.Update();
 	}
-	if (app->player->CheckActive2 == true) {
-		app->render->DrawTexture(NameCheckTex2, app->player->position.x - 20, app->player->position.y + 100, NULL);
-		app->player->CheckActive2 = false;
+	if (actualScene == 2) {
+		if (Point4 == true && CheckUsed4 == false) {
+			app->SaveGameRequest();
+			Point4 = false;
+			CheckUsed4 = true;
+		}
+		if (Point5 == true && CheckUsed5 == false) {
+			app->SaveGameRequest();
+			Point5 = false;
+			CheckUsed5 = true;
+		}
+
+		if (Point4 == false) {
+			app->render->DrawTexture(CheckpointTex, 108, 136, &(CheckPoint.GetCurrentFrame()));
+		}
+		if (Point5 == false) {
+			app->render->DrawTexture(CheckpointTex, 640, 110, &(CheckPoint.GetCurrentFrame()));
+		}
+		if (Point4 == true) {
+			app->render->DrawTexture(CheckpointTex, 108, 137, &(CheckpointUsed.GetCurrentFrame()));
+		}
+		if (Point5 == true) {
+			app->render->DrawTexture(CheckpointTex, 640, 111, &(CheckpointUsed.GetCurrentFrame()));
+		}
+
+		if (app->player->CheckActive4 == true) {
+			app->render->DrawTexture(NameCheckTex1, app->player->position.x - 20, app->player->position.y + 100, NULL);
+			app->player->CheckActive4 = false;
+		}
+		if (app->player->CheckActive5 == true) {
+			app->render->DrawTexture(NameCheckTex2, app->player->position.x - 20, app->player->position.y + 100, NULL);
+			app->player->CheckActive5 = false;
+		}
+		CheckPoint.Update();
+		CheckpointUsed.Update();
 	}
-	if (app->player->CheckActive3 == true) {
-		app->render->DrawTexture(NameCheckTex3, app->player->position.x - 20, app->player->position.y + 100, NULL);
-		app->player->CheckActive3 = false;
-	}
-	CheckPoint.Update();
-	CheckpointUsed.Update();
+	
 
 }
 
