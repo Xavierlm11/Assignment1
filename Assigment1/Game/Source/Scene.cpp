@@ -322,6 +322,7 @@ bool Scene::Update(float dt)
 			// Draw map
 			DrawScene();
 			Checkpoints();
+			Teleports();
 			
 			break;
 	case GAME_OVER:
@@ -526,103 +527,127 @@ void Scene::Checkpoints()
 		CheckPoint.Update();
 		CheckpointUsed.Update();
 	}
-	
-
 }
-
-
 
 
 void Scene::Teleports()
 {
-	if (ActiveTeleport1 == true) { //TP 1
-		if (tps1 == 1) {
-			app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-		}
-		if (tps1 == 2) {
-			app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-		}
-		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
-			tps1 += 1;
-		}
-		if (tps1 == 3) {
-			tps1 = 1;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 1 && Point2 == true) {//Checkpoint 2 from 1
-			app->player->position.x = 233;
-			app->player->position.y = 5;
+	if (actualScene == 1) {
+		if (ActiveTeleport1 == true) { //TP 1
+			if (tps1 == 1) {
+				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (tps1 == 2) {
+				app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+				tps1 += 1;
+			}
+			if (tps1 == 3) {
+				tps1 = 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 1 && Point2 == true) {//Checkpoint 2 from 1
+				app->player->position.x = 233;
+				app->player->position.y = 5;
+				ActiveTeleport1 = false;
+				app->audio->PlayFx(teleportFx);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 2 && Point3 == true) {//Checkpoint 3 from 1
+				app->player->position.x = 590;
+				app->player->position.y = 200;
+				ActiveTeleport1 = false;
+				app->audio->PlayFx(teleportFx);
+			}
 			ActiveTeleport1 = false;
-			app->audio->PlayFx(teleportFx);
 		}
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps1 == 2 && Point3 == true) {//Checkpoint 3 from 1
-			app->player->position.x = 590;
-			app->player->position.y = 200;
-			ActiveTeleport1 = false;
-			app->audio->PlayFx(teleportFx);
-		}
-		ActiveTeleport1 = false;
-	}
 
-	if (ActiveTeleport2 == true) { //TP 2
-		if (tps2 == 1) {
-			app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-		}
-		if (tps2 == 2) {
-			app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-		}
-		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
-			tps2 += 1;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
-			tps2 -= 1;
-		}
-		if (tps2 == 3 || tps2 == 0) {
-			tps2 = 1;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 1 && Point1 == true) {//Checkpoint 1 from 2
-			app->player->position.x = 70;
-			app->player->position.y = 240;
+		if (ActiveTeleport2 == true) { //TP 2
+			if (tps2 == 1) {
+				app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (tps2 == 2) {
+				app->render->DrawTexture(Teleport3Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+				tps2 += 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+				tps2 -= 1;
+			}
+			if (tps2 == 3 || tps2 == 0) {
+				tps2 = 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 1 && Point1 == true) {//Checkpoint 1 from 2
+				app->player->position.x = 70;
+				app->player->position.y = 240;
+				ActiveTeleport2 = false;
+				app->audio->PlayFx(teleportFx);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 2 && Point3 == true) {//Checkpoint 3 from 2
+				app->player->position.x = 590;
+				app->player->position.y = 200;
+				ActiveTeleport2 = false;
+				app->audio->PlayFx(teleportFx);
+			}
 			ActiveTeleport2 = false;
-			app->audio->PlayFx(teleportFx);
 		}
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps2 == 2 && Point3 == true) {//Checkpoint 3 from 2
-			app->player->position.x = 590;
-			app->player->position.y = 200;
-			ActiveTeleport2 = false;
-			app->audio->PlayFx(teleportFx);
-		}
-		ActiveTeleport2 = false;
-	}
 
-	if (ActiveTeleport3 == true) { //TP 3
-		if (tps3 == 1) {
-			app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-		}
-		if (tps3 == 2) {
-			app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
-		}
-		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
-			tps3 += 1;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
-			tps3 -= 1;
-		}
-		if (tps3 == 3 || tps3 == 0) {
-			tps3 = 1;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 1 && Point1 == true) {//Checkpoint 1 from 3
-			app->player->position.x = 70;
-			app->player->position.y = 240;
+		if (ActiveTeleport3 == true) { //TP 3
+			if (tps3 == 1) {
+				app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (tps3 == 2) {
+				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+				tps3 += 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+				tps3 -= 1;
+			}
+			if (tps3 == 3 || tps3 == 0) {
+				tps3 = 1;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 1 && Point1 == true) {//Checkpoint 1 from 3
+				app->player->position.x = 70;
+				app->player->position.y = 240;
+				ActiveTeleport3 = false;
+				app->audio->PlayFx(teleportFx);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 2 && Point2 == true) {//Checkpoint 2 from 3
+				app->player->position.x = 233;
+				app->player->position.y = 5;
+				ActiveTeleport3 = false;
+				app->audio->PlayFx(teleportFx);
+			}
 			ActiveTeleport3 = false;
-			app->audio->PlayFx(teleportFx);
 		}
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps3 == 2 && Point2 == true) {//Checkpoint 2 from 3
-			app->player->position.x = 233;
-			app->player->position.y = 5;
-			ActiveTeleport3 = false;
-			app->audio->PlayFx(teleportFx);
+	}
+	if (actualScene == 2) {
+		if (ActiveTeleport4 == true) { //TP 4
+			if (tps4 == 1) {
+				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps4 == 1 && Point5 == true) {//Checkpoint 1 from 3
+				app->player->position.x = 645;
+				app->player->position.y = 95;
+				ActiveTeleport4 = false;
+				app->audio->PlayFx(teleportFx);
+			}
+			ActiveTeleport4 = false;
 		}
-		ActiveTeleport3 = false;
+		if (ActiveTeleport5 == true) { //TP 4
+			if (tps5 == 1) {
+				app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps5 == 1 && Point4 == true) {//Checkpoint 1 from 3
+				app->player->position.x = 108;
+				app->player->position.y = 125;
+				ActiveTeleport5 = false;
+				app->audio->PlayFx(teleportFx);
+			}
+			ActiveTeleport4 = false;
+		}
 	}
 
 }
