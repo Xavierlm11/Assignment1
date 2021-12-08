@@ -58,6 +58,9 @@ public:
 	float scrollerX = 0;
 	float scrollerX1 = 0;
 
+	float scrollerX2 = 0;
+	float scrollerX3 = 0;
+
 	bool Point1 = false;
 	bool CheckUsed1 = false;
 	bool Point2 = false;
@@ -106,6 +109,9 @@ private:
 	SDL_Texture* PressEnterTex;
 	SDL_Texture* EnterStartTex;
 	SDL_Texture* GalaxyTex;
+	SDL_Texture* Level2Paral1;
+	SDL_Texture* Level2Paral2;
+
 	//scenes animations
 	Animation Press;
 	Animation intro;

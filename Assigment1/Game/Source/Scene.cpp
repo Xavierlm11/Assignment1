@@ -121,6 +121,8 @@ bool Scene::Start()
 	EnterStartTex = app->tex->Load("Assets/textures/PressEnter.png");
 	Enter = app->tex->Load("Assets/textures/LoseEnter.png");
 	GalaxyTex= app->tex->Load("Assets/textures/GalaxyTex.png");
+	Level2Paral1 = app->tex->Load("Assets/textures/Level2Parallax1.png");
+	Level2Paral2 = app->tex->Load("Assets/textures/Level2Parallax2.png");
 
 	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
@@ -317,6 +319,8 @@ bool Scene::Update(float dt)
 				currentScene = SCENE;
 			}	
 			app->map->Draw();
+			// Draw map
+			DrawScene();
 			
 			break;
 	case GAME_OVER:
@@ -391,13 +395,20 @@ bool Scene::SaveState(pugi::xml_node& data) const {
 
 
 ////++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Function calls
+//                            Function calls
 ////++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 void Scene::DrawScene()
 {
-	app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
-	app->render->DrawTexture(GalaxyTex, scrollerX1, 0, NULL);
+	if (app->scene->currentScene == SCENE) {
+		app->render->DrawTexture(bgpa, scrollerX, 0, NULL);
+		app->render->DrawTexture(GalaxyTex, scrollerX1, 0, NULL);
+	}
+	if (app->scene->currentScene == SCENE2) {
+		app->render->DrawTexture(Level2Paral1, scrollerX2-75, -40, NULL);
+		/*app->render->DrawTexture(GalaxyTex, scrollerX3, 0, NULL);*/
+	}
+
 	app->map->Draw();
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {

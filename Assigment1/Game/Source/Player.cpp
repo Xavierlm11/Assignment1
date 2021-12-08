@@ -166,8 +166,15 @@ bool Player::Update(float dt) {
 			currentAnimation = &walkAnimR;
 			PlayerPosition = true;
 		}
-		app->scene->scrollerX -= speed / 6;
-		app->scene->scrollerX1 -= speed /24;
+		if (app->scene->currentScene == SCENE) {
+			app->scene->scrollerX -= speed / 6;
+			app->scene->scrollerX1 -= speed / 24;
+		}
+		if (app->scene->currentScene == SCENE2) {
+			app->scene->scrollerX2 -= speed / 6;
+			app->scene->scrollerX3 -= speed / 24;
+		}		
+
 	}
 
 	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
@@ -179,8 +186,14 @@ bool Player::Update(float dt) {
 			currentAnimation = &walkAnimL;
 			PlayerPosition = false;
 		}
-		app->scene->scrollerX += speed / 6;
-		app->scene->scrollerX1 += speed / 24;
+		if (app->scene->currentScene == SCENE) {
+			app->scene->scrollerX += speed / 6;
+			app->scene->scrollerX1 += speed / 24;
+		}
+		if (app->scene->currentScene == SCENE2) {
+			app->scene->scrollerX2 += speed / 6;
+			app->scene->scrollerX3 += speed / 24;
+		}
 	}
 	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false)  && god == true)
 	{
