@@ -67,7 +67,7 @@ public:
 	bool item2Used = false;
 
 	bool Key = false;
-
+	
 	int Money = 0;
 	uint GetCoin = 0;
 

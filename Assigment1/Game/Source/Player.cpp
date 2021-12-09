@@ -467,24 +467,16 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM1)
 		{
-			item1Used = true;
 			if (PlayerLives < 5) {
-				app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] = false;
+				item1Used = true;
 				app->audio->PlayFx(GetItem);
-			}
-			if (PlayerLives >= 5) {
-				item1Used = false;
 			}
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM2)
 		{
-			item2Used = true;
 			if (PlayerLives < 5) {
-				app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] = false;
+				item2Used = true;
 				app->audio->PlayFx(GetItem);
-			}
-			if (PlayerLives >= 5) {
-				item2Used = false;
 			}
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::KEY)

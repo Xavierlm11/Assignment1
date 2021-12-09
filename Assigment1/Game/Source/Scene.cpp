@@ -379,19 +379,34 @@ bool Scene::LoadState(pugi::xml_node& data) {
 	CheckUsed1 = data.child("teleport").attribute("check1").as_bool();
 	CheckUsed2 = data.child("teleport").attribute("check2").as_bool();
 	CheckUsed3 = data.child("teleport").attribute("check3").as_bool();
+	CheckUsed4 = data.child("teleport").attribute("check4").as_bool();
+	CheckUsed5 = data.child("teleport").attribute("check5").as_bool();
+
+	app->player->Money = data.child("Money").attribute("coins").as_int();
+
+	app->player->item1Used = data.child("Health").attribute("item1").as_bool();
+	app->player->item2Used = data.child("Health").attribute("item2").as_bool();
 
 	return true;
 }
 bool Scene::SaveState(pugi::xml_node& data) const {
 	pugi::xml_node teleports = data.child("teleport");
+	pugi::xml_node coins = data.child("Money");
+	pugi::xml_node items = data.child("Health");
 
 	teleports.attribute("check1").set_value(CheckUsed1);
 	teleports.attribute("check2").set_value(CheckUsed2);
 	teleports.attribute("check3").set_value(CheckUsed3);
+	teleports.attribute("check4").set_value(CheckUsed4);
+	teleports.attribute("check5").set_value(CheckUsed5);
+
+	coins.attribute("coins").set_value(app->player->Money);
+
+	items.attribute("item1").set_value(app->player->item1Used);
+	items.attribute("item2").set_value(app->player->item2Used);
 
 	return true;
 }
-
 
 ////++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //                            Function calls
@@ -702,6 +717,13 @@ void Scene::Health()
 	}
 	if (app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] == true) {
 		app->render->DrawTexture(ItemHealth2Tex, 200, 285, NULL);
+	}
+	if (app->player->item1Used == true) {
+		app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] = false;
+	}
+
+	if (app->player->item2Used == true) {
+		app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] = false;
 	}
 
 }
