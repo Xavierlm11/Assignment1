@@ -149,209 +149,8 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt) {
 	bool ret = true;
-	float speed = 2*dt*0.09;
 	
-	if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) )
-	{
-		if (god) { god = false; }
-		else if (!god) { god = true; }
-		
-	}
-	if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR==false)
-	{
-		position.x += speed;
-		if (currentAnimation != &walkAnimR)
-		{
-			walkAnimR.Reset();
-			currentAnimation = &walkAnimR;
-			PlayerPosition = true;
-		}
-		if (app->scene->currentScene == SCENE) {
-			app->scene->scrollerX -= speed / 6;
-			app->scene->scrollerX1 -= speed / 24;
-		}
-		if (app->scene->currentScene == SCENE2) {
-			app->scene->scrollerX2 -= speed / 8;
-			app->scene->scrollerX3 -= speed / 14;
-		}		
-
-	}
-
-	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
-	{
-		position.x -= speed*0.68;
-		if (currentAnimation != &walkAnimL)
-		{
-			walkAnimL.Reset();
-			currentAnimation = &walkAnimL;
-			PlayerPosition = false;
-		}
-		if (app->scene->currentScene == SCENE) {
-			app->scene->scrollerX += speed / 6;
-			app->scene->scrollerX1 += speed / 24;
-		}
-		if (app->scene->currentScene == SCENE2) {
-			app->scene->scrollerX2 += speed / 8;
-			app->scene->scrollerX3 += speed / 12;
-		}
-	}
-	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false)  && god == true)
-	{
-		position.y -= speed*2;		
-	}
-	if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && contact == false && god == true)
-	{
-		position.y += speed;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		if (PlayerPosition == false) {
-			jumpAnimL.Reset();
-			currentAnimation = &jumpAnimL;
-		}
-		if (PlayerPosition == true)
-		{
-			jumpAnimR.Reset();
-			currentAnimation = &jumpAnimR;
-		}
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		if (PlayerPosition == false) {
-			jumpAnimL.Reset();
-			currentAnimation = &jumpAnimL;
-		}
-		if (PlayerPosition == true)
-		{
-			jumpAnimR.Reset();
-			currentAnimation = &jumpAnimR;
-		}
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
-	{
-		if (PlayerPosition == false) {
-			jumpAnimL.Reset();
-			currentAnimation = &jumpAnimL;
-		}
-		if (PlayerPosition == true)
-		{
-			jumpAnimR.Reset();
-			currentAnimation = &jumpAnimR;
-		}
-
-		jumping = true;
-		dbjump = true;
-	}
-	if (jumping == true)
-	{
-		position.y -= 3;
-		jumped += 10;
-	}
-	 if (jumped>=100)
-	{
-		jumping = false;
-		jumped = 0;
-	}
-	 if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN  && dbjump==true)
-	 { 
-		 jumped = 0;
-		 dbjump = false;
-	 }
-	//player animation if no movement detected
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
-			if (currentAnimation != &idleAnimR && currentAnimation != &idleAnimL && currentAnimation != &jumpAnimR && currentAnimation != &jumpAnimL) {
-				if (PlayerPosition == true) {
-					idleAnimR.Reset();
-					currentAnimation = &idleAnimR;
-				}
-				if (PlayerPosition == false) {
-					idleAnimL.Reset();
-					currentAnimation = &idleAnimL;
-				}
-			}
-		}
-
-		if(app->scene->currentScene==SCENE){
-			//PLAYER LIMITS
-			if (position.x > 660)
-			{
-				position.x = 660;
-			}
-			if (position.y < 0) {
-				position.y = 0;
-			}
-			if (position.x < 20) {
-				position.x = 20;
-			}
-		}
-	
-		currentAnimation->Update();
-
-		if (death == true && god==false )
-		{
-			if (PlayerPosition == true) {
-			PlayerDeathR.Reset();
-			currentAnimation = &PlayerDeathR;
-			}
-			if (PlayerPosition == false) {
-				PlayerDeathL.Reset();
-				currentAnimation = &PlayerDeathL;
-			}
-			death = false;
-			app->scene->silence = true;
-			app->scene->currentScene = GAME_OVER;
-		}
-		
-		//Gravity
-		if (contact == false && god == false&&jumping==false) {
-			position.y += 3;
-		}
-
-		//Lifes
-		if (PlayerLives > 5) {
-			PlayerLives = 5;
-		}
-
-		if (app->scene->currentScene == SCENE){
-			if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-			{
-				PlayerLives -= 1;
-			}
-
-			if (app->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-			{
-				PlayerLives += 1;
-			}
-
-			if (PlayerLives == 5) {
-				app->render->DrawTexture(HealthBarTex, 5 ,5,&(Bar5.GetCurrentFrame()),0);
-			}
-			if (PlayerLives == 4) {
-				app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar4.GetCurrentFrame()), 0);
-			}
-			if (PlayerLives == 3) {
-				app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar3.GetCurrentFrame()), 0);
-			}
-			if (PlayerLives == 2) {
-				app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar2.GetCurrentFrame()), 0);
-			}
-			if (PlayerLives == 1) {
-				app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar1.GetCurrentFrame()), 0);
-			}
-			if (item1Used == true && PlayerLives < 5) {
-				PlayerLives += 1;
-				item1Used = false;
-			}
-			if (item2Used == true && PlayerLives < 5) {
-				PlayerLives += 1;
-				item2Used = false;
-			}
-			if (PlayerLives == 0) {
-				LOG("MORISTE");
-				death = true;
-			}
-		}
-
+	MovementPlayer(dt);
 		
 	return ret;
 }
@@ -393,6 +192,26 @@ bool Player::CleanUp()
 	return true;
 }
 
+// Load Game State PLAYER POSITION
+bool Player::LoadState(pugi::xml_node& data)
+{
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
+
+	return true;
+}
+
+
+// Save Game State PLAYER POSITION
+bool Player::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node pos = data.child("position");
+
+	pos.attribute("x").set_value(position.x);
+	pos.attribute("y").set_value(position.y);
+
+	return true;
+}
 
 void Player::OnCollision(Collider* c1, Collider* c2) {
 	
@@ -525,4 +344,209 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->scene->AllowTeleport = true;
 			}
 		}
+}
+
+void Player::MovementPlayer(float dt) {
+	float speed = 2 * dt * 0.09;
+
+	if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN))
+	{
+		if (god) { god = false; }
+		else if (!god) { god = true; }
+
+	}
+	if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR == false)
+	{
+		position.x += speed;
+		if (currentAnimation != &walkAnimR)
+		{
+			walkAnimR.Reset();
+			currentAnimation = &walkAnimR;
+			PlayerPosition = true;
+		}
+		if (app->scene->currentScene == SCENE) {
+			app->scene->scrollerX -= speed / 6;
+			app->scene->scrollerX1 -= speed / 24;
+		}
+		if (app->scene->currentScene == SCENE2) {
+			app->scene->scrollerX2 -= speed / 8;
+			app->scene->scrollerX3 -= speed / 14;
+		}
+
+	}
+
+	if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && sidesL == false)
+	{
+		position.x -= speed * 0.68;
+		if (currentAnimation != &walkAnimL)
+		{
+			walkAnimL.Reset();
+			currentAnimation = &walkAnimL;
+			PlayerPosition = false;
+		}
+		if (app->scene->currentScene == SCENE) {
+			app->scene->scrollerX += speed / 6;
+			app->scene->scrollerX1 += speed / 24;
+		}
+		if (app->scene->currentScene == SCENE2) {
+			app->scene->scrollerX2 += speed / 8;
+			app->scene->scrollerX3 += speed / 12;
+		}
+	}
+	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false) && god == true)
+	{
+		position.y -= speed * 2;
+	}
+	if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && contact == false && god == true)
+	{
+		position.y += speed;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		if (PlayerPosition == false) {
+			jumpAnimL.Reset();
+			currentAnimation = &jumpAnimL;
+		}
+		if (PlayerPosition == true)
+		{
+			jumpAnimR.Reset();
+			currentAnimation = &jumpAnimR;
+		}
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		if (PlayerPosition == false) {
+			jumpAnimL.Reset();
+			currentAnimation = &jumpAnimL;
+		}
+		if (PlayerPosition == true)
+		{
+			jumpAnimR.Reset();
+			currentAnimation = &jumpAnimR;
+		}
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
+	{
+		if (PlayerPosition == false) {
+			jumpAnimL.Reset();
+			currentAnimation = &jumpAnimL;
+		}
+		if (PlayerPosition == true)
+		{
+			jumpAnimR.Reset();
+			currentAnimation = &jumpAnimR;
+		}
+
+		jumping = true;
+		dbjump = true;
+	}
+	if (jumping == true)
+	{
+		position.y -= 3;
+		jumped += 10;
+	}
+	if (jumped >= 100)
+	{
+		jumping = false;
+		jumped = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN && dbjump == true)
+	{
+		jumped = 0;
+		dbjump = false;
+	}
+	//player animation if no movement detected
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
+		if (currentAnimation != &idleAnimR && currentAnimation != &idleAnimL && currentAnimation != &jumpAnimR && currentAnimation != &jumpAnimL) {
+			if (PlayerPosition == true) {
+				idleAnimR.Reset();
+				currentAnimation = &idleAnimR;
+			}
+			if (PlayerPosition == false) {
+				idleAnimL.Reset();
+				currentAnimation = &idleAnimL;
+			}
+		}
+	}
+
+	if (app->scene->currentScene == SCENE) {
+		//PLAYER LIMITS
+		if (position.x > 660)
+		{
+			position.x = 660;
+		}
+		if (position.y < 0) {
+			position.y = 0;
+		}
+		if (position.x < 20) {
+			position.x = 20;
+		}
+	}
+
+	currentAnimation->Update();
+
+	if (death == true && god == false)
+	{
+		if (PlayerPosition == true) {
+			PlayerDeathR.Reset();
+			currentAnimation = &PlayerDeathR;
+		}
+		if (PlayerPosition == false) {
+			PlayerDeathL.Reset();
+			currentAnimation = &PlayerDeathL;
+		}
+		death = false;
+		app->scene->silence = true;
+		app->scene->currentScene = GAME_OVER;
+	}
+
+	//Gravity
+	if (contact == false && god == false && jumping == false) {
+		position.y += 3;
+	}
+
+	//Lifes
+	if (PlayerLives > 5) {
+		PlayerLives = 5;
+	}
+
+	if (app->scene->currentScene == SCENE) {
+		if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+		{
+			PlayerLives -= 1;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+		{
+			PlayerLives += 1;
+		}
+
+		if (PlayerLives == 5) {
+			app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar5.GetCurrentFrame()), 0);
+		}
+		if (PlayerLives == 4) {
+			app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar4.GetCurrentFrame()), 0);
+		}
+		if (PlayerLives == 3) {
+			app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar3.GetCurrentFrame()), 0);
+		}
+		if (PlayerLives == 2) {
+			app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar2.GetCurrentFrame()), 0);
+		}
+		if (PlayerLives == 1) {
+			app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar1.GetCurrentFrame()), 0);
+		}
+		if (item1Used == true && PlayerLives < 5) {
+			PlayerLives += 1;
+			item1Used = false;
+		}
+		if (item2Used == true && PlayerLives < 5) {
+			PlayerLives += 1;
+			item2Used = false;
+		}
+		if (PlayerLives == 0) {
+			LOG("MORISTE");
+			death = true;
+		}
+	}
 }

@@ -38,10 +38,17 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2) override ;
+
+	//All player movement
+	void MovementPlayer(float dt);
+
+	// Load / Save
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
 	
-	// Load Texture
-	SDL_Texture* const Load(const char* path);
-	SDL_Texture* const LoadSurface(SDL_Surface* surface);
+	//// Load Texture
+	//SDL_Texture* const Load(const char* path);
+	//SDL_Texture* const LoadSurface(SDL_Surface* surface);
 
 	iPoint position;
 
@@ -57,6 +64,13 @@ public:
 	int jumped;
 	bool dbjump;
 
+	
+
+public:
+	List<SDL_Texture*> player;
+
+	
+
 	bool CheckActive1 = false;
 	bool CheckActive2 = false;
 	bool CheckActive3 = false;
@@ -67,16 +81,12 @@ public:
 	bool item2Used = false;
 
 	bool Key = false;
-	
+
 	int Money = 0;
 	uint GetCoin = 0;
 
 	//Player Lives
 	int PlayerLives = 5;
-
-public:
-	List<SDL_Texture*> player;
-
 private:
 	bool PlayerPosition = true;
 

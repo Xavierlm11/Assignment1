@@ -96,27 +96,6 @@ bool Render::CleanUp()
 }
 
 
-// Load Game State PLAYER POSITION
-bool Render::LoadState(pugi::xml_node& data)
-{
-	app->player->position.x = data.child("position").attribute("x").as_int();
-	app->player->position.y = data.child("position").attribute("y").as_int();
-
-	return true;
-}
-
-
-// Save Game State PLAYER POSITION
-bool Render::SaveState(pugi::xml_node& data) const
-{
-	pugi::xml_node pos = data.child("position");
-
-	pos.attribute("x").set_value(app->player->position.x);
-	pos.attribute("y").set_value(app->player->position.y);
-
-	return true;
-}
-
 void Render::SetBackgroundColor(SDL_Color color)
 {
 	background = color;

@@ -9,7 +9,6 @@
 
   <renderer>
     <vsync value="false"/>
-	  
   </renderer>
 
   <window>
