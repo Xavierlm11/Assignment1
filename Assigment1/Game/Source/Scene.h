@@ -90,6 +90,8 @@ public:
 	bool CoinUsed1 = false;
 	bool CoinUsed2 = false;
 	bool CoinUsed3 = false;
+
+	bool AllowTeleport = false;
 public:
 	void DrawScene();
 	void Checkpoints();
@@ -101,6 +103,7 @@ public:
 	void SetGameOver();
 	void StartCollidersLevel1();
 	void StartCollidersLevel2();
+	void Level1ToLevel2();
 
 	int actualScene = 1;
 	//void;
@@ -148,6 +151,7 @@ private:
 	SDL_Texture* Teleport3Tex = nullptr;
 	Collider* Item1 = nullptr;
 	Collider* Item2 = nullptr;
+	Collider* Teleport = nullptr;
 
 	//Key
 	SDL_Texture* KeyTex = nullptr;

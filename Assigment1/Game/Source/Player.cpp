@@ -522,11 +522,15 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed3 = true;
 		}
-		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA )
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA)
 		{
 			LOG("MORISTE");
 			death = true;
 		}
-	
-	
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::TELEPORT)
+		{
+			if (Key == true) {
+				app->scene->AllowTeleport = true;
+			}
+		}
 }

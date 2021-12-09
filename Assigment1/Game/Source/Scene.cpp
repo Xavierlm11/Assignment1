@@ -296,16 +296,13 @@ bool Scene::Update(float dt)
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
-			app->coll->clean();
-			app->map->CleanUp();
-			level2 = true;
-			actualScene = 2;
-			app->player->position.x = 40;
-			app->player->position.y = 50;
-			app->SaveGameRequest();
-			currentScene = SCENE2;		
+			Level1ToLevel2();
+		}
 
-		}		
+		if (AllowTeleport == true) {
+			Level1ToLevel2();
+			AllowTeleport = false;
+		}
 
 		break;
 		case SCENE2:
@@ -628,7 +625,7 @@ void Scene::Teleports()
 			if (tps4 == 1) {
 				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
 			}
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps4 == 1 && Point5 == true) {//Checkpoint 1 from 3
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps4 == 1 && Point5 == true) {
 				app->player->position.x = 645;
 				app->player->position.y = 95;
 				ActiveTeleport4 = false;
@@ -636,11 +633,11 @@ void Scene::Teleports()
 			}
 			ActiveTeleport4 = false;
 		}
-		if (ActiveTeleport5 == true) { //TP 4
+		if (ActiveTeleport5 == true) { //TP 5
 			if (tps5 == 1) {
 				app->render->DrawTexture(Teleport1Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
 			}
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps5 == 1 && Point4 == true) {//Checkpoint 1 from 3
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && tps5 == 1 && Point4 == true) {
 				app->player->position.x = 108;
 				app->player->position.y = 125;
 				ActiveTeleport5 = false;
@@ -779,10 +776,25 @@ void Scene::StartCollidersLevel1()
 	CoinColl1 = app->coll->AddCollider({ 18,171, 12,12 }, Collider::Type::COIN1, this);
 	CoinColl2 = app->coll->AddCollider({ 540, 135, 12,12 }, Collider::Type::COIN2, this);
 	CoinColl3 = app->coll->AddCollider({ 289, 175, 12,12 }, Collider::Type::COIN3, this);
+
+	//Teleport
+	Teleport= app->coll->AddCollider({ 80,44, 12,12 }, Collider::Type::TELEPORT, this);
 }
 
 void Scene::StartCollidersLevel2() 
 {
 	Check4 = app->coll->AddCollider({ 108, 140, 20,20 }, Collider::Type::CHECKPOINT4, this);
 	Check5 = app->coll->AddCollider({ 640, 117, 20,20 }, Collider::Type::CHECKPOINT5, this);
+}
+
+void Scene::Level1ToLevel2() {
+	
+	app->coll->clean();
+	app->map->CleanUp();
+	level2 = true;
+	actualScene = 2;
+	app->player->position.x = 40;
+	app->player->position.y = 50;
+	app->SaveGameRequest();
+	currentScene = SCENE2;	
 }

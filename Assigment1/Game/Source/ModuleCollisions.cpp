@@ -73,6 +73,7 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::LAVA][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::LAVA][Collider::Type::PARED] = false;
 	matrix[Collider::Type::LAVA][Collider::Type::SUELO] = false;
+	matrix[Collider::Type::LAVA][Collider::Type::TELEPORT] = false;
 
 	//PLAYER HEAD
 	matrix[Collider::Type::PLAYERHEAD][Collider::Type::PLAYERHEAD] = false;
@@ -174,6 +175,12 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::TIERRA][Collider::Type::PLAYERRIGHT] = true;
 	matrix[Collider::Type::TIERRA][Collider::Type::PLAYERLEFT] = true;
 	matrix[Collider::Type::TIERRA][Collider::Type::PLAYERHEAD] = true;
+
+	//TELEPORT
+	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERHEAD] = false;
 }
 
 // Destructor
@@ -319,6 +326,9 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::TIERRA: // red
 			app->render->DrawRectangle(colliders[i]->rect, 150, 150, 250, alpha);
+			break;
+			case Collider::Type::TELEPORT:
+			app->render->DrawRectangle(colliders[i]->rect, 170, 150, 50, alpha);
 			break;
 		}
 	}

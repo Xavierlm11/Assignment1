@@ -23,6 +23,7 @@ struct Collider
 		CHECKPOINT3,
 		CHECKPOINT4,
 		CHECKPOINT5,
+		TELEPORT,
 		ITEM1,
 		ITEM2,
 		KEY,
