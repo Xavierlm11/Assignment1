@@ -26,6 +26,8 @@ struct Collider
 		TELEPORT,
 		ITEM1,
 		ITEM2,
+		ITEM3,
+		ITEM4,
 		KEY,
 		COIN1,
 		COIN2,

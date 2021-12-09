@@ -79,6 +79,8 @@ public:
 
 	bool item1Used = false;
 	bool item2Used = false;
+	bool item3Used = false;
+	bool item4Used = false;
 
 	bool Key = false;
 

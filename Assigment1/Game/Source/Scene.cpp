@@ -320,6 +320,8 @@ bool Scene::Update(float dt)
 			DrawScene();
 			Checkpoints();
 			Teleports();
+			Health();
+			Coins();
 			
 			break;
 	case GAME_OVER:
@@ -684,17 +686,6 @@ void Scene::Keys()
 
 void Scene::Coins()
 {
-	if (CoinUsed1 == false) {
-		app->render->DrawTexture(CoinTex, 18, 172, &(CoinAnim.GetCurrentFrame()));
-	}
-	if (CoinUsed2 == false) {
-		app->render->DrawTexture(CoinTex, 540, 135, &(CoinAnim.GetCurrentFrame()));
-	}
-	if (CoinUsed3 == false) {
-		app->render->DrawTexture(CoinTex, 290, 174, &(CoinAnim.GetCurrentFrame()));
-	}
-	CoinAnim.Update();
-
 	if (app->player->Money == 1) {
 		app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin1.GetCurrentFrame()));
 	}
@@ -704,6 +695,22 @@ void Scene::Coins()
 	if (app->player->Money == 3) {
 		app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin3.GetCurrentFrame()));
 	}
+	
+	if (actualScene == 1) {
+		if (CoinUsed1 == false) {
+			app->render->DrawTexture(CoinTex, 18, 172, &(CoinAnim.GetCurrentFrame()));
+		}
+		if (CoinUsed2 == false) {
+			app->render->DrawTexture(CoinTex, 540, 135, &(CoinAnim.GetCurrentFrame()));
+		}
+		if (CoinUsed3 == false) {
+			app->render->DrawTexture(CoinTex, 290, 174, &(CoinAnim.GetCurrentFrame()));
+		}
+		CoinAnim.Update();		
+	}
+	/*if (actualScene == 2) {
+
+	}*/
 
 }
 
@@ -712,18 +719,33 @@ void Scene::Coins()
 
 void Scene::Health()
 {
-	if (app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] == true) {
-		app->render->DrawTexture(ItemHealth1Tex, 460, 214, NULL);
+	if (actualScene == 1) {
+		if (app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] == true) {
+			app->render->DrawTexture(ItemHealth1Tex, 460, 214, NULL);
+		}
+		if (app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] == true) {
+			app->render->DrawTexture(ItemHealth2Tex, 200, 285, NULL);
+		}
+		if (app->player->item1Used == true) {
+			app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] = false;
+		}
+		if (app->player->item2Used == true) {
+			app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] = false;
+		}
 	}
-	if (app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] == true) {
-		app->render->DrawTexture(ItemHealth2Tex, 200, 285, NULL);
-	}
-	if (app->player->item1Used == true) {
-		app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] = false;
-	}
-
-	if (app->player->item2Used == true) {
-		app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] = false;
+	if (actualScene == 2) {
+		if (app->coll->matrix[Collider::Type::ITEM3][Collider::Type::PLAYER] == true) {
+			app->render->DrawTexture(ItemHealth1Tex, 600, 90, NULL);
+		}
+		if (app->coll->matrix[Collider::Type::ITEM4][Collider::Type::PLAYER] == true) {
+			app->render->DrawTexture(ItemHealth2Tex, 970, 105, NULL);
+		}
+		if (app->player->item3Used == true) {
+			app->coll->matrix[Collider::Type::ITEM3][Collider::Type::PLAYER] = false;
+		}
+		if (app->player->item4Used == true) {
+			app->coll->matrix[Collider::Type::ITEM4][Collider::Type::PLAYER] = false;
+		}
 	}
 
 }
@@ -807,6 +829,9 @@ void Scene::StartCollidersLevel2()
 {
 	Check4 = app->coll->AddCollider({ 108, 140, 20,20 }, Collider::Type::CHECKPOINT4, this);
 	Check5 = app->coll->AddCollider({ 640, 117, 20,20 }, Collider::Type::CHECKPOINT5, this);
+
+	Item3= app->coll->AddCollider({ 600, 90, 12,12 }, Collider::Type::ITEM3, this);
+	Item4 = app->coll->AddCollider({ 970, 105, 12,12 }, Collider::Type::ITEM4, this);
 }
 
 void Scene::Level1ToLevel2() {

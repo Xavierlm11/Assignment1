@@ -151,6 +151,8 @@ private:
 	SDL_Texture* Teleport3Tex = nullptr;
 	Collider* Item1 = nullptr;
 	Collider* Item2 = nullptr;
+	Collider* Item3 = nullptr;
+	Collider* Item4 = nullptr;
 	Collider* Teleport = nullptr;
 
 	//Key

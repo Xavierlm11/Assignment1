@@ -298,6 +298,20 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->audio->PlayFx(GetItem);
 			}
 		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM3)
+		{
+			if (PlayerLives < 5) {
+				item3Used = true;
+				app->audio->PlayFx(GetItem);
+			}
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM4)
+		{
+			if (PlayerLives < 5) {
+				item4Used = true;
+				app->audio->PlayFx(GetItem);
+			}
+		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::KEY)
 		{
 			if (Key == false) {
@@ -510,7 +524,7 @@ void Player::MovementPlayer(float dt) {
 		PlayerLives = 5;
 	}
 
-	if (app->scene->currentScene == SCENE) {
+	if (app->scene->currentScene == SCENE|| app->scene->currentScene == SCENE2) {
 		if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 		{
 			PlayerLives -= 1;
@@ -543,6 +557,14 @@ void Player::MovementPlayer(float dt) {
 		if (item2Used == true && PlayerLives < 5) {
 			PlayerLives += 1;
 			item2Used = false;
+		}
+		if (item3Used == true && PlayerLives < 5) {
+			PlayerLives += 1;
+			item3Used = false;
+		}
+		if (item4Used == true && PlayerLives < 5) {
+			PlayerLives += 1;
+			item4Used = false;
 		}
 		if (PlayerLives == 0) {
 			LOG("MORISTE");

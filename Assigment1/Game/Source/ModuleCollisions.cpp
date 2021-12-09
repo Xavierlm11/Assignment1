@@ -140,6 +140,18 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::ITEM2][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::ITEM2][Collider::Type::PLAYERHEAD] = false;
 
+	//ITEM3
+	matrix[Collider::Type::ITEM3][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ITEM3][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::ITEM3][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::ITEM3][Collider::Type::PLAYERHEAD] = false;
+
+	//ITEM4
+	matrix[Collider::Type::ITEM4][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ITEM4][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::ITEM4][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::ITEM4][Collider::Type::PLAYERHEAD] = false;
+
 	//KEY
 	matrix[Collider::Type::KEY][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::KEY][Collider::Type::PLAYERRIGHT] = false;
@@ -307,6 +319,11 @@ void ModuleCollisions::DebugDraw()
 			app->render->DrawRectangle(colliders[i]->rect, 255, 150, 20, alpha);
 			break;
 			case Collider::Type::ITEM2: // red
+			app->render->DrawRectangle(colliders[i]->rect, 255, 150, 20, alpha);
+			break; case Collider::Type::ITEM3: // red
+			app->render->DrawRectangle(colliders[i]->rect, 255, 150, 20, alpha);
+			break;
+			break; case Collider::Type::ITEM4: // red
 			app->render->DrawRectangle(colliders[i]->rect, 255, 150, 20, alpha);
 			break;
 			case Collider::Type::KEY: // red
