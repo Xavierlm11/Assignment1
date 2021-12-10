@@ -148,6 +148,8 @@ private:
 	SDL_Texture* NameCheckTex3 = nullptr;
 
 	//Teleports
+	SDL_Texture* TeleportToLevel2Tex = nullptr;
+	Animation TeleportAnim;
 	SDL_Texture* Teleport1Tex = nullptr;
 	SDL_Texture* Teleport2Tex = nullptr;
 	SDL_Texture* Teleport3Tex = nullptr;

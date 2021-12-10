@@ -96,6 +96,10 @@ Scene::Scene() : Module()
 	GetCoin5.PushBack({ 300,2,30,12 });
 	GetCoin5.loop = false;
 
+	TeleportAnim.PushBack({0,0,25,35});
+	TeleportAnim.loop = true;
+	TeleportAnim.speed = 0.15f;
+
 }
 
 // Destructor
@@ -129,6 +133,7 @@ bool Scene::Start()
 	GalaxyTex= app->tex->Load("Assets/textures/GalaxyTex.png");
 	Level2Paral1 = app->tex->Load("Assets/textures/Level2Parallax1.png");
 	Level2Paral2 = app->tex->Load("Assets/textures/Level2Parallax2.png");
+	TeleportToLevel2Tex = app->tex->Load("Assets/textures/TeleportTex.png");
 
 	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
@@ -553,6 +558,8 @@ void Scene::Checkpoints()
 void Scene::Teleports()
 {
 	if (actualScene == 1) {
+		
+		app->render->DrawTexture(TeleportToLevel2Tex, 80, 44, &(TeleportAnim.GetCurrentFrame()));
 		if (ActiveTeleport1 == true) { //TP 1
 			if (tps1 == 1) {
 				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
@@ -666,7 +673,7 @@ void Scene::Teleports()
 				ActiveTeleport5 = false;
 				app->audio->PlayFx(teleportFx);
 			}
-			ActiveTeleport4 = false;
+			ActiveTeleport5 = false;
 		}
 	}
 
