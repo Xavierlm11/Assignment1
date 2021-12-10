@@ -90,6 +90,8 @@ public:
 	bool CoinUsed1 = false;
 	bool CoinUsed2 = false;
 	bool CoinUsed3 = false;
+	bool CoinUsed4 = false;
+	bool CoinUsed5 = false;
 
 	bool AllowTeleport = false;
 public:
@@ -162,10 +164,12 @@ private:
 
 	//Coins
 	SDL_Texture* CoinTex = nullptr;
-	Animation CoinAnim, GetCoin1, GetCoin2, GetCoin3;
+	Animation CoinAnim, GetCoin1, GetCoin2, GetCoin3, GetCoin4, GetCoin5;
 	Collider* CoinColl1 = nullptr;
 	Collider* CoinColl2 = nullptr;
 	Collider* CoinColl3 = nullptr;
+	Collider* CoinColl4 = nullptr;
+	Collider* CoinColl5 = nullptr;
 	
 	SDL_Texture* pathTex;
 	SDL_Texture* originTex;

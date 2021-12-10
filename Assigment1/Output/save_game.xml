@@ -5,8 +5,8 @@
 	<textures />
 	<audio />
 	<scene>
-		<teleport check1="false" check2="false" check3="false" check4="true" check5="false" />
-		<Money coins="2" />
+		<teleport check1="false" check2="false" check3="false" check4="false" check5="false" />
+		<Money coins="0" />
 		<Health item1="false" item2="false" />
 	</scene>
 	<enemy>
@@ -14,6 +14,6 @@
 	</enemy>
 	<renderer />
 	<player>
-		<position x="106" y="107" />
+		<position x="50" y="18" />
 	</player>
 </game_state>

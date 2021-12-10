@@ -90,6 +90,12 @@ Scene::Scene() : Module()
 	GetCoin3.PushBack({ 231,2,30,12 });
 	GetCoin3.loop = false;
 
+	GetCoin4.PushBack({ 266,2,30,12 });
+	GetCoin4.loop = false;
+
+	GetCoin5.PushBack({ 300,2,30,12 });
+	GetCoin5.loop = false;
+
 }
 
 // Destructor
@@ -695,6 +701,12 @@ void Scene::Coins()
 	if (app->player->Money == 3) {
 		app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin3.GetCurrentFrame()));
 	}
+	if (app->player->Money ==4) {
+		app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin4.GetCurrentFrame()));
+	}
+	if (app->player->Money == 5) {
+		app->render->DrawTexture(CoinTex, app->player->position.x + 70, app->player->position.y - 54, &(GetCoin5.GetCurrentFrame()));
+	}
 	
 	if (actualScene == 1) {
 		if (CoinUsed1 == false) {
@@ -708,9 +720,16 @@ void Scene::Coins()
 		}
 		CoinAnim.Update();		
 	}
-	/*if (actualScene == 2) {
-
-	}*/
+	if (actualScene == 2) {
+		
+		if (CoinUsed4 == false) {
+			app->render->DrawTexture(CoinTex, 650, 163, &(CoinAnim.GetCurrentFrame()));
+		}
+		if (CoinUsed5 == false) {
+			app->render->DrawTexture(CoinTex, 470, 60, &(CoinAnim.GetCurrentFrame()));
+		}
+		CoinAnim.Update();
+	}
 
 }
 
@@ -832,6 +851,9 @@ void Scene::StartCollidersLevel2()
 
 	Item3= app->coll->AddCollider({ 600, 90, 12,12 }, Collider::Type::ITEM3, this);
 	Item4 = app->coll->AddCollider({ 970, 105, 12,12 }, Collider::Type::ITEM4, this);
+
+	CoinColl4 = app->coll->AddCollider({ 650, 163, 12,12 }, Collider::Type::COIN4, this);
+	CoinColl5 = app->coll->AddCollider({ 470, 60, 12,12 }, Collider::Type::COIN5, this);
 }
 
 void Scene::Level1ToLevel2() {

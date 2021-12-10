@@ -347,6 +347,24 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed3 = true;
 		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN4)
+		{
+			if (app->scene->CoinUsed4 == false) {
+				app->coll->matrix[Collider::Type::COIN4][Collider::Type::PLAYER] = false;
+				Money += 1;
+				app->audio->PlayFx(GetCoin);
+			}
+			app->scene->CoinUsed4 = true;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN5)
+		{
+			if (app->scene->CoinUsed5 == false) {
+				app->coll->matrix[Collider::Type::COIN5][Collider::Type::PLAYER] = false;
+				Money += 1;
+				app->audio->PlayFx(GetCoin);
+			}
+			app->scene->CoinUsed5 = true;
+		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA)
 		{
 			LOG("MORISTE");

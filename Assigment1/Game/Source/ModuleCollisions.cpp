@@ -176,6 +176,18 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::COIN3][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::COIN3][Collider::Type::PLAYERHEAD] = false;
 
+	//COIN4
+	matrix[Collider::Type::COIN4][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::COIN4][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::COIN4][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::COIN4][Collider::Type::PLAYERHEAD] = false;
+
+	//COIN5
+	matrix[Collider::Type::COIN5][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::COIN5][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::COIN5][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::COIN5][Collider::Type::PLAYERHEAD] = false;
+
 	//voolador
 	matrix[Collider::Type::VOLADOR][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::VOLADOR][Collider::Type::PLAYERRIGHT] = true;
@@ -330,13 +342,19 @@ void ModuleCollisions::DebugDraw()
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 200, alpha);
 			break;
 			case Collider::Type::COIN1: // red
-			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 200, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 			case Collider::Type::COIN2: // red
-			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 200, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 			case Collider::Type::COIN3: // red
-			app->render->DrawRectangle(colliders[i]->rect, 100, 100, 200, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
+			case Collider::Type::COIN4: // red
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
+			case Collider::Type::COIN5: // red
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 			case Collider::Type::VOLADOR: // red
 			app->render->DrawRectangle(colliders[i]->rect, 150, 150, 250, alpha);
