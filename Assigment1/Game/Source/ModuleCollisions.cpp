@@ -205,6 +205,12 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERHEAD] = false;
+
+	//WIN
+	matrix[Collider::Type::WIN][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::WIN][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::WIN][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::WIN][Collider::Type::PLAYERHEAD] = false;
 }
 
 // Destructor
@@ -364,6 +370,9 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::TELEPORT:
 			app->render->DrawRectangle(colliders[i]->rect, 170, 150, 50, alpha);
+			break;
+			case Collider::Type::WIN:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
 		}
 	}

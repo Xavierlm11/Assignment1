@@ -36,6 +36,8 @@ struct Collider
 		COIN5,
 		VOLADOR,
 		TIERRA,
+		WIN,
+
 		MAX
 	};
 

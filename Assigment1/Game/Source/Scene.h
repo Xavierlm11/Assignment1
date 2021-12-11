@@ -95,6 +95,9 @@ public:
 	bool CoinUsed5 = false;
 
 	bool AllowTeleport = false;
+
+	Animation WinAnim;
+
 public:
 	void DrawScene();
 	void Checkpoints();
@@ -133,7 +136,7 @@ private:
 	Animation Press;
 	Animation intro;
 	Animation EnterStart;
-	Animation WinAnim;
+
 	
 	//Fx
 	uint wasted=0;
@@ -177,6 +180,8 @@ private:
 	Collider* CoinColl3 = nullptr;
 	Collider* CoinColl4 = nullptr;
 	Collider* CoinColl5 = nullptr;
+
+	Collider* WinCol = nullptr;
 	
 	SDL_Texture* pathTex;
 	SDL_Texture* originTex;

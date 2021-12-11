@@ -370,6 +370,12 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			LOG("MORISTE");
 			death = true;
 		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::WIN	)
+		{
+			app->scene->win = true;
+			app->scene->WinAnim.Reset();
+			app->scene->currentScene = WIN_GAME;
+		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::TELEPORT)
 		{
 			if (Key == true) {

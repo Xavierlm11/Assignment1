@@ -358,7 +358,6 @@ bool Scene::Update(float dt)
 				win = true;
 				WinAnim.Reset();
 				currentScene = WIN_GAME;
-
 			}
 			
 			break;
@@ -971,6 +970,8 @@ void Scene::StartCollidersLevel2()
 
 	CoinColl4 = app->coll->AddCollider({ 650, 163, 12,12 }, Collider::Type::COIN4, this);
 	CoinColl5 = app->coll->AddCollider({ 470, 60, 12,12 }, Collider::Type::COIN5, this);
+
+	WinCol = app->coll->AddCollider({ 1400, 113, 12,25 }, Collider::Type::WIN, this);
 }
 
 void Scene::Level1ToLevel2() {
