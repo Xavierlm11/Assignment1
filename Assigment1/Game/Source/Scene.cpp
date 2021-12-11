@@ -97,6 +97,13 @@ Scene::Scene() : Module()
 	GetCoin5.loop = false;
 
 	TeleportAnim.PushBack({0,0,25,35});
+	TeleportAnim.PushBack({ 51,0,25,35 });
+	TeleportAnim.PushBack({ 102,0,25,35 });
+	TeleportAnim.PushBack({ 153,0,25,35 });
+	TeleportAnim.PushBack({ 205,0,25,35 });
+	TeleportAnim.PushBack({ 256,0,25,35 });
+	TeleportAnim.PushBack({ 307,0,25,35 });
+	TeleportAnim.PushBack({ 358,0,25,35 });
 	TeleportAnim.loop = true;
 	TeleportAnim.speed = 0.15f;
 
@@ -325,7 +332,12 @@ bool Scene::Update(float dt)
 				/*app->map->CreateColliders();*/
 				actualScene = 1; 
 				currentScene = SCENE;
-			}	
+			}
+
+			if (silence) {
+				app->audio->PlayMusic("Assets/audio/music/BackgroundMusicLevel2.ogg");
+				silence = false;
+			}
 			app->map->Draw();
 			// Draw map
 			DrawScene();
@@ -355,6 +367,7 @@ bool Scene::Update(float dt)
 			{
 				startTitle = true;
 				currentScene = SCENE2;
+				silence = true;
 				app->player->PlayerLives = 5;
 				/*app->render->camera.y = 0;
 				app->render->camera.x = 0;*/
@@ -559,7 +572,9 @@ void Scene::Teleports()
 {
 	if (actualScene == 1) {
 		
-		app->render->DrawTexture(TeleportToLevel2Tex, 80, 44, &(TeleportAnim.GetCurrentFrame()));
+		app->render->DrawTexture(TeleportToLevel2Tex, 72, 23, &(TeleportAnim.GetCurrentFrame()));
+		TeleportAnim.Update();
+
 		if (ActiveTeleport1 == true) { //TP 1
 			if (tps1 == 1) {
 				app->render->DrawTexture(Teleport2Tex, app->player->position.x - 52, app->player->position.y + 90, NULL);
@@ -681,7 +696,6 @@ void Scene::Teleports()
 
 
 
-
 void Scene::Keys()
 {
 	if (app->player->Key == false) {
@@ -693,7 +707,6 @@ void Scene::Keys()
 	KeyAnim.Update();
 
 }
-
 
 
 
@@ -741,8 +754,6 @@ void Scene::Coins()
 }
 
 
-
-
 void Scene::Health()
 {
 	if (actualScene == 1) {
@@ -777,8 +788,6 @@ void Scene::Health()
 }
 
 
-
-
 void Scene::Pathfinding()
 {
 	{int mouseX, mouseY;
@@ -805,8 +814,6 @@ void Scene::Pathfinding()
 	}
 
 }
-
-
 
 
 void Scene::SetGameOver()
@@ -864,7 +871,7 @@ void Scene::StartCollidersLevel2()
 }
 
 void Scene::Level1ToLevel2() {
-	
+	silence = true;
 	app->coll->clean();
 	app->map->CleanUp();
 	level2 = true;
