@@ -494,7 +494,7 @@ void Scene::DrawScene()
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		app->player->position.y = 20;
-		app->player->position.x = 50;
+		app->player->position.x = 40;
 		if (actualScene == 2)
 		{
 			app->coll->clean();
@@ -528,10 +528,15 @@ void Scene::DrawScene()
 		app->scene->CheckUsed4 = false;
 		app->scene->CheckUsed5 = false;
 		app->scene->CoinUsed1 = false;
+		app->coll->matrix[Collider::Type::COIN1][Collider::Type::PLAYER] = true;
 		app->scene->CoinUsed2 = false;
+		app->coll->matrix[Collider::Type::COIN2][Collider::Type::PLAYER] = true;
 		app->scene->CoinUsed3 = false;
+		app->coll->matrix[Collider::Type::COIN3][Collider::Type::PLAYER] = true;
 		app->scene->CoinUsed4 = false;
+		app->coll->matrix[Collider::Type::COIN4][Collider::Type::PLAYER] = true;
 		app->scene->CoinUsed5 = false;
+		app->coll->matrix[Collider::Type::COIN5][Collider::Type::PLAYER] = true;
 		app->scene->silence = true;
 		
 		app->player->god = false;
