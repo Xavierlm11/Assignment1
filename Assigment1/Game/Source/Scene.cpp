@@ -114,6 +114,13 @@ Scene::Scene() : Module()
 	WinAnim.loop = false;
 	WinAnim.speed = 0.15f;
 
+	for (int i = 0; i < 40; i++) {
+		TeleportFinalAnim.PushBack({ i * 25,0,25,25 });
+	}
+	TeleportFinalAnim.loop = true;
+	TeleportFinalAnim.speed = 0.65f;
+
+
 }
 
 // Destructor
@@ -149,6 +156,7 @@ bool Scene::Start()
 	Level2Paral2 = app->tex->Load("Assets/textures/Level2Parallax2.png");
 	TeleportToLevel2Tex = app->tex->Load("Assets/textures/TeleportTex.png");
 	WinScreen = app->tex->Load("Assets/textures/WinScreenTex.png");
+	TeleportFinalTex = app->tex->Load("Assets/textures/PadoruTex.png");
 
 	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
@@ -722,6 +730,8 @@ void Scene::Teleports()
 			}
 			ActiveTeleport5 = false;
 		}
+		app->render->DrawTexture(TeleportFinalTex, 1390, 113, &(TeleportFinalAnim.GetCurrentFrame()));
+		TeleportFinalAnim.Update();
 	}
 
 }
