@@ -389,8 +389,15 @@ void Player::MovementPlayer(float dt) {
 
 	if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN))
 	{
-		if (god) { god = false; }
-		else if (!god) { god = true; }
+		if (god) 
+		{
+			god = false; 
+		}
+		else if (!god) 
+		{
+			god = true;
+			app->audio->PlayMusic(("Assets/audio/music/GodMode.ogg"));
+		}
 
 	}
 	if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && sidesR == false)
