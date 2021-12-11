@@ -202,9 +202,9 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 
 	//TELEPORT
 	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERRIGHT] = false;
-	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERLEFT] = false;
-	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERRIGHT] = true;
+	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERLEFT] = true;
+	matrix[Collider::Type::TELEPORT][Collider::Type::PLAYERHEAD] = true;
 
 	//WIN
 	matrix[Collider::Type::WIN][Collider::Type::PLAYER] = true;

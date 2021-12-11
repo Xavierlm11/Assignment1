@@ -376,9 +376,8 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			app->scene->WinAnim.Reset();
 			app->scene->currentScene = WIN_GAME;
 		}
-		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::TELEPORT)
+		if ((c1->type == Collider::Type::PLAYER || c1->type == Collider::Type::PLAYERHEAD || c1->type == Collider::Type::PLAYERLEFT || c1->type == Collider::Type::PLAYERRIGHT) && c2->type == Collider::Type::TELEPORT)
 		{
-			
 			if (Key == true) {
 				app->scene->AllowTeleport = true;
 			}

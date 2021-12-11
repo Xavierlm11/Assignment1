@@ -329,6 +329,17 @@ bool Scene::Update(float dt)
 
 		break;
 		case SCENE2:
+			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && UwU==0) {
+				BugFixer = true;
+			}
+			if (BugFixer == true) {
+				app->player->position.x = 40;
+				app->player->position.y = 0;
+				scrollerX2 = 0;
+				scrollerX3 = 0;
+				BugFixer = false;
+				UwU = 1;
+			}
 
 			if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 				app->coll->clean();
@@ -346,6 +357,7 @@ bool Scene::Update(float dt)
 				app->player->position.y = -100;
 				silence = false;
 			}
+
 			app->map->Draw();
 			// Draw map
 			DrawScene();
@@ -978,8 +990,6 @@ void Scene::StartCollidersLevel2()
 }
 
 void Scene::Level1ToLevel2() {
-	/*app->player->position.x = 40;
-	app->player->position.y = 0;*/
 	silence = true;
 	app->coll->clean();
 	app->map->CleanUp();
