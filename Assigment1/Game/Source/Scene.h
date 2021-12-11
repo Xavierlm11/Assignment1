@@ -124,6 +124,7 @@ private:
 	SDL_Texture* GameOver;
 	SDL_Texture* Enter;
 	SDL_Texture* WinScreen;
+	SDL_Texture* TeleportFinalTex;
 
 	//parallax
 	SDL_Texture* img;
@@ -140,6 +141,7 @@ private:
 	Animation Press;
 	Animation intro;
 	Animation EnterStart;
+	Animation TeleportFinalAnim;
 
 	
 	//Fx
