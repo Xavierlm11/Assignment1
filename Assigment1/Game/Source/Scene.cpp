@@ -107,6 +107,13 @@ Scene::Scene() : Module()
 	TeleportAnim.loop = true;
 	TeleportAnim.speed = 0.15f;
 
+	//Win Animation
+	for (int i = 0; i < 50; i++) {
+		WinAnim.PushBack({ i * 240,0,240,168 });
+	}
+	WinAnim.loop = false;
+	WinAnim.speed = 0.15f;
+
 }
 
 // Destructor
@@ -141,6 +148,7 @@ bool Scene::Start()
 	Level2Paral1 = app->tex->Load("Assets/textures/Level2Parallax1.png");
 	Level2Paral2 = app->tex->Load("Assets/textures/Level2Parallax2.png");
 	TeleportToLevel2Tex = app->tex->Load("Assets/textures/TeleportTex.png");
+	WinScreen = app->tex->Load("Assets/textures/WinScreenTex.png");
 
 	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
@@ -163,6 +171,7 @@ bool Scene::Start()
 	//Fx
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 	teleportFx = app->audio->LoadFx("Assets/audio/fx/TeleportFx.wav");
+	winFx = app->audio->LoadFx("Assets/audio/fx/WinFx.wav");
 	
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
 
@@ -311,6 +320,12 @@ bool Scene::Update(float dt)
 			Level1ToLevel2();
 		}
 
+		if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
+			win = true;
+			WinAnim.Reset();
+			currentScene = WIN_GAME;
+		}
+
 		if (AllowTeleport == true) {
 			Level1ToLevel2();
 			AllowTeleport = false;
@@ -338,6 +353,13 @@ bool Scene::Update(float dt)
 			Teleports();
 			Health();
 			Coins();
+
+			if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
+				win = true;
+				WinAnim.Reset();
+				currentScene = WIN_GAME;
+
+			}
 			
 			break;
 	case GAME_OVER:
@@ -362,6 +384,25 @@ bool Scene::Update(float dt)
 			}
 		}
 		break;
+	case WIN_GAME:
+		SetWinGame();
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			if (actualScene == 1)
+			{
+				startTitle = true;
+				currentScene = SCENE;
+				app->player->PlayerLives = 5;
+				app->LoadGameRequest();
+			}
+			if (actualScene == 2)
+			{
+				startTitle = true;
+				currentScene = SCENE2;
+				silence = true;
+				app->player->PlayerLives = 5;
+				app->LoadGameRequest();
+			}
+		}
 	}
 	return true;
 }
@@ -878,6 +919,24 @@ void Scene::SetGameOver()
 	app->render->DrawTexture(GameOver, 0, 0);
 	app->render->DrawTexture(Enter, 62, 100, &(Press.GetCurrentFrame()));
 
+}
+
+void Scene::SetWinGame() {
+	app->player->position.y = 20000;
+	app->player->position.x = 20000;
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
+
+	WinAnim.Update();
+	if (win)
+	{
+		app->audio->PlayFx(winFx);
+		win = false;
+		app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
+	}
+	
+	app->render->DrawTexture(WinScreen, 0, 0, &(WinAnim.GetCurrentFrame()));
+	
 }
 
 

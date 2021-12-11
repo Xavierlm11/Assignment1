@@ -12,7 +12,8 @@ enum State
 	TITLE_SCREEN,
 	SCENE,
 	SCENE2,
-	GAME_OVER
+	GAME_OVER,
+	WIN_GAME
 };
 
 
@@ -51,6 +52,7 @@ public:
 
 	bool startTitle=true;
 	bool silence=true;
+	bool win;
 	bool level1=false;
 	bool level2=false;
 	
@@ -102,6 +104,7 @@ public:
 	void Health();
 	void Pathfinding();
 	void SetGameOver();
+	void SetWinGame();
 	void StartCollidersLevel1();
 	void StartCollidersLevel2();
 	void Level1ToLevel2();
@@ -113,6 +116,7 @@ private:
 	SDL_Texture* bgTexture;
 	SDL_Texture* GameOver;
 	SDL_Texture* Enter;
+	SDL_Texture* WinScreen;
 
 	//parallax
 	SDL_Texture* img;
@@ -129,9 +133,11 @@ private:
 	Animation Press;
 	Animation intro;
 	Animation EnterStart;
+	Animation WinAnim;
 	
 	//Fx
 	uint wasted=0;
+	uint winFx = 0;
 	uint teleportFx = 0;
 	
 	//CheckPoint
