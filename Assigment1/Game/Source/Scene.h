@@ -96,6 +96,9 @@ public:
 
 	bool AllowTeleport = false;
 
+	bool BugFixer = false;
+	int UwU = 0;
+
 	Animation WinAnim;
 
 public:
