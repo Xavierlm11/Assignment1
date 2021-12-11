@@ -230,7 +230,10 @@ bool Scene::PreUpdate()
 		app->map->Load("level2.tmx");
 		StartCollidersLevel2();
 		app->map->CreateColliders();
+		//app->player->position.x = 40;
+		//app->player->position.y = 50;
 		level2 = false;
+		
 	}
 
 
@@ -281,7 +284,7 @@ bool Scene::Update(float dt)
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 		}
 
-		{int speed = 8;
+	
 
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
@@ -289,8 +292,6 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 			app->SaveGameRequest();
 
-
-		}
 		// Draw map
 		DrawScene();
 
@@ -316,7 +317,7 @@ bool Scene::Update(float dt)
 			app->map->CreateColliders();
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN || AllowTeleport==true) {
 			Level1ToLevel2();
 		}
 
@@ -326,12 +327,9 @@ bool Scene::Update(float dt)
 			currentScene = WIN_GAME;
 		}
 
-		if (AllowTeleport == true) {
-			Level1ToLevel2();
-		}
-
 		break;
 		case SCENE2:
+
 			if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 				app->coll->clean();
 				app->map->CleanUp();
@@ -343,6 +341,9 @@ bool Scene::Update(float dt)
 
 			if (silence) {
 				app->audio->PlayMusic("Assets/audio/music/BackgroundMusicLevel2.ogg");
+				/*app->LoadGameRequest();*/
+				app->player->position.x = 40;
+				app->player->position.y = -100;
 				silence = false;
 			}
 			app->map->Draw();
@@ -551,11 +552,9 @@ void Scene::DrawScene()
 		app->player->item4Used = false;
 		app->player->Key = false;
 		app->player->Money = 0;
-		app->player->GetCoin = 0;
 		app->player->PlayerLives = 5;
 		app->player->PlayerPosition = true;
 		app->scene->currentScene = SCENE;
-		
 		
 		app->SaveGameRequest();
 	}
@@ -979,14 +978,13 @@ void Scene::StartCollidersLevel2()
 }
 
 void Scene::Level1ToLevel2() {
-	AllowTeleport = false;
+	/*app->player->position.x = 40;
+	app->player->position.y = 0;*/
 	silence = true;
 	app->coll->clean();
 	app->map->CleanUp();
 	level2 = true;
 	actualScene = 2;
-	app->player->position.x = 40;
-	app->player->position.y = 50;
 	app->SaveGameRequest();
-	currentScene = SCENE2;	
+	currentScene = SCENE2;
 }
