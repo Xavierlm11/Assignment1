@@ -328,7 +328,6 @@ bool Scene::Update(float dt)
 
 		if (AllowTeleport == true) {
 			Level1ToLevel2();
-			AllowTeleport = false;
 		}
 
 		break;
@@ -980,6 +979,7 @@ void Scene::StartCollidersLevel2()
 }
 
 void Scene::Level1ToLevel2() {
+	AllowTeleport = false;
 	silence = true;
 	app->coll->clean();
 	app->map->CleanUp();

@@ -158,16 +158,16 @@ bool Player::Update(float dt) {
 bool Player::PostUpdate()
 {
 	bool ret = true;
-	colliderPlayer->SetPos(position.x - 5, position.y + 33);
-	colliderPlayerR->SetPos(position.x + 4, position.y + 26);
-	colliderPlayerL->SetPos(position.x - 9, position.y + 26);
-	colliderHead->SetPos(position.x - 4, position.y + 24);
+	colliderPlayer->SetPos(position.x + 4, position.y + 13);
+	colliderPlayerR->SetPos(position.x + 15, position.y + 4);
+	colliderPlayerL->SetPos(position.x, position.y + 4);
+	colliderHead->SetPos(position.x + 6, position.y + 5);
 	
 	Uint8 alpha = 80;
 	
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();	
 
-	app->render->DrawTexture(texture, position.x - 10, position.y + 20, &rect);//draw player
+	app->render->DrawTexture(texture, position.x, position.y, &rect);//draw player
 
 	contact = false;
 	sidesR = false;
