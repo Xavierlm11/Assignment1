@@ -49,11 +49,10 @@ public:
 
 	State currentScene;
 
-	bool startTitle;
-	bool LoseScreen;
-	bool silence;
+	bool startTitle=true;
+	bool silence=true;
 	bool level1=false;
-	bool level2;
+	bool level2=false;
 	
 	float scrollerX = 0;
 	float scrollerX1 = 0;

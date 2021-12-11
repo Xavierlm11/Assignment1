@@ -89,8 +89,9 @@ public:
 
 	//Player Lives
 	int PlayerLives = 5;
-private:
 	bool PlayerPosition = true;
+private:
+	
 
 	//cargar textura del jugador
 	SDL_Texture* texture = nullptr;
@@ -123,10 +124,7 @@ private:
 	//gravity
 	int gravity = 1;
 	
-	//salto
-	bool startjump = false;
-	int jumpVel = 0;
-	int maxjumpheight = 0;
+
 };
 
 

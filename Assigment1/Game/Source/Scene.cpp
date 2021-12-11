@@ -168,12 +168,6 @@ bool Scene::Start()
 
 	StartCollidersLevel1();
 	
-	startTitle = true;
-	silence = true;
-	level2 = false;
-	app->render->camera.x = 0;
-	app->render->camera.y = 0;
-
 
 	if (app->map->Load("level1.tmx") == true)
 	{
@@ -329,7 +323,6 @@ bool Scene::Update(float dt)
 				app->map->CleanUp();
 				level1 = true;
 				startTitle = true;
-				/*app->map->CreateColliders();*/
 				actualScene = 1; 
 				currentScene = SCENE;
 			}
@@ -356,11 +349,7 @@ bool Scene::Update(float dt)
 			{
 				startTitle = true;
 				currentScene = SCENE;
-				app->player->PlayerLives = 5;
-				/*app->render->camera.y = 0;
-				app->render->camera.x = 0;*/
-				//app->player->position.y = 20;
-				//app->player->position.x = 50;
+				app->player->PlayerLives = 5;		
 				app->LoadGameRequest();
 			}
 			if (actualScene == 2)
@@ -369,10 +358,6 @@ bool Scene::Update(float dt)
 				currentScene = SCENE2;
 				silence = true;
 				app->player->PlayerLives = 5;
-				/*app->render->camera.y = 0;
-				app->render->camera.x = 0;*/
-				//app->player->position.y = 20;
-				//app->player->position.x = 50;
 				app->LoadGameRequest();
 			}
 		}
@@ -470,6 +455,65 @@ void Scene::DrawScene()
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		app->player->position.y = 20;
 		app->player->position.x = 50;
+		if (actualScene == 2)
+		{
+			app->coll->clean();
+			app->map->CleanUp();
+			level1 = true;
+			startTitle = true;
+		}
+		app->scene->actualScene = 1;
+		app->scene->ActiveTeleport1 = false;
+		app->scene->ActiveTeleport2 = false;
+		app->scene->ActiveTeleport3 = false;
+		app->scene->ActiveTeleport4 = false;
+		app->scene->AllowTeleport = false;
+		app->scene->scrollerX = 0;
+		app->scene->scrollerX1 = 0;
+		app->scene->scrollerX2 = 0;
+		app->scene->scrollerX3 = 0;
+		app->scene->tps1 = 1;
+		app->scene->tps2 = 1;
+		app->scene->tps3 = 1;
+		app->scene->tps4 = 1;
+		app->scene->tps5 = 1;
+		app->scene->Point1 = false;
+		app->scene->Point2 = false;
+		app->scene->Point3 = false;
+		app->scene->Point4 = false;
+		app->scene->Point5 = false;
+		app->scene->CheckUsed1 = false;
+		app->scene->CheckUsed2 = false;
+		app->scene->CheckUsed3 = false;
+		app->scene->CheckUsed4 = false;
+		app->scene->CheckUsed5 = false;
+		app->scene->CoinUsed1 = false;
+		app->scene->CoinUsed2 = false;
+		app->scene->CoinUsed3 = false;
+		app->scene->CoinUsed4 = false;
+		app->scene->CoinUsed5 = false;
+		app->scene->silence = true;
+		
+		app->player->god = false;
+		app->player->ActivePlayer = false;
+		app->player->CheckActive1 = false;
+		app->player->CheckActive2 = false;
+		app->player->CheckActive3 = false;
+		app->player->CheckActive4 = false;
+		app->player->CheckActive5 = false;
+		app->player->item1Used = false;
+		app->player->item2Used = false;
+		app->player->item3Used = false;
+		app->player->item4Used = false;
+		app->player->Key = false;
+		app->player->Money = 0;
+		app->player->GetCoin = 0;
+		app->player->PlayerLives = 5;
+		app->player->PlayerPosition = true;
+		app->scene->currentScene = SCENE;
+		
+		
+		app->SaveGameRequest();
 	}
 
 }

@@ -422,7 +422,7 @@ void Player::MovementPlayer(float dt) {
 		}
 		if (app->scene->currentScene == SCENE2) {
 			app->scene->scrollerX2 += speed / 8;
-			app->scene->scrollerX3 += speed / 12;
+			app->scene->scrollerX3 += speed / 14;
 		}
 	}
 	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) && (sidesL == false || sidesR == false) && god == true)
