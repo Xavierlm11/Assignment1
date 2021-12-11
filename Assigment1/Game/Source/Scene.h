@@ -114,6 +114,7 @@ public:
 	void StartCollidersLevel1();
 	void StartCollidersLevel2();
 	void Level1ToLevel2();
+	void ResetGame();
 
 	int actualScene = 1;
 	//void;

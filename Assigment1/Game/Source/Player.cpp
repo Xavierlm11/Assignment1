@@ -556,12 +556,12 @@ void Player::MovementPlayer(float dt) {
 	}
 
 	if (app->scene->currentScene == SCENE|| app->scene->currentScene == SCENE2) {
-		if (app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		{
 			PlayerLives -= 1;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 		{
 			PlayerLives += 1;
 		}
