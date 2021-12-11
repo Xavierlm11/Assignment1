@@ -313,15 +313,12 @@ bool Scene::Update(float dt)
 		// L12b: Debug pathfinding
 		Pathfinding();
 		
-		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
-			app->map->CreateColliders();
-		}
 
-		if (app->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN || AllowTeleport==true) {
+		if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN || AllowTeleport==true) {
 			Level1ToLevel2();
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
 			win = true;
 			WinAnim.Reset();
 			currentScene = WIN_GAME;
@@ -341,7 +338,7 @@ bool Scene::Update(float dt)
 				UwU = 1;
 			}
 
-			if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+			if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
 				app->coll->clean();
 				app->map->CleanUp();
 				level1 = true;
@@ -352,9 +349,6 @@ bool Scene::Update(float dt)
 
 			if (silence) {
 				app->audio->PlayMusic("Assets/audio/music/BackgroundMusicLevel2.ogg");
-				/*app->LoadGameRequest();*/
-				/*app->player->position.x = 40;
-				app->player->position.y = -100;*/
 				silence = false;
 			}
 
@@ -372,7 +366,7 @@ bool Scene::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 				app->SaveGameRequest();
 
-			if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
+			if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
 				win = true;
 				WinAnim.Reset();
 				currentScene = WIN_GAME;
