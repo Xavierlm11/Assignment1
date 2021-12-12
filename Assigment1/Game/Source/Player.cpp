@@ -569,7 +569,7 @@ void Player::MovementPlayer(float dt) {
 			currentAnimation = &jumpAnimR;
 		}
 	}
-
+	int gravity = 3 * dt * 0.09;
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN )
 	{
 		if (jumps == 1)
@@ -598,22 +598,22 @@ void Player::MovementPlayer(float dt) {
 	}
 	if (jumping == true)
 	{
-		position.y -= 3;
+		position.y -= gravity;
 		jumped += 10;
 
-		if (jumped > 120)
+		if (jumped > 70)
 			{
 				jumping = false;
 				jumped = 0;
 			}
 	}
-	
+	int gravity2 = 5 * dt * 0.09;
 	if (jumping2 == true)
 	{
-		position.y -= 5;
+		position.y -= gravity2;
 		jumped2 += 10;
 
-		if (jumped2 > 100)
+		if (jumped2 > 70)
 		{
 			jumping2 = false;
 			jumped2 = 0;
