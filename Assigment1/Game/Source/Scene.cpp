@@ -280,7 +280,7 @@ bool Scene::Update(float dt)
 			app->render->camera.y = 0;
 			app->render->camera.x = 0;
 
-			app->player->position.x = 50;
+			app->player->position.x = 70;
 			app->player->position.y = 15;
 			
 
@@ -366,7 +366,7 @@ bool Scene::Update(float dt)
 				app->map->CleanUp();
 				level1 = true;
 				startTitle = true;
-				app->player->position.x = 40;
+				app->player->position.x = 70;
 				app->player->position.y = 0;
 				actualScene = 1; 
 				currentScene = SCENE;
@@ -640,7 +640,7 @@ void Scene::Teleports()
 {
 	if (actualScene == 1) {
 		
-		app->render->DrawTexture(TeleportToLevel2Tex, 72, 23, &(TeleportAnim.GetCurrentFrame()));
+		app->render->DrawTexture(TeleportToLevel2Tex, 32, 23, &(TeleportAnim.GetCurrentFrame()));
 		TeleportAnim.Update();
 
 		if (ActiveTeleport1 == true) { //TP 1
@@ -943,7 +943,7 @@ void Scene::StartCollidersLevel1()
 	CoinColl3 = app->coll->AddCollider({ 289, 175, 12,12 }, Collider::Type::COIN3, this);
 
 	//Teleport
-	Teleport= app->coll->AddCollider({ 80,44, 12,12 }, Collider::Type::TELEPORT, this);
+	Teleport= app->coll->AddCollider({ 40,44, 12,12 }, Collider::Type::TELEPORT, this);
 }
 
 void Scene::StartCollidersLevel2() 
@@ -975,7 +975,7 @@ void Scene::Level1ToLevel2() {
 void Scene::ResetGame() {
 	
 		app->player->position.y = 20;
-		app->player->position.x = 40;
+		app->player->position.x = 70;
 		if (actualScene == 2)
 		{
 			app->coll->clean();
