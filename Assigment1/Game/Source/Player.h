@@ -94,6 +94,8 @@ public:
 
 	uint JumpFx = 0;
 
+	uint playerAttack = 0;
+
 private:
 	
 

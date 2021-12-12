@@ -8,6 +8,8 @@
 #include "Audio.h"
 #include "ModuleCollisions.h"
 #include "Scene.h"
+#include "ModuleParticles.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -115,6 +117,7 @@ bool Player::Start()
 	GetKey = app->audio->LoadFx("Assets/audio/fx/GetKeyFx.wav");
 	GetCoin = app->audio->LoadFx("Assets/audio/fx/GetCoinFx.wav");
 	JumpFx = app->audio->LoadFx("Assets/audio/fx/JumpFx.wav");
+	playerAttack = app->audio->LoadFx("Assets/audio/fx/PlayerAttackFx.wav");
 
 	currentAnimation = &idleAnimR; //player start with idle anim
 
@@ -131,7 +134,7 @@ bool Player::Start()
 
 	//colliderplayerR y colliderplayerL solo colisionan para las paredes
 
-	misil = app->coll->AddCollider({ position.x,position.y, 5,5}, Collider::Type::PLAYERATTACK,this);
+	//misil = app->coll->AddCollider({ position.x,position.y, 30,30}, Collider::Type::PLAYERATTACK,this);
 	
 	contact = false;
 	death = false;
@@ -412,6 +415,19 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 
 void Player::MovementPlayer(float dt) {
 	float speed = 2 * dt * 0.09;
+	
+	//particles
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		app->audio->PlayFx(playerAttack);
+		if (PlayerPosition == true) {
+			app->particles->PlayerAttack.speed.x = 3;
+			app->particles->AddParticle(app->particles->PlayerAttack, position.x, position.y, 1, Collider::Type::PLAYERATTACK);
+		}
+		if (PlayerPosition == false) {
+			app->particles->PlayerAttack.speed.x = -3;
+			app->particles->AddParticle(app->particles->PlayerAttack, position.x, position.y , 1, Collider::Type::PLAYERATTACK);
+		}
+	}
 
 	if ((app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN))
 	{
