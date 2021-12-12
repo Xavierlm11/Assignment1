@@ -366,6 +366,8 @@ bool Scene::Update(float dt)
 				app->map->CleanUp();
 				level1 = true;
 				startTitle = true;
+				app->player->position.x = 40;
+				app->player->position.y = 0;
 				actualScene = 1; 
 				currentScene = SCENE;
 			}
@@ -464,9 +466,16 @@ bool Scene::LoadState(pugi::xml_node& data) {
 	CheckUsed5 = data.child("teleport").attribute("check5").as_bool();
 
 	app->player->Money = data.child("Money").attribute("coins").as_int();
+	CoinUsed1 = data.child("Money").attribute("coinused1").as_bool();
+	CoinUsed2 = data.child("Money").attribute("coinused2").as_bool();
+	CoinUsed3 = data.child("Money").attribute("coinused3").as_bool();
+	CoinUsed4 = data.child("Money").attribute("coinused4").as_bool();
+	CoinUsed5 = data.child("Money").attribute("coinused5").as_bool();
 
 	app->player->item1Used = data.child("Health").attribute("item1").as_bool();
 	app->player->item2Used = data.child("Health").attribute("item2").as_bool();
+	app->player->item3Used = data.child("Health").attribute("item3").as_bool();
+	app->player->item4Used = data.child("Health").attribute("item4").as_bool();
 
 	return true;
 }
@@ -482,9 +491,16 @@ bool Scene::SaveState(pugi::xml_node& data) const {
 	teleports.attribute("check5").set_value(CheckUsed5);
 
 	coins.attribute("coins").set_value(app->player->Money);
+	coins.attribute("coinused1").set_value(CoinUsed1);
+	coins.attribute("coinused2").set_value(CoinUsed2);
+	coins.attribute("coinused3").set_value(CoinUsed3);
+	coins.attribute("coinused4").set_value(CoinUsed4);
+	coins.attribute("coinused5").set_value(CoinUsed5);
 
 	items.attribute("item1").set_value(app->player->item1Used);
 	items.attribute("item2").set_value(app->player->item2Used);
+	items.attribute("item3").set_value(app->player->item3Used);
+	items.attribute("item4").set_value(app->player->item4Used);
 
 	return true;
 }
@@ -913,7 +929,7 @@ void Scene::StartCollidersLevel1()
 {
 	//Checkpoints colliders
 	Check1 = app->coll->AddCollider({ 70, 260, 20,20 }, Collider::Type::CHECKPOINT1, this);
-	Check2 = app->coll->AddCollider({ 233, 26, 20,20 }, Collider::Type::CHECKPOINT2, this);
+	Check2 = app->coll->AddCollider({ 233, 28, 20,20 }, Collider::Type::CHECKPOINT2, this);
 	Check3 = app->coll->AddCollider({ 590, 220, 20,20 }, Collider::Type::CHECKPOINT3, this);
 
 	//Item Collider
@@ -950,6 +966,8 @@ void Scene::Level1ToLevel2() {
 	app->map->CleanUp();
 	level2 = true;
 	actualScene = 2;
+	app->player->position.x = 40;
+	app->player->position.y = 0;
 	app->SaveGameRequest();
 	currentScene = SCENE2;
 }

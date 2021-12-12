@@ -198,6 +198,10 @@ bool Player::LoadState(pugi::xml_node& data)
 	position.x = data.child("position").attribute("x").as_int();
 	position.y = data.child("position").attribute("y").as_int();
 
+	PlayerLives = data.child("lives").attribute("count").as_int();
+
+	Key = data.child("Key").attribute("keyused").as_bool();
+
 	return true;
 }
 
@@ -206,9 +210,15 @@ bool Player::LoadState(pugi::xml_node& data)
 bool Player::SaveState(pugi::xml_node& data) const
 {
 	pugi::xml_node pos = data.child("position");
+	pugi::xml_node life = data.child("lives");
+	pugi::xml_node key = data.child("Key");
 
 	pos.attribute("x").set_value(position.x);
 	pos.attribute("y").set_value(position.y);
+
+	life.attribute("count").set_value(PlayerLives);
+
+	key.attribute("keyused").set_value(Key);
 
 	return true;
 }
@@ -329,7 +339,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed1 = true;
 		}
-		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN2)
+		if ((c1->type == Collider::Type::PLAYER || c1->type == Collider::Type::PLAYERLEFT || c1->type == Collider::Type::PLAYERRIGHT || c1->type == Collider::Type::PLAYERHEAD) && c2->type == Collider::Type::COIN2)
 		{
 			if (app->scene->CoinUsed2 == false) {
 				app->coll->matrix[Collider::Type::COIN2][Collider::Type::PLAYER] = false;
@@ -338,7 +348,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed2 = true;
 		}
-		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN3)
+		if ((c1->type == Collider::Type::PLAYER || c1->type == Collider::Type::PLAYERLEFT ||  c1->type == Collider::Type::PLAYERRIGHT || c1->type == Collider::Type::PLAYERHEAD) && c2->type == Collider::Type::COIN3)
 		{
 			if (app->scene->CoinUsed3 == false) {
 				app->coll->matrix[Collider::Type::COIN3][Collider::Type::PLAYER] = false;

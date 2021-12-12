@@ -166,15 +166,15 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 
 	//COIN2
 	matrix[Collider::Type::COIN2][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::COIN2][Collider::Type::PLAYERRIGHT] = false;
-	matrix[Collider::Type::COIN2][Collider::Type::PLAYERLEFT] = false;
-	matrix[Collider::Type::COIN2][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::COIN2][Collider::Type::PLAYERRIGHT] = true;
+	matrix[Collider::Type::COIN2][Collider::Type::PLAYERLEFT] = true;
+	matrix[Collider::Type::COIN2][Collider::Type::PLAYERHEAD] = true;
 
 	//COIN3
 	matrix[Collider::Type::COIN3][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::COIN3][Collider::Type::PLAYERRIGHT] = false;
-	matrix[Collider::Type::COIN3][Collider::Type::PLAYERLEFT] = false;
-	matrix[Collider::Type::COIN3][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::COIN3][Collider::Type::PLAYERRIGHT] = true;
+	matrix[Collider::Type::COIN3][Collider::Type::PLAYERLEFT] = true;
+	matrix[Collider::Type::COIN3][Collider::Type::PLAYERHEAD] = true;
 
 	//COIN4
 	matrix[Collider::Type::COIN4][Collider::Type::PLAYER] = true;
