@@ -222,29 +222,30 @@ bool Scene::PreUpdate()
 	//jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
 	jug = app->map->WorldToMap((app->player->position.x), (app->player->position.y));
 
-
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if (originSelected == true)
+	if (currentScene == SCENE) {
+		if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
-			app->pathfinding->CreatePath(origin1, p);
-			originSelected = false;
+			if (originSelected == true)
+			{
+				app->pathfinding->CreatePath(origin1, p);
+				originSelected = false;
+			}
+			else
+			{
+				origin1 = p;
+				originSelected = true;
+			}
 		}
-		else
+
+		/*if (conT==true)
 		{
-			origin1 = p;
-			originSelected = true;
+
+			app->pathfinding->CreatePath(tierra, jug);
+		}*/
+		if (conV == true)
+		{
+			app->pathfinding->CreatePath(volador, jug);
 		}
-	}
-
-	/*if (conT==true)
-	{
-
-		app->pathfinding->CreatePath(tierra, jug);
-	}*/
-	if (conV == true)
-	{
-		app->pathfinding->CreatePath(volador, jug);
 	}
 	if (level1) {
 		app->map->Load("level1.tmx");
@@ -276,6 +277,9 @@ bool Scene::PreUpdate()
 	{
 		app->maxFrameRate = 16;
 	}
+
+	conT = false;
+	conV = false;
 
 	return true;
 }
@@ -920,7 +924,7 @@ void Scene::Pathfinding()
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 
-	uint fpslim = 4;
+	uint fpslim = 5;
 
 	for (uint i = 0; i < path->Count(); ++i)
 	{
@@ -928,6 +932,7 @@ void Scene::Pathfinding()
 		{*/
 		if (i == 1 && app->frameCount % fpslim == 0) {
 			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			pos=app->map->WorldToMap(path->At(i)->x, path->At(i)->y);
 			if (conV)
 			{
 				app->enemies->Enemy2.x = pos.x;
