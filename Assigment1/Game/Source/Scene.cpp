@@ -11,6 +11,7 @@
 #include "Log.h"
 #include "ModuleCollisions.h"
 #include "PathFinding.h"
+#include "ModuleEnemies.h"
 
 
 Scene::Scene() : Module()
@@ -212,6 +213,16 @@ bool Scene::PreUpdate()
 	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
 	p = app->map->WorldToMap(p.x, p.y);
 
+	iPoint tierra;
+	iPoint volador;
+	iPoint jug;
+
+	tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
+	volador = app->map->WorldToMap(app->enemies->Enemy2.x, app->enemies->Enemy2.y);
+	//jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
+	jug = app->map->WorldToMap((app->player->position.x), (app->player->position.y));
+
+
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if (originSelected == true)
@@ -226,6 +237,15 @@ bool Scene::PreUpdate()
 		}
 	}
 
+	/*if (conT==true)
+	{
+
+		app->pathfinding->CreatePath(tierra, jug);
+	}*/
+	if (conV == true)
+	{
+		app->pathfinding->CreatePath(volador, jug);
+	}
 	if (level1) {
 		app->map->Load("level1.tmx");
 		StartCollidersLevel1();
@@ -858,6 +878,33 @@ void Scene::Health()
 }
 
 
+//void Scene::Pathfinding()
+//{
+//	{int mouseX, mouseY;
+//	app->input->GetMousePosition(mouseX, mouseY);
+//	iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
+//
+//	app->input->GetMousePosition(mouseX, mouseY);
+//	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
+//	p = app->map->WorldToMap(p.x, p.y);
+//	p = app->map->MapToWorld(p.x, p.y);
+//
+//	app->render->DrawTexture(pathTex, p.x, p.y);
+//
+//	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+//
+//	for (uint i = 0; i < path->Count(); ++i)
+//	{
+//		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+//		app->render->DrawTexture(pathTex, pos.x, pos.y);
+//	}
+//
+//	iPoint originScreen = app->map->MapToWorld(origin1.x, origin1.y);
+//	app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
+//	}
+//
+//}
+
 void Scene::Pathfinding()
 {
 	{int mouseX, mouseY;
@@ -873,10 +920,27 @@ void Scene::Pathfinding()
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 
+	uint fpslim = 4;
+
 	for (uint i = 0; i < path->Count(); ++i)
 	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(pathTex, pos.x, pos.y);
+		/*if (app->frameCount % fpslim == 0)
+		{*/
+		if (i == 1 && app->frameCount % fpslim == 0) {
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			if (conV)
+			{
+				app->enemies->Enemy2.x = pos.x;
+				app->enemies->Enemy2.y = pos.y;
+			}
+			if (conT)
+			{
+				app->enemies->Enemy1.x = pos.x;
+				app->enemies->Enemy1.y = pos.y;
+			}
+			app->render->DrawTexture(pathTex, pos.x, pos.y);
+		}
+
 	}
 
 	iPoint originScreen = app->map->MapToWorld(origin1.x, origin1.y);

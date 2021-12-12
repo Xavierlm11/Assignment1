@@ -117,6 +117,8 @@ public:
 	void ResetGame();
 
 	int actualScene = 1;
+	bool conT = false;
+	bool conV = false;
 	bool frcap = false;
 	//void;
 private:

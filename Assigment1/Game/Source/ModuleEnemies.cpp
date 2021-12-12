@@ -64,8 +64,10 @@ bool ModuleEnemies::Awake(pugi::xml_node&) {
 
 // Called before the first frame
 bool ModuleEnemies::Start() {
-	positionEnemy.x = 10;
-	positionEnemy.y = 10;
+	Enemy1.x = 540;
+	Enemy1.y = 48;
+	Enemy2.x = 550;
+	Enemy2.y = 150;
 	WaddleDeeTex = app->tex->Load("Assets/textures/WaddleDeeEnemies.png");
 	BooTex = app->tex->Load("Assets/textures/BooSheet.png");
 
@@ -81,8 +83,8 @@ bool ModuleEnemies::PreUpdate(){
 
 bool ModuleEnemies::Update(float dt){
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {
-		positionEnemy.x += 2;
-		
+		Enemy1.x += 2;
+		Enemy2.x += 2;
 		WalkWaddleR.Reset();
 		currentWaddleAnimation = &WalkWaddleR;
 
@@ -90,8 +92,8 @@ bool ModuleEnemies::Update(float dt){
 		currentBooAnimation = &FlyingBooR;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) {
-		positionEnemy.x -= 2;
-
+		Enemy1.x -= 2;
+		Enemy2.x -= 2;
 		WalkWaddleL.Reset();
 		currentWaddleAnimation = &WalkWaddleL;
 
@@ -99,10 +101,12 @@ bool ModuleEnemies::Update(float dt){
 		currentBooAnimation = &FlyingBooL;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {
-		positionEnemy.y += 2;
+		Enemy1.y += 2;
+		Enemy2.y += 2;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) {
-		positionEnemy.y -= 2;
+		Enemy1.y -= 2;
+		Enemy2.y -= 2;
 	}
 
 	currentWaddleAnimation->Update();
@@ -117,10 +121,10 @@ bool ModuleEnemies::PostUpdate(){
 	if (app->scene->currentScene == SCENE) {
 		//Draw Waddle Dee
 		SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
-		app->render->DrawTexture(WaddleDeeTex, positionEnemy.x - 10, positionEnemy.y + 20, &rect);
+		app->render->DrawTexture(WaddleDeeTex, Enemy1.x, Enemy1.y, &rect);
 		//Draw Boo
 		SDL_Rect Boo = currentBooAnimation->GetCurrentFrame();
-		app->render->DrawTexture(BooTex, positionEnemy.x - 40, positionEnemy.y + 30, &Boo);
+		app->render->DrawTexture(BooTex, Enemy2.x, Enemy2.y, &Boo);
 	}
 	
 
@@ -143,17 +147,23 @@ bool ModuleEnemies::CleanUp(){
 }
 
 // Load / Save
-bool ModuleEnemies::LoadState(pugi::xml_node& data){
-	positionEnemy.x = data.child("enemypos").attribute("x").as_int();
-	positionEnemy.y = data.child("enemypos").attribute("y").as_int();
+bool ModuleEnemies::LoadState(pugi::xml_node& data) {
+	Enemy1.x = data.child("enemy1").attribute("x").as_int();
+	Enemy1.y = data.child("enemy1").attribute("y").as_int();
 
+	Enemy2.x = data.child("enemy2").attribute("x").as_int();
+	Enemy2.y = data.child("enemy2").attribute("y").as_int();
 	return true;
 }
-bool ModuleEnemies::SaveState(pugi::xml_node& data) const{
-	pugi::xml_node posenemy = data.child("enemypos");
+bool ModuleEnemies::SaveState(pugi::xml_node& data) const {
+	pugi::xml_node posenemy1 = data.child("enemy1");
+	pugi::xml_node posenemy2 = data.child("enemy2");
 
-	posenemy.attribute("x").set_value(positionEnemy.x);
-	posenemy.attribute("y").set_value(positionEnemy.y);
+	posenemy1.attribute("x").set_value(Enemy1.x);
+	posenemy1.attribute("y").set_value(Enemy1.y);
+
+	posenemy2.attribute("x").set_value(Enemy2.x);
+	posenemy2.attribute("y").set_value(Enemy2.y);
 
 	return true;
 }

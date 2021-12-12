@@ -411,7 +411,18 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->scene->AllowTeleport = true;
 			}
 		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::TIERRA)
+		{
+			LOG("TIERRAAAAAA A LA VISTA");
+			app->scene->conT = true;
+		}
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::VOLADOR)
+		{
+			LOG("AIUDAAAAAA");
+			app->scene->conV = true;
+		}
 }
+
 
 void Player::MovementPlayer(float dt) {
 	float speed = 2 * dt * 0.09;

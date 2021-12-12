@@ -39,7 +39,13 @@ public:
 
 	iPoint positionEnemy;
 
+
+	iPoint Enemy1;
+	iPoint Enemy2;
+	iPoint Enemy3;
+	iPoint Enemy4;
 	List<SDL_Texture*>enemy;
+	
 
 private:
 	SDL_Texture* WaddleDeeTex = nullptr;
