@@ -320,12 +320,19 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				item3Used = true;
 				app->audio->PlayFx(GetItem);
 			}
+			if (item3Used == true && PlayerLives < 5) {
+				PlayerLives += 1;
+			}
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM4)
 		{
 			if (PlayerLives < 5) {
 				item4Used = true;
 				app->audio->PlayFx(GetItem);
+			}
+			if (item4Used == true && PlayerLives < 5) {
+				PlayerLives += 1;
+				item4Used = false;
 			}
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::KEY)
@@ -604,14 +611,6 @@ void Player::MovementPlayer(float dt) {
 		}
 		if (PlayerLives == 1) {
 			app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar1.GetCurrentFrame()), 0);
-		}
-		if (item3Used == true && PlayerLives < 5) {
-			PlayerLives += 1;
-			item3Used = false;
-		}
-		if (item4Used == true && PlayerLives < 5) {
-			PlayerLives += 1;
-			item4Used = false;
 		}
 		if (PlayerLives == 0) {
 			LOG("MORISTE");
