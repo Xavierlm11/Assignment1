@@ -99,7 +99,7 @@ public:
 	Player* player;
 	ModuleCollisions* coll;
 	ModuleEnemies* enemies;
-
+	uint32 maxFrameRate ;
 private:
 
 	int argc;
@@ -131,7 +131,7 @@ private:
 	float averageFps = 0.0f;
 	float dt = 0.0f;
 
-	uint32 maxFrameRate = 16;
+	
 };
 
 extern App* app;

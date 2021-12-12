@@ -391,6 +391,14 @@ void Player::MovementPlayer(float dt) {
 	{
 		if (god) 
 		{
+			if (app->scene->currentScene==SCENE)
+			{
+				app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
+			}
+			if (app->scene->currentScene == SCENE2)
+			{
+				app->audio->PlayMusic("Assets/audio/music/BackgroundMusicLevel2.ogg");
+			}
 			god = false; 
 		}
 		else if (!god) 

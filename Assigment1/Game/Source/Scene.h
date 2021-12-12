@@ -117,6 +117,7 @@ public:
 	void ResetGame();
 
 	int actualScene = 1;
+	bool frcap = false;
 	//void;
 private:
 	//scenes

@@ -244,6 +244,18 @@ bool Scene::PreUpdate()
 		
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		frcap = !frcap;
+
+	}
+	if (frcap) {
+		app->maxFrameRate = 32;
+
+	}
+	else
+	{
+		app->maxFrameRate = 16;
+	}
 
 	return true;
 }
