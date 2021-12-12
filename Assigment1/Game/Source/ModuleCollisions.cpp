@@ -28,6 +28,8 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT1] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT2] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT3] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::ENEMYBOO] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::ENEMYWADDLE] = true;
 
 	//PLAYER RIGHT
 	matrix[Collider::Type::PLAYERRIGHT][Collider::Type::PLAYER] = false;

@@ -443,7 +443,22 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			LOG("MORISTE");
 			death = true;
 		}
-		
+
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ENEMYBOO && hit==false)
+		{
+			PlayerLives -= 1;
+			hit = true;
+		}
+
+		/*if (c1->type != Collider::Type::PLAYER && c2->type != Collider::Type::ENEMYBOO && hit == true) {
+			hit = false;
+		}*/
+
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ENEMYWADDLE)
+		{
+			PlayerLives -= 1;
+		}
+
 		
 }
 

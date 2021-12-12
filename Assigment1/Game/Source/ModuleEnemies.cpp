@@ -88,7 +88,13 @@ bool ModuleEnemies::PreUpdate(){
 bool ModuleEnemies::Update(float dt){
 	//COLLISIONS
 	Enemy1col->SetPos(Enemy1.x, Enemy1.y);
-	Enemy2col->SetPos(Enemy2.x, Enemy2.y);
+	if (app->scene->currentScene == SCENE) {
+		Enemy2col->SetPos(Enemy2.x, Enemy2.y);
+	}
+	else if(app->scene->currentScene==SCENE2) {
+		Enemy2col->SetPos(Enemy2.x+1000, Enemy2.y+1000);
+	}
+	
 
 
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {

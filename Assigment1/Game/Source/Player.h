@@ -67,6 +67,8 @@ public:
 	int jumped2;
 	bool dbjump;
 
+	bool hit = false;
+
 	Collider* misil = nullptr;
 
 public:
