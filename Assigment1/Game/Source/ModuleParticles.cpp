@@ -138,8 +138,8 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, int ty
 			p->position.y = y-20;
 
 			//Adding the particle's collider
-			if (colliderType == Collider::Type::PLAYERATTACK)
-				p->collider = app->coll->AddCollider({app->player->position.x,app->player->position.y, 15,8 }, colliderType, this);
+			if (colliderType == Collider::Type::PLAYERATTACK && p->type == 1)
+				p->collider = app->coll->AddCollider({app->player->position.x,app->player->position.y, 8,8 }, colliderType, this);
 			
 			else {
 				p->collider = app->coll->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);

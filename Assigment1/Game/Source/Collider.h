@@ -38,6 +38,8 @@ struct Collider
 		TIERRA,
 		WIN,
 		PLAYERATTACK,
+		ENEMYBOO,
+		ENEMYWADDLE,
 
 		MAX
 	};

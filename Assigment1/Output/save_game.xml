@@ -5,18 +5,18 @@
 	<textures />
 	<audio />
 	<scene>
-		<teleport check1="true" check2="false" check3="true" check4="false" check5="false" />
-		<Money coins="3" coinused1="true" coinused2="true" coinused3="true" coinused4="false" coinused5="false" />
+		<teleport check1="false" check2="false" check3="false" check4="false" check5="false" />
+		<Money coins="0" coinused1="false" coinused2="false" coinused3="false" coinused4="false" coinused5="false" />
 		<Health item1="false" item2="false" item3="false" item4="false" />
 	</scene>
 	<enemy>
 		<enemy x="10" y="10" />
-		<enemy2 x="512" y="144" />
+		<enemy2 x="550" y="150" />
 	</enemy>
 	<renderer />
 	<player>
-		<position x="58" y="262" />
+		<position x="70" y="18" />
 		<lives count="5" />
-		<Key keyused="true" />
+		<Key keyused="false" />
 	</player>
 </game_state>

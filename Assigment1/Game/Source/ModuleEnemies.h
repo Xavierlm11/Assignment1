@@ -42,10 +42,14 @@ public:
 
 	iPoint Enemy1;
 	iPoint Enemy2;
-	iPoint Enemy3;
-	iPoint Enemy4;
 	List<SDL_Texture*>enemy;
 	
+	Collider* Enemy1col = nullptr;
+	Collider* Enemy2col = nullptr;
+
+
+	int BooLive = 1;
+	int WaddleLive = 1;
 
 private:
 	SDL_Texture* WaddleDeeTex = nullptr;
@@ -60,5 +64,6 @@ private:
 	Animation* currentBooAnimation = nullptr;
 	Animation FlyingBooR,
 		FlyingBooL;
+
 };
 #endif

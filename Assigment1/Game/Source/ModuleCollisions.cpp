@@ -56,6 +56,8 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYERATTACK][Collider::Type::PARED] = true;
 	matrix[Collider::Type::PLAYERATTACK][Collider::Type::SUELO] = true;
 	matrix[Collider::Type::PLAYERATTACK][Collider::Type::LAVA] = true;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::ENEMYWADDLE] = true;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::ENEMYBOO] = true;
 	
 	//SUELO
 	matrix[Collider::Type::SUELO][Collider::Type::SUELO] = false;
@@ -63,6 +65,7 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::SUELO][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::SUELO][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::SUELO][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::SUELO][Collider::Type::PLAYERATTACK] = true;
 	matrix[Collider::Type::SUELO][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::SUELO][Collider::Type::PARED] = false;
 	
@@ -72,6 +75,7 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PARED][Collider::Type::PLAYERRIGHT] = true;
 	matrix[Collider::Type::PARED][Collider::Type::PLAYERLEFT] = true;
 	matrix[Collider::Type::PARED][Collider::Type::PLAYERHEAD] = true;
+	matrix[Collider::Type::PARED][Collider::Type::PLAYERATTACK] = true;
 	matrix[Collider::Type::PARED][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::PARED][Collider::Type::PARED] = false;
 
@@ -93,6 +97,8 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYERHEAD][Collider::Type::LAVA] = false;
 	matrix[Collider::Type::PLAYERHEAD][Collider::Type::PARED] = true;
 	matrix[Collider::Type::PLAYERHEAD][Collider::Type::SUELO] = false;
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::ENEMYWADDLE] = true;
+	matrix[Collider::Type::PLAYERHEAD][Collider::Type::ENEMYBOO] = true;
 
 	//CHECKPOINT 1
 	matrix[Collider::Type::CHECKPOINT1][Collider::Type::PLAYER] = true;
@@ -221,6 +227,21 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::WIN][Collider::Type::PLAYERRIGHT] = false;
 	matrix[Collider::Type::WIN][Collider::Type::PLAYERLEFT] = false;
 	matrix[Collider::Type::WIN][Collider::Type::PLAYERHEAD] = false;
+
+	//BOO 
+	matrix[Collider::Type::ENEMYBOO][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ENEMYBOO][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::ENEMYBOO][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::ENEMYBOO][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::ENEMYBOO][Collider::Type::PLAYERATTACK] = true;
+
+	//WADDLE
+	matrix[Collider::Type::ENEMYWADDLE][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ENEMYWADDLE][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::ENEMYWADDLE][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::ENEMYWADDLE][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::ENEMYWADDLE][Collider::Type::PLAYERATTACK] = true;
+
 }
 
 // Destructor
@@ -385,7 +406,13 @@ void ModuleCollisions::DebugDraw()
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
 			case Collider::Type::PLAYERATTACK:
-			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 255, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+			case Collider::Type::ENEMYBOO:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
+			break;
+			case Collider::Type::ENEMYWADDLE:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 		}
 	}

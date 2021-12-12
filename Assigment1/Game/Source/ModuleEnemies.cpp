@@ -73,6 +73,10 @@ bool ModuleEnemies::Start() {
 
 	currentWaddleAnimation = &WalkWaddleL;
 	currentBooAnimation = &FlyingBooL;
+
+	Enemy1col = app->coll->AddCollider({ Enemy1.x,Enemy1.y,20,20 }, Collider::Type::ENEMYWADDLE, this);
+	Enemy2col = app->coll->AddCollider({ Enemy2.x,Enemy2.y,20,20 }, Collider::Type::ENEMYBOO, this);
+
 	return true;
 }
 
@@ -82,6 +86,11 @@ bool ModuleEnemies::PreUpdate(){
 }
 
 bool ModuleEnemies::Update(float dt){
+	//COLLISIONS
+	Enemy1col->SetPos(Enemy1.x, Enemy1.y);
+	Enemy2col->SetPos(Enemy2.x, Enemy2.y);
+
+
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {
 		Enemy1.x += 2;
 		Enemy2.x += 2;
@@ -116,15 +125,15 @@ bool ModuleEnemies::Update(float dt){
 }
 
 bool ModuleEnemies::PostUpdate(){
-	/*Uint8 alpha = 80;
-	app->render->DrawRectangle({ positionEnemy.x,positionEnemy.y,20,20}, 250, 0, 250, alpha);*/
 	if (app->scene->currentScene == SCENE) {
 		//Draw Waddle Dee
 		SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
 		app->render->DrawTexture(WaddleDeeTex, Enemy1.x, Enemy1.y, &rect);
+		
 		//Draw Boo
 		SDL_Rect Boo = currentBooAnimation->GetCurrentFrame();
 		app->render->DrawTexture(BooTex, Enemy2.x, Enemy2.y, &Boo);
+		
 	}
 	
 
@@ -153,6 +162,7 @@ bool ModuleEnemies::LoadState(pugi::xml_node& data) {
 
 	Enemy2.x = data.child("enemy2").attribute("x").as_int();
 	Enemy2.y = data.child("enemy2").attribute("y").as_int();
+
 	return true;
 }
 bool ModuleEnemies::SaveState(pugi::xml_node& data) const {

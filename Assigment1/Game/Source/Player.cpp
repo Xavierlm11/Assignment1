@@ -9,6 +9,7 @@
 #include "ModuleCollisions.h"
 #include "Scene.h"
 #include "ModuleParticles.h"
+#include "ModuleEnemies.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -236,6 +237,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			contact = true;
 			jumps = 2;
 		}
+
 		if (c1->type == Collider::Type::PLAYERHEAD && c2->type == Collider::Type::PARED)
 		{
 			/*contact = true;*/
@@ -251,6 +253,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			sidesL = true;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT1)
 		{
 			if (app->scene->Point1 == false) {
@@ -261,6 +264,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			app->scene->ActiveTeleport1 = true;
 			app->scene->tps1 == 1;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT2)
 		{
 			if (app->scene->Point2 == false) {
@@ -271,6 +275,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			app->scene->ActiveTeleport2 = true;
 			app->scene->tps2 == 1;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT3)
 		{
 			if (app->scene->Point3 == false) {
@@ -281,6 +286,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			app->scene->ActiveTeleport3 = true;
 			app->scene->tps3 == 1;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT4)
 		{
 			if (app->scene->Point4 == false) {
@@ -291,6 +297,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			app->scene->ActiveTeleport4 = true;
 			app->scene->tps4 == 1;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT5)
 		{
 			if (app->scene->Point5 == false) {
@@ -301,6 +308,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			app->scene->ActiveTeleport5 = true;
 			app->scene->tps5 == 1;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM1)
 		{
 			if (PlayerLives < 5) {
@@ -311,6 +319,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				PlayerLives += 1;
 			}
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM2)
 		{
 			if (PlayerLives < 5) {
@@ -321,6 +330,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				PlayerLives += 1;
 			}
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM3)
 		{
 			if (PlayerLives < 5) {
@@ -331,6 +341,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				PlayerLives += 1;
 			}
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM4)
 		{
 			if (PlayerLives < 5) {
@@ -341,6 +352,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				PlayerLives += 1;
 			}
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::KEY)
 		{
 			if (Key == false) {
@@ -348,6 +360,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			Key = true;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN1)
 		{
 			if (app->scene->CoinUsed1 == false) {
@@ -358,6 +371,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed1 = true;
 		}
+
 		if ((c1->type == Collider::Type::PLAYER || c1->type == Collider::Type::PLAYERLEFT || c1->type == Collider::Type::PLAYERRIGHT || c1->type == Collider::Type::PLAYERHEAD) && c2->type == Collider::Type::COIN2)
 		{
 			if (app->scene->CoinUsed2 == false) {
@@ -367,6 +381,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed2 = true;
 		}
+
 		if ((c1->type == Collider::Type::PLAYER || c1->type == Collider::Type::PLAYERLEFT ||  c1->type == Collider::Type::PLAYERRIGHT || c1->type == Collider::Type::PLAYERHEAD) && c2->type == Collider::Type::COIN3)
 		{
 			if (app->scene->CoinUsed3 == false) {
@@ -376,6 +391,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed3 = true;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN4)
 		{
 			if (app->scene->CoinUsed4 == false) {
@@ -385,6 +401,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed4 = true;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::COIN5)
 		{
 			if (app->scene->CoinUsed5 == false) {
@@ -394,33 +411,48 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			app->scene->CoinUsed5 = true;
 		}
-		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA)
-		{
-			LOG("MORISTE");
-			death = true;
-		}
+	
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::WIN	)
 		{
 			app->scene->win = true;
 			app->scene->WinAnim.Reset();
 			app->scene->currentScene = WIN_GAME;
 		}
+
 		if ((c1->type == Collider::Type::PLAYER || c1->type == Collider::Type::PLAYERHEAD || c1->type == Collider::Type::PLAYERLEFT || c1->type == Collider::Type::PLAYERRIGHT) && c2->type == Collider::Type::TELEPORT)
 		{
 			if (Key == true) {
 				app->scene->AllowTeleport = true;
 			}
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::TIERRA)
 		{
 			LOG("TIERRAAAAAA A LA VISTA");
 			app->scene->conT = true;
 		}
+
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::VOLADOR)
 		{
 			LOG("AIUDAAAAAA");
 			app->scene->conV = true;
 		}
+
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::LAVA)
+		{
+			LOG("MORISTE");
+			death = true;
+		}
+		
+		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ENEMYBOO)
+		{
+			app->enemies->BooLive = 0;
+		}
+				
+		if (c1->type == Collider::Type::PLAYERATTACK && c2->type == Collider::Type::ENEMYWADDLE)
+		{
+			app->enemies->WaddleLive = 0;
+		}	
 }
 
 
