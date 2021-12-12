@@ -217,10 +217,7 @@ bool Scene::PreUpdate()
 	iPoint volador;
 	iPoint jug;
 
-	tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
-	volador = app->map->WorldToMap(app->enemies->Enemy2.x, app->enemies->Enemy2.y);
-	jug = app->map->WorldToMap((app->player->position.x), (app->player->position.y));
-
+	
 	if (currentScene == SCENE) {
 		volador = app->map->WorldToMap(app->enemies->Enemy2.x, app->enemies->Enemy2.y);
 		jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
@@ -240,8 +237,7 @@ bool Scene::PreUpdate()
 
 		if (conV==true && app->enemies->BooLive == 1)
 		{
-			tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
-			jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
+			
 			app->pathfinding->CreatePath(volador, jug);
 		}
 		
@@ -249,8 +245,11 @@ bool Scene::PreUpdate()
 
 	if (currentScene == SCENE2)
 	{
+		tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
+		jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
 		if (conT == true && app->enemies->WaddleLive == 1)
 		{
+			
 			app->pathfinding->CreatePath(tierra, jug);
 		}
 	}
@@ -280,9 +279,7 @@ bool Scene::PreUpdate()
 		app->maxFrameRate = 16;
 	}
 	
-	conT = false;
-	conV = false;
-
+	
 	return true;
 }
 
@@ -466,6 +463,9 @@ bool Scene::Update(float dt)
 			
 		}
 	}
+
+	
+
 	return true;
 }
 
@@ -909,9 +909,9 @@ void Scene::Pathfinding(iPoint& enemy)
 
 	for (uint i = 0; i < path->Count(); ++i)
 	{
-		
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		if (i == 1 && app->frameCount % fpslim == 0) {
-			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			
 			
 			if (conV)
 			{
@@ -923,13 +923,14 @@ void Scene::Pathfinding(iPoint& enemy)
 				enemy.x = pos.x;
 				//enemy.y = pos.y;
 			}
-			app->render->DrawTexture(pathTex, pos.x, pos.y);
+			
 		}
-
+		
+		if(app->coll->debug)app->render->DrawTexture(pathTex, pos.x, pos.y);
 	}
 
 	iPoint originScreen = app->map->MapToWorld(origin1.x, origin1.y);
-	app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
+	if (app->coll->debug)app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
 	}
 
 }
@@ -1084,6 +1085,10 @@ void Scene::ResetGame() {
 		app->player->Money = 0;
 		app->player->PlayerLives = 5;
 		app->player->PlayerPosition = true;
+		app->enemies->BooLive = 1;
+		app->enemies->WaddleLive = 1;
+		app->player->hit = false;
+
 		app->scene->currentScene = SCENE;
 
 		app->SaveGameRequest();

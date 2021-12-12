@@ -46,6 +46,8 @@ public:
 
 	void clean();
 
+	bool debug = false;
+
 private:
 	// All existing colliders in the scene
 	
@@ -54,7 +56,7 @@ private:
 	
 
 	// Simple debugging flag to draw all colliders
-	bool debug = false;
+	
 };
 
 #endif // __MODULE_COLLISIONS_H
