@@ -332,7 +332,6 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			if (item4Used == true && PlayerLives < 5) {
 				PlayerLives += 1;
-				item4Used = false;
 			}
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::KEY)
