@@ -109,7 +109,7 @@ Scene::Scene() : Module()
 	TeleportAnim.speed = 0.15f;
 
 	//Win Animation
-	for (int i = 0; i < 50; i++) {
+	for (int i = 0; i < 39; i++) {
 		WinAnim.PushBack({ i * 240,0,240,168 });
 	}
 	WinAnim.loop = false;
