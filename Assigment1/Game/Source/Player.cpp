@@ -527,8 +527,6 @@ void Player::MovementPlayer(float dt) {
 			jumped = 0;
 			jumping = true;
 		}
-		
-		
 	}
 	if (jumping == true)
 	{
