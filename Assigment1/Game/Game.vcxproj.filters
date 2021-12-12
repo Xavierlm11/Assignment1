@@ -55,6 +55,12 @@
     <ClCompile Include="Source\Pathfinding.cpp">
       <Filter>Headers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleParticles.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Particle.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -130,6 +136,12 @@
       <Filter>Origin</Filter>
     </ClInclude>
     <ClInclude Include="Source\Pathfinding.h">
+      <Filter>Origin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleParticles.h">
+      <Filter>Origin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Particle.h">
       <Filter>Origin</Filter>
     </ClInclude>
   </ItemGroup>

@@ -67,12 +67,10 @@ public:
 	int jumped2;
 	bool dbjump;
 
-	
+	Collider* misil = nullptr;
 
 public:
 	List<SDL_Texture*> player;
-
-	
 
 	bool CheckActive1 = false;
 	bool CheckActive2 = false;

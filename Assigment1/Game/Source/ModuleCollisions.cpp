@@ -47,6 +47,16 @@ ModuleCollisions::ModuleCollisions( ) : Module()
 	matrix[Collider::Type::PLAYERLEFT][Collider::Type::PARED] = true;
 	matrix[Collider::Type::PLAYERLEFT][Collider::Type::SUELO] = false;
 
+	//PLAYERATTACK
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::PLAYERRIGHT] = false;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::PLAYERLEFT] = false;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::PLAYERHEAD] = false;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::PLAYERATTACK] = false;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::PARED] = true;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::SUELO] = true;
+	matrix[Collider::Type::PLAYERATTACK][Collider::Type::LAVA] = true;
+	
 	//SUELO
 	matrix[Collider::Type::SUELO][Collider::Type::SUELO] = false;
 	matrix[Collider::Type::SUELO][Collider::Type::PLAYER] = true;
@@ -373,6 +383,9 @@ void ModuleCollisions::DebugDraw()
 			break;
 			case Collider::Type::WIN:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+			case Collider::Type::PLAYERATTACK:
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
 		}
 	}

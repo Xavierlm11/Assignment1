@@ -24,6 +24,8 @@ class Player;
 class ModuleCollisions;
 class ModuleEnemies;
 class PathFinding;
+class ModuleParticles;
+//class Particle;
 
 class App
 {
@@ -99,6 +101,7 @@ public:
 	Player* player;
 	ModuleCollisions* coll;
 	ModuleEnemies* enemies;
+	ModuleParticles* particles;
 	uint32 maxFrameRate ;
 private:
 

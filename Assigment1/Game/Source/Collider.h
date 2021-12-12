@@ -37,6 +37,7 @@ struct Collider
 		VOLADOR,
 		TIERRA,
 		WIN,
+		PLAYERATTACK,
 
 		MAX
 	};

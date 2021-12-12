@@ -131,6 +131,8 @@ bool Player::Start()
 
 	//colliderplayerR y colliderplayerL solo colisionan para las paredes
 
+	misil = app->coll->AddCollider({ position.x,position.y, 5,5}, Collider::Type::PLAYERATTACK,this);
+	
 	contact = false;
 	death = false;
 	sidesR = false;

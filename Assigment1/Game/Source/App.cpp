@@ -11,6 +11,8 @@
 #include "Animation.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
+#include "ModuleParticles.h"
+#include "Particle.h"
 
 
 #include "Defs.h"
@@ -34,6 +36,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	player = new Player();
 	coll = new ModuleCollisions();
 	enemies = new ModuleEnemies();
+	particles = new ModuleParticles();
+	/*part = new Particle();*/
 
 	render = new Render();
 	// Ordered for awake / Start / Update
@@ -48,6 +52,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(enemies);
 	AddModule(coll);
+	AddModule(particles);
+	/*AddModule(part);*/
 	
 	// Render last to swap buffer
 	AddModule(render);
