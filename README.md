@@ -14,6 +14,7 @@ This game is a plataformer made by CITM students
 Keyboard
 - A and D  - Movement
 - Space - Jump
+- E - Shoot
 
 ### Debug functionality
 
@@ -24,9 +25,14 @@ Keyboard
 - F4 - Restart level
 - F5 - Save the current game state
 - F6 - Load the previous state (even across levels)
+- F7 - Teleport direct to Level 1
+- F8 - Teleport direct to Level 2
 - F9 - View Collider / Logic
 - F10 - God Mode (fly around, cannot be killed)
-
+- F11 - Switch Framerate 30/60
+- 1 - Direct win
+- M - Add life
+- N - Reduce life
 
 
 ## Developers
