@@ -97,32 +97,32 @@ bool ModuleEnemies::Update(float dt){
 	
 
 
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {
-		Enemy1.x += 2;
-		Enemy2.x += 2;
-		WalkWaddleR.Reset();
-		currentWaddleAnimation = &WalkWaddleR;
+	//if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {
+	//	Enemy1.x += 2;
+	//	Enemy2.x += 2;
+	//	WalkWaddleR.Reset();
+	//	currentWaddleAnimation = &WalkWaddleR;
 
-		FlyingBooR.Reset();
-		currentBooAnimation = &FlyingBooR;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) {
-		Enemy1.x -= 2;
-		Enemy2.x -= 2;
-		WalkWaddleL.Reset();
-		currentWaddleAnimation = &WalkWaddleL;
+	//	FlyingBooR.Reset();
+	//	currentBooAnimation = &FlyingBooR;
+	//}
+	//if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) {
+	//	Enemy1.x -= 2;
+	//	Enemy2.x -= 2;
+	//	WalkWaddleL.Reset();
+	//	currentWaddleAnimation = &WalkWaddleL;
 
-		FlyingBooL.Reset();
-		currentBooAnimation = &FlyingBooL;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {
-		Enemy1.y += 2;
-		Enemy2.y += 2;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) {
-		Enemy1.y -= 2;
-		Enemy2.y -= 2;
-	}
+	//	FlyingBooL.Reset();
+	//	currentBooAnimation = &FlyingBooL;
+	//}
+	//if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {
+	//	Enemy1.y += 2;
+	//	Enemy2.y += 2;
+	//}
+	//if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) {
+	//	Enemy1.y -= 2;
+	//	Enemy2.y -= 2;
+	//}
 
 	currentWaddleAnimation->Update();
 	currentBooAnimation->Update();

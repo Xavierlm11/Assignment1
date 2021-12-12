@@ -1088,6 +1088,10 @@ void Scene::ResetGame() {
 		app->enemies->BooLive = 1;
 		app->enemies->WaddleLive = 1;
 		app->player->hit = false;
+		app->enemies->Enemy1.x = 1100;
+		app->enemies->Enemy1.y = 144;
+		app->enemies->Enemy2.x = 550;
+		app->enemies->Enemy2.y = 150;
 
 		app->scene->currentScene = SCENE;
 
