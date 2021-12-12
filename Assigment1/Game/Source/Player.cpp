@@ -300,12 +300,18 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				item1Used = true;
 				app->audio->PlayFx(GetItem);
 			}
+			if (item1Used == true && PlayerLives < 5) {
+				PlayerLives += 1;
+			}
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM2)
 		{
 			if (PlayerLives < 5) {
 				item2Used = true;
 				app->audio->PlayFx(GetItem);
+			}
+			if (item2Used == true && PlayerLives < 5) {
+				PlayerLives += 1;
 			}
 		}
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ITEM3)
@@ -598,14 +604,6 @@ void Player::MovementPlayer(float dt) {
 		}
 		if (PlayerLives == 1) {
 			app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar1.GetCurrentFrame()), 0);
-		}
-		if (item1Used == true && PlayerLives < 5) {
-			PlayerLives += 1;
-			item1Used = false;
-		}
-		if (item2Used == true && PlayerLives < 5) {
-			PlayerLives += 1;
-			item2Used = false;
 		}
 		if (item3Used == true && PlayerLives < 5) {
 			PlayerLives += 1;
