@@ -8,6 +8,7 @@
 #include "ModuleCollisions.h"
 #include "textures.h"
 #include "Player.h"
+#include "ModuleEnemies.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -58,8 +59,18 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		 /*Always destroy particles that collide*/
-		if (particles[i] != nullptr && particles[i]->collider == c1)
+		if (particles[i] != nullptr && (particles[i]->collider == c1 || particles[i]->collider == c1))
 		{
+			if ((c1->type == Collider::Type::PLAYERATTACK && c2->type == Collider::Type::ENEMYBOO || c1->type == Collider::Type::ENEMYBOO && c2->type == Collider::Type::PLAYERATTACK) && app->enemies->BooLive == 1)
+			{
+				app->enemies->BooLive = 0;
+			}
+
+			if ((c1->type == Collider::Type::PLAYERATTACK && c2->type == Collider::Type::ENEMYWADDLE || c1->type == Collider::Type::ENEMYWADDLE && c2->type == Collider::Type::PLAYERATTACK) && app->enemies->WaddleLive==1)
+			{
+				app->enemies->WaddleLive = 0;
+			}
+
 			/*if (particles[i]->type == 1) {
 				AddParticle(shuriken_explosion, particles[i]->position.x, particles[i]->position.y, particles[i]->type);
 				particles[i]->type == 0;
@@ -71,9 +82,8 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 			}*/
 			
 
-			delete particles[i];
+		delete particles[i];
 			particles[i] = nullptr;
-			break;
 		}
 	}
 }
@@ -89,14 +99,6 @@ bool ModuleParticles::Update(float dt)
 		// Call particle Update. If it has reached its lifetime, destroy it
 		if(particle->Update() == false)
 		{
-			/*AddParticle(PlayerAttack, particles[i]->position.x, particles[i]->position.y, 1);*/
-			/*if (particles[i]->type == 1) {
-				AddParticle(shuriken_explosion, particles[i]->position.x, particles[i]->position.y, 1);
-			}
-
-			if (particles[i]->type == 2) {
-				AddParticle(knife_explosion, particles[i]->position.x, particles[i]->position.y, 2);
-			}*/
 			delete particle;
 			particles[i] = nullptr;
 		}
@@ -138,8 +140,11 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, int ty
 			p->position.y = y-20;
 
 			//Adding the particle's collider
-			if (colliderType == Collider::Type::PLAYERATTACK && p->type == 1)
-				p->collider = app->coll->AddCollider({app->player->position.x,app->player->position.y, 8,8 }, colliderType, this);
+
+			if (colliderType != Collider::Type::NONE && p->type == 1)
+				p->collider = app->coll->AddCollider({ 0, 0, 18, 10 }, colliderType, this);
+			/*if (colliderType == Collider::Type::PLAYERATTACK && p->type == 1)
+				p->collider = app->coll->AddCollider({app->player->position.x,app->player->position.y, 8,8 }, colliderType, this);*/
 			
 			else {
 				p->collider = app->coll->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);

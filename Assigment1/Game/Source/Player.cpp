@@ -444,15 +444,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			death = true;
 		}
 		
-		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::ENEMYBOO)
-		{
-			app->enemies->BooLive = 0;
-		}
-				
-		if (c1->type == Collider::Type::PLAYERATTACK && c2->type == Collider::Type::ENEMYWADDLE)
-		{
-			app->enemies->WaddleLive = 0;
-		}	
+		
 }
 
 
@@ -468,7 +460,7 @@ void Player::MovementPlayer(float dt) {
 		}
 		if (PlayerPosition == false) {
 			app->particles->PlayerAttack.speed.x = -3;
-			app->particles->AddParticle(app->particles->PlayerAttack, position.x, position.y , 1, Collider::Type::PLAYERATTACK);
+			app->particles->AddParticle(app->particles->PlayerAttack, position.x, position.y, 1, Collider::Type::PLAYERATTACK);
 		}
 	}
 

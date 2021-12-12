@@ -126,20 +126,19 @@ bool ModuleEnemies::Update(float dt){
 
 bool ModuleEnemies::PostUpdate(){
 	if (app->scene->currentScene == SCENE) {
-		//Draw Waddle Dee
-		SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
-		app->render->DrawTexture(WaddleDeeTex, Enemy1.x, Enemy1.y, &rect);
-		
-		//Draw Boo
-		SDL_Rect Boo = currentBooAnimation->GetCurrentFrame();
-		app->render->DrawTexture(BooTex, Enemy2.x, Enemy2.y, &Boo);
+		if (BooLive == 1) {
+			//Draw Boo
+			SDL_Rect Boo = currentBooAnimation->GetCurrentFrame();
+			app->render->DrawTexture(BooTex, Enemy2.x, Enemy2.y, &Boo);
+		}
 		
 	}
 	if (app->scene->currentScene == SCENE2) {
-		//Draw Waddle Dee
-		SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
-		app->render->DrawTexture(WaddleDeeTex, Enemy1.x, Enemy1.y, &rect);
-
+		if (WaddleLive == 1) {
+			//Draw Waddle Dee
+			SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
+			app->render->DrawTexture(WaddleDeeTex, Enemy1.x, Enemy1.y, &rect);
+		}
 		
 
 	}
@@ -170,17 +169,24 @@ bool ModuleEnemies::LoadState(pugi::xml_node& data) {
 	Enemy2.x = data.child("enemy2").attribute("x").as_int();
 	Enemy2.y = data.child("enemy2").attribute("y").as_int();
 
+	BooLive = data.child("EnemiesAlives").attribute("enemy1").as_int();
+	WaddleLive = data.child("EnemiesAlives").attribute("enemy1").as_int();
+
 	return true;
 }
 bool ModuleEnemies::SaveState(pugi::xml_node& data) const {
 	pugi::xml_node posenemy1 = data.child("enemy1");
 	pugi::xml_node posenemy2 = data.child("enemy2");
+	pugi::xml_node EnemyLives = data.child("EnemiesAlives");
 
 	posenemy1.attribute("x").set_value(Enemy1.x);
 	posenemy1.attribute("y").set_value(Enemy1.y);
 
 	posenemy2.attribute("x").set_value(Enemy2.x);
 	posenemy2.attribute("y").set_value(Enemy2.y);
+
+	EnemyLives.attribute("enemy1").set_value(BooLive);
+	EnemyLives.attribute("enemy2").set_value(WaddleLive);
 
 	return true;
 }

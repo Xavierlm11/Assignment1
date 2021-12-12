@@ -238,7 +238,7 @@ bool Scene::PreUpdate()
 			}
 		}*/
 
-		if (conV==true)
+		if (conV==true && app->enemies->BooLive == 1)
 		{
 			tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
 			jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
@@ -249,7 +249,7 @@ bool Scene::PreUpdate()
 
 	if (currentScene == SCENE2)
 	{
-		if (conT == true)
+		if (conT == true && app->enemies->WaddleLive == 1)
 		{
 			app->pathfinding->CreatePath(tierra, jug);
 		}
