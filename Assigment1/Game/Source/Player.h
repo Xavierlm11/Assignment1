@@ -61,7 +61,10 @@ public:
 	bool sidesR;
 	bool sidesL;
 	bool jumping;
+	bool jumping2;
+	int jumps;
 	int jumped;
+	int jumped2;
 	bool dbjump;
 
 	
@@ -90,6 +93,9 @@ public:
 	//Player Lives
 	int PlayerLives = 5;
 	bool PlayerPosition = true;
+
+	uint JumpFx = 0;
+
 private:
 	
 

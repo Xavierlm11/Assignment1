@@ -114,6 +114,7 @@ bool Player::Start()
 	GetCheckpoint = app->audio->LoadFx("Assets/audio/fx/GetCheckpointFx.wav");
 	GetKey = app->audio->LoadFx("Assets/audio/fx/GetKeyFx.wav");
 	GetCoin = app->audio->LoadFx("Assets/audio/fx/GetCoinFx.wav");
+	JumpFx = app->audio->LoadFx("Assets/audio/fx/JumpFx.wav");
 
 	currentAnimation = &idleAnimR; //player start with idle anim
 
@@ -228,6 +229,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::SUELO )
 		{
 			contact = true;
+			jumps = 2;
 		}
 		if (c1->type == Collider::Type::PLAYERHEAD && c2->type == Collider::Type::PARED)
 		{
@@ -500,36 +502,64 @@ void Player::MovementPlayer(float dt) {
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && contact == true)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN )
 	{
-		if (PlayerPosition == false) {
-			jumpAnimL.Reset();
-			currentAnimation = &jumpAnimL;
-		}
-		if (PlayerPosition == true)
+		if (jumps == 1)
 		{
-			jumpAnimR.Reset();
-			currentAnimation = &jumpAnimR;
+			app->audio->PlayFx(JumpFx);
+			jumps--;
+			jumping2 = true;
+			jumped2 = 0;
 		}
-
-		jumping = true;
-		dbjump = true;
+		if (contact||jumps==2)
+		{
+			app->audio->PlayFx(JumpFx);
+			if (PlayerPosition == false) {
+				jumpAnimL.Reset();
+				currentAnimation = &jumpAnimL;
+			}
+			if (PlayerPosition == true)
+			{
+				jumpAnimR.Reset();
+				currentAnimation = &jumpAnimR;
+			}
+			jumps--;
+			jumped = 0;
+			jumping = true;
+		}
+		
+		
 	}
 	if (jumping == true)
 	{
 		position.y -= 3;
 		jumped += 10;
+
+		if (jumped > 120)
+			{
+				jumping = false;
+				jumped = 0;
+			}
 	}
-	if (jumped >= 100)
+	
+	if (jumping2 == true)
 	{
-		jumping = false;
-		jumped = 0;
+		position.y -= 5;
+		jumped2 += 10;
+
+		if (jumped2 > 100)
+		{
+			jumping2 = false;
+			jumped2 = 0;
+		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN && dbjump == true)
+	
+
+	/*if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN && jumps<0)
 	{
 		jumped = 0;
 		dbjump = false;
-	}
+	}*/
 	//player animation if no movement detected
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE) {
 		if (currentAnimation != &idleAnimR && currentAnimation != &idleAnimL && currentAnimation != &jumpAnimR && currentAnimation != &jumpAnimL) {
