@@ -2,7 +2,7 @@
 
 ## Description
 
-This game is a plataformer made by CITM students
+This game is a platformer made by CITM students
 
 ## Key Features
 
@@ -15,6 +15,13 @@ Keyboard
 - A and D  - Movement
 - Space - Jump
 - E - Shoot
+- Left/Right and Enter - When checkpoints are unlocked, player can teleport through them
+
+## Objectives in level 1
+Unlock the portal with the key
+
+## Objectives in level 2
+Pass the level without being killed
 
 ### Debug functionality
 
