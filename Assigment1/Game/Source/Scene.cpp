@@ -341,7 +341,7 @@ bool Scene::Update(float dt)
 			Level1ToLevel2();
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) {
 			win = true;
 			WinAnim.Reset();
 			currentScene = WIN_GAME;
@@ -393,7 +393,7 @@ bool Scene::Update(float dt)
 				ResetGame();
 			}
 
-			if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+			if (app->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) {
 				win = true;
 				WinAnim.Reset();
 				currentScene = WIN_GAME;
