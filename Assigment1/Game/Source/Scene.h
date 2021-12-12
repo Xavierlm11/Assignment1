@@ -108,7 +108,7 @@ public:
 	void Keys();
 	void Coins();
 	void Health();
-	void Pathfinding();
+	void Pathfinding(iPoint& enemy);
 	void SetGameOver();
 	void SetWinGame();
 	void StartCollidersLevel1();

@@ -64,8 +64,8 @@ bool ModuleEnemies::Awake(pugi::xml_node&) {
 
 // Called before the first frame
 bool ModuleEnemies::Start() {
-	Enemy1.x = 540;
-	Enemy1.y = 48;
+	Enemy1.x = 1100;
+	Enemy1.y = 144;
 	Enemy2.x = 550;
 	Enemy2.y = 150;
 	WaddleDeeTex = app->tex->Load("Assets/textures/WaddleDeeEnemies.png");
@@ -135,7 +135,14 @@ bool ModuleEnemies::PostUpdate(){
 		app->render->DrawTexture(BooTex, Enemy2.x, Enemy2.y, &Boo);
 		
 	}
-	
+	if (app->scene->currentScene == SCENE2) {
+		//Draw Waddle Dee
+		SDL_Rect rect = currentWaddleAnimation->GetCurrentFrame();
+		app->render->DrawTexture(WaddleDeeTex, Enemy1.x, Enemy1.y, &rect);
+
+		
+
+	}
 
 	return true;
 }

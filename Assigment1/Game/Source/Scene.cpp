@@ -208,10 +208,10 @@ bool Scene::Start()
 bool Scene::PreUpdate()
 {
 
-	int mouseX, mouseY;
+	/*int mouseX, mouseY;
 	app->input->GetMousePosition(mouseX, mouseY);
 	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
-	p = app->map->WorldToMap(p.x, p.y);
+	p = app->map->WorldToMap(p.x, p.y);*/
 
 	iPoint tierra;
 	iPoint volador;
@@ -219,11 +219,12 @@ bool Scene::PreUpdate()
 
 	tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
 	volador = app->map->WorldToMap(app->enemies->Enemy2.x, app->enemies->Enemy2.y);
-	//jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
 	jug = app->map->WorldToMap((app->player->position.x), (app->player->position.y));
 
 	if (currentScene == SCENE) {
-		if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		volador = app->map->WorldToMap(app->enemies->Enemy2.x, app->enemies->Enemy2.y);
+		jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
+		/*if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
 			if (originSelected == true)
 			{
@@ -235,34 +236,35 @@ bool Scene::PreUpdate()
 				origin1 = p;
 				originSelected = true;
 			}
-		}
-
-		/*if (conT==true)
-		{
-
-			app->pathfinding->CreatePath(tierra, jug);
 		}*/
-		if (conV == true)
+
+		if (conV==true)
 		{
+			tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
+			jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
 			app->pathfinding->CreatePath(volador, jug);
+		}
+		
+	}
+
+	if (currentScene == SCENE2)
+	{
+		if (conT == true)
+		{
+			app->pathfinding->CreatePath(tierra, jug);
 		}
 	}
 	if (level1) {
 		app->map->Load("level1.tmx");
 		StartCollidersLevel1();
 		app->map->CreateColliders();
-
-		level1 = false;
-		
+		level1 = false;	
 	}
 	if (level2) {
 		app->map->Load("level2.tmx");
 		StartCollidersLevel2();
 		app->map->CreateColliders();
-		//app->player->position.x = 40;
-		//app->player->position.y = 50;
 		level2 = false;
-		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
@@ -277,7 +279,7 @@ bool Scene::PreUpdate()
 	{
 		app->maxFrameRate = 16;
 	}
-
+	
 	conT = false;
 	conV = false;
 
@@ -355,7 +357,10 @@ bool Scene::Update(float dt)
 		Health();
 		
 		// L12b: Debug pathfinding
-		Pathfinding();
+		
+		Pathfinding(app->enemies->Enemy2);
+		//if (conT)Pathfinding(app->enemies->Enemy1);
+		
 		
 		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 			ResetGame();
@@ -370,7 +375,7 @@ bool Scene::Update(float dt)
 			WinAnim.Reset();
 			currentScene = WIN_GAME;
 		}
-
+		
 		break;
 		case SCENE2:
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && UwU==0) {
@@ -408,6 +413,8 @@ bool Scene::Update(float dt)
 			Teleports();
 			Health();
 			Coins();
+			Pathfinding(app->enemies->Enemy1);
+
 
 			if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 				app->LoadGameRequest();
@@ -882,36 +889,10 @@ void Scene::Health()
 }
 
 
-//void Scene::Pathfinding()
-//{
-//	{int mouseX, mouseY;
-//	app->input->GetMousePosition(mouseX, mouseY);
-//	iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
-//
-//	app->input->GetMousePosition(mouseX, mouseY);
-//	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
-//	p = app->map->WorldToMap(p.x, p.y);
-//	p = app->map->MapToWorld(p.x, p.y);
-//
-//	app->render->DrawTexture(pathTex, p.x, p.y);
-//
-//	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-//
-//	for (uint i = 0; i < path->Count(); ++i)
-//	{
-//		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-//		app->render->DrawTexture(pathTex, pos.x, pos.y);
-//	}
-//
-//	iPoint originScreen = app->map->MapToWorld(origin1.x, origin1.y);
-//	app->render->DrawTexture(originTex, originScreen.x, originScreen.y);
-//	}
-//
-//}
 
-void Scene::Pathfinding()
+void Scene::Pathfinding(iPoint& enemy)
 {
-	{int mouseX, mouseY;
+	{/*int mouseX, mouseY;
 	app->input->GetMousePosition(mouseX, mouseY);
 	iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x, mouseY - app->render->camera.y);
 
@@ -920,28 +901,27 @@ void Scene::Pathfinding()
 	p = app->map->WorldToMap(p.x, p.y);
 	p = app->map->MapToWorld(p.x, p.y);
 
-	app->render->DrawTexture(pathTex, p.x, p.y);
+	app->render->DrawTexture(pathTex, p.x, p.y);*/
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 
-	uint fpslim = 5;
+	uint fpslim = 6;
 
 	for (uint i = 0; i < path->Count(); ++i)
 	{
-		/*if (app->frameCount % fpslim == 0)
-		{*/
+		
 		if (i == 1 && app->frameCount % fpslim == 0) {
 			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			pos=app->map->WorldToMap(path->At(i)->x, path->At(i)->y);
+			
 			if (conV)
 			{
-				app->enemies->Enemy2.x = pos.x;
-				app->enemies->Enemy2.y = pos.y;
+				enemy.x = pos.x;
+				enemy.y = pos.y;
 			}
 			if (conT)
 			{
-				app->enemies->Enemy1.x = pos.x;
-				app->enemies->Enemy1.y = pos.y;
+				enemy.x = pos.x;
+				//enemy.y = pos.y;
 			}
 			app->render->DrawTexture(pathTex, pos.x, pos.y);
 		}
