@@ -198,6 +198,14 @@ private:
 	// L12b: Debug pathfing
 	iPoint origin1;
 	bool originSelected = false;
+
+	_Mix_Music* lvl1mus;
+	/*_Mix_Music* lvl2mus = 0;
+	_Mix_Music* Godmus=0;*/
+
+	//uint* lvl1mus;
+	/*uint* lvl2mus ;
+	uint* Godmus ;*/
 };
 
 #endif // __SCENE_H__

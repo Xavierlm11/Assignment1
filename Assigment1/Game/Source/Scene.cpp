@@ -13,6 +13,7 @@
 #include "PathFinding.h"
 #include "ModuleEnemies.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
 
 Scene::Scene() : Module()
 {
@@ -158,7 +159,7 @@ bool Scene::Start()
 	TeleportToLevel2Tex = app->tex->Load("Assets/textures/TeleportTex.png");
 	WinScreen = app->tex->Load("Assets/textures/WinScreenTex.png");
 	TeleportFinalTex = app->tex->Load("Assets/textures/PadoruTex.png");
-
+	
 	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
 	NameCheckTex1 = app->tex->Load("Assets/textures/Checkpoint1Tex.png");
@@ -183,6 +184,8 @@ bool Scene::Start()
 	winFx = app->audio->LoadFx("Assets/audio/fx/WinFx.wav");
 	
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
+
+	lvl1mus = Mix_LoadMUS("Assets/audio/music/BackgroundMusic.ogg");
 
 	StartCollidersLevel1();
 	
@@ -324,7 +327,7 @@ bool Scene::Update(float dt)
 		{
 			startTitle = false;
 			
-			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
+			app->audio->Music("Assets/audio/music/BackgroundMusic.ogg");
 		}
 
 	
@@ -904,7 +907,7 @@ void Scene::Pathfinding(iPoint& enemy)
 	app->render->DrawTexture(pathTex, p.x, p.y);*/
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-
+	
 	uint fpslim = 6;
 
 	for (uint i = 0; i < path->Count(); ++i)

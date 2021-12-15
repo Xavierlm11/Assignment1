@@ -23,6 +23,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//
+	bool LoadMusic(const char* path);
+
 	// Play a music file
 	bool PlayMusic(const char* path, float fadeTime = DEFAULT_MUSIC_FADE_TIME);
 
@@ -31,6 +34,8 @@ public:
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
+
+	bool Music(_Mix_Music* mus, float fadeTime = DEFAULT_MUSIC_FADE_TIME);
 
 private:
 
