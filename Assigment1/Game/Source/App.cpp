@@ -13,6 +13,7 @@
 #include "ModuleEnemies.h"
 #include "ModuleParticles.h"
 #include "Particle.h"
+#include "GuiManager.h"
 
 
 #include "Defs.h"
@@ -37,7 +38,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	coll = new ModuleCollisions();
 	enemies = new ModuleEnemies();
 	particles = new ModuleParticles();
-	/*part = new Particle();*/
+	guiManager = new GuiManager();
 
 	render = new Render();
 	// Ordered for awake / Start / Update
@@ -53,7 +54,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(enemies);
 	AddModule(coll);
 	AddModule(particles);
-	/*AddModule(part);*/
+	AddModule(guiManager);
 	
 	// Render last to swap buffer
 	AddModule(render);

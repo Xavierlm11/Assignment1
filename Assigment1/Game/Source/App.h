@@ -25,7 +25,7 @@ class ModuleCollisions;
 class ModuleEnemies;
 class PathFinding;
 class ModuleParticles;
-//class Particle;
+class GuiManager;
 
 class App
 {
@@ -103,6 +103,7 @@ public:
 	ModuleEnemies* enemies;
 	ModuleParticles* particles;
 	uint32 maxFrameRate ;
+	GuiManager* guiManager;
 
 	uint64 frameCount = 0;
 private:

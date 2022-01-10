@@ -61,6 +61,12 @@
     <ClCompile Include="Source\Particle.cpp">
       <Filter>Headers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -142,6 +148,15 @@
       <Filter>Origin</Filter>
     </ClInclude>
     <ClInclude Include="Source\Particle.h">
+      <Filter>Origin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>Origin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiControl.h">
+      <Filter>Origin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
       <Filter>Origin</Filter>
     </ClInclude>
   </ItemGroup>

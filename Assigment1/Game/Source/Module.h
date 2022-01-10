@@ -8,7 +8,7 @@
 class App;
 
 struct Collider;
-
+struct GuiControl;
 
 class Module
 {
@@ -69,7 +69,10 @@ public:
 	{
 		return true;
 	}
-
+	virtual bool OnGuiMouseClickEvent(GuiControl* control)
+	{
+		return true;
+	}
 	//void Module::OnCollision(Collider* c1, Collider* c2) {
 
 	//}
