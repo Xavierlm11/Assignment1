@@ -120,6 +120,7 @@ public:
 	bool conT = false;
 	bool conV = false;
 	bool frcap = false;
+	Timer clock;
 	//void;
 private:
 	//scenes

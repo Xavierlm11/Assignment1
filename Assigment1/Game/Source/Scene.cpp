@@ -216,12 +216,17 @@ bool Scene::PreUpdate()
 	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
 	p = app->map->WorldToMap(p.x, p.y);*/
 
+	uint miliseconds = clock.Read() % 1000;
+	uint seconds = (clock.Read() / 1000) % 60;
+	uint minutes = (clock.Read() / 1000) / 60;
+
 	iPoint tierra;
 	iPoint volador;
 	iPoint jug;
 
 	
 	if (currentScene == SCENE) {
+		
 		volador = app->map->WorldToMap(app->enemies->Enemy2.x, app->enemies->Enemy2.y);
 		jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
 		/*if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -311,7 +316,8 @@ bool Scene::Update(float dt)
 			
 
 			currentScene = SCENE;
-
+			clock.Stop();
+			clock.Start();
 			app->SaveGameRequest();
 			
 		}
@@ -325,6 +331,7 @@ bool Scene::Update(float dt)
 		
 		if (startTitle)
 		{
+			
 			startTitle = false;
 			
 			//app->audio->Music("Assets/audio/music/BackgroundMusic.ogg");
@@ -436,7 +443,7 @@ bool Scene::Update(float dt)
 	case GAME_OVER:
 
 		SetGameOver();
-
+		clock.Stop();
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			if (actualScene == 1) 
 			{
