@@ -185,7 +185,7 @@ bool Scene::Start()
 	
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
 
-	lvl1mus = Mix_LoadMUS("Assets/audio/music/BackgroundMusic.ogg");
+	//lvl1mus = Mix_LoadMUS("Assets/audio/music/BackgroundMusic.ogg");
 
 	StartCollidersLevel1();
 	
@@ -327,7 +327,7 @@ bool Scene::Update(float dt)
 		{
 			startTitle = false;
 			
-			app->audio->Music("Assets/audio/music/BackgroundMusic.ogg");
+			//app->audio->Music("Assets/audio/music/BackgroundMusic.ogg");
 		}
 
 	
