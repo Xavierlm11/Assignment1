@@ -12,6 +12,7 @@
 #include "ModuleCollisions.h"
 #include "PathFinding.h"
 #include "ModuleEnemies.h"
+#include "GuiManager.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
 
@@ -187,9 +188,15 @@ bool Scene::Start()
 
 	//lvl1mus = Mix_LoadMUS("Assets/audio/music/BackgroundMusic.ogg");
 
+	// L14: TODO 2: Declare a GUI Button and create it using the GuiManager
+	btnPlay = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play", { (100), 30, 40, 15 }, this);
+	btnContinue = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (100), 50, 40, 15 }, this);
+	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (100), 70, 40, 15 }, this);
+	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (100), 90, 40, 15 }, this);
+	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (100), 110, 40, 15 }, this);
+	
 	StartCollidersLevel1();
 	
-
 	if (app->map->Load("level1.tmx") == true)
 	{
 		int w, h;
@@ -306,25 +313,21 @@ bool Scene::Update(float dt)
 			app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
 		}
 		if ((app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)||(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)) {
-			startTitle = true;
+						
 
-			app->render->camera.y = 0;
-			app->render->camera.x = 0;
-
-			app->player->position.x = 70;
-			app->player->position.y = 15;
-			
-
-			currentScene = SCENE;
-			clock.Stop();
-			clock.Start();
+			currentScene = MENU;
+		
 			app->SaveGameRequest();
-			
 		}
-
+	
 		app->render->DrawTexture(bgTexture, 0, 0, &(intro.GetCurrentFrame()));
 		app->render->DrawTexture(EnterStartTex,80, 140, &(EnterStart.GetCurrentFrame()));
 		
+		break;
+
+	case MENU:
+			//Draw GUI
+			app->guiManager->Draw();
 		break;
 	case SCENE:
 		
@@ -338,7 +341,6 @@ bool Scene::Update(float dt)
 		}
 
 	
-
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
 
@@ -367,7 +369,7 @@ bool Scene::Update(float dt)
 		
 		Pathfinding(app->enemies->Enemy2);
 		//if (conT)Pathfinding(app->enemies->Enemy1);
-		
+
 		
 		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 			ResetGame();
@@ -488,6 +490,55 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	return ret;
+}
+
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
+{
+
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		//Checks the GUI element ID
+		if (control->id == 1)
+		{
+			LOG("Click on button 1");
+			currentScene = SCENE;
+			clock.Stop();
+			clock.Start();
+			startTitle = true;
+
+			app->render->camera.y = 0;
+			app->render->camera.x = 0;
+
+			app->player->position.x = 70;
+			app->player->position.y = 15;
+		}
+
+		if (control->id == 2)
+		{
+			LOG("Click on button 2");
+		}
+
+		if (control->id == 3)
+		{
+			LOG("Click on button 3");
+		}
+		if (control->id == 4)
+		{
+			LOG("Click on button 4");
+		}
+		if (control->id == 5)
+		{
+			LOG("Click on button 5");
+		}
+	}
+	//Other cases here
+
+	default: break;
+	}
+
+	return true;
 }
 
 // Called before quitting

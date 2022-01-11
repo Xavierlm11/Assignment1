@@ -4,12 +4,15 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Point.h"
+#include "GuiButton.h"
+
 struct SDL_Texture;
 
 
 enum State
 {
 	TITLE_SCREEN,
+	MENU,
 	SCENE,
 	SCENE2,
 	GAME_OVER,
@@ -47,6 +50,9 @@ public:
 	// Load / Save
 	bool LoadState(pugi::xml_node& data);
 	bool SaveState(pugi::xml_node& data) const;
+
+	// Define multiple Gui Event methods
+	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	State currentScene;
 
@@ -199,6 +205,13 @@ private:
 	// L12b: Debug pathfing
 	iPoint origin1;
 	bool originSelected = false;
+
+	// L14: TODO 2: Declare a GUI Button and create it using the GuiManager
+	GuiButton* btnPlay;
+	GuiButton* btnContinue;
+	GuiButton* btnSettings;
+	GuiButton* btnCredits;
+	GuiButton* btnExit;
 
 	//_Mix_Music* lvl1mus;
 	/*_Mix_Music* lvl2mus = 0;
