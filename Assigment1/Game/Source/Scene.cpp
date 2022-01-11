@@ -160,6 +160,7 @@ bool Scene::Start()
 	TeleportToLevel2Tex = app->tex->Load("Assets/textures/TeleportTex.png");
 	WinScreen = app->tex->Load("Assets/textures/WinScreenTex.png");
 	TeleportFinalTex = app->tex->Load("Assets/textures/PadoruTex.png");
+	MenuBackgroundTex = app->tex->Load("Assets/textures/MEnuBackground.png");
 	
 	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
@@ -189,11 +190,11 @@ bool Scene::Start()
 	//lvl1mus = Mix_LoadMUS("Assets/audio/music/BackgroundMusic.ogg");
 
 	// L14: TODO 2: Declare a GUI Button and create it using the GuiManager
-	btnPlay = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play", { (100), 30, 40, 15 }, this);
-	btnContinue = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (100), 50, 40, 15 }, this);
-	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (100), 70, 40, 15 }, this);
-	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (100), 90, 40, 15 }, this);
-	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (100), 110, 40, 15 }, this);
+	btnPlay = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play", { (48), 91, 70, 31 }, this);
+	btnContinue = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (122), 91, 70, 31 }, this);
+	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (48), 127, 70, 20 }, this);
+	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 127, 70, 20 }, this);
+	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
 	
 	StartCollidersLevel1();
 	
@@ -326,8 +327,10 @@ bool Scene::Update(float dt)
 		break;
 
 	case MENU:
+		app->render->DrawTexture(MenuBackgroundTex, 0, 0, NULL);
 			//Draw GUI
-			app->guiManager->Draw();
+		app->guiManager->Draw();
+			
 		break;
 	case SCENE:
 		

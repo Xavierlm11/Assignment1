@@ -135,6 +135,7 @@ private:
 	SDL_Texture* Enter;
 	SDL_Texture* WinScreen;
 	SDL_Texture* TeleportFinalTex;
+	SDL_Texture* MenuBackgroundTex;
 
 	//parallax
 	SDL_Texture* img;
@@ -152,6 +153,7 @@ private:
 	Animation intro;
 	Animation EnterStart;
 	Animation TeleportFinalAnim;
+	Animation KirboTex;
 
 	
 	//Fx
