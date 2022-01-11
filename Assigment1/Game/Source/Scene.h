@@ -136,6 +136,8 @@ private:
 	SDL_Texture* WinScreen;
 	SDL_Texture* TeleportFinalTex;
 	SDL_Texture* MenuBackgroundTex;
+	SDL_Texture* Kirbo1Tex;
+	SDL_Texture* Kirbo2Tex;
 
 	//parallax
 	SDL_Texture* img;
@@ -153,7 +155,7 @@ private:
 	Animation intro;
 	Animation EnterStart;
 	Animation TeleportFinalAnim;
-	Animation KirboTex;
+	Animation Kirbo1Anim;
 
 	
 	//Fx
@@ -214,6 +216,12 @@ private:
 	GuiButton* btnSettings;
 	GuiButton* btnCredits;
 	GuiButton* btnExit;
+
+	int rot = 0;
+	float movex = -10;
+	float movey = -10;
+	float movex1 = 260;
+	float movey1 = 30;
 
 	//_Mix_Music* lvl1mus;
 	/*_Mix_Music* lvl2mus = 0;

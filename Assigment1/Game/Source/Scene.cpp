@@ -123,6 +123,7 @@ Scene::Scene() : Module()
 	TeleportFinalAnim.loop = true;
 	TeleportFinalAnim.speed = 0.65f;
 
+	Kirbo1Anim.PushBack({ 0,0,18,30 });
 
 }
 
@@ -161,6 +162,8 @@ bool Scene::Start()
 	WinScreen = app->tex->Load("Assets/textures/WinScreenTex.png");
 	TeleportFinalTex = app->tex->Load("Assets/textures/PadoruTex.png");
 	MenuBackgroundTex = app->tex->Load("Assets/textures/MEnuBackground.png");
+	Kirbo1Tex= app->tex->Load("Assets/textures/Kirbo1Tex.png");
+	Kirbo2Tex = app->tex->Load("Assets/textures/Kirbo2Tex.png");
 	
 	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
@@ -328,8 +331,27 @@ bool Scene::Update(float dt)
 
 	case MENU:
 		app->render->DrawTexture(MenuBackgroundTex, 0, 0, NULL);
-			//Draw GUI
+		app->render->DrawTexture(Kirbo1Tex, movex, movey, &(Kirbo1Anim.GetCurrentFrame()),1.0f,rot);
+		rot+= dt*0.09;
+	
+		movex += dt * 0.04;
+		movey += dt * 0.03;
+		
+		if (movex > 230 && movey > 100) {
+			movex = -10;
+			movey = -10;
+		}
+		app->render->DrawTexture(Kirbo2Tex, movex1, movey1, &(Kirbo1Anim.GetCurrentFrame()), 1.0f, rot+80);
+	
+		movex1 -= dt * 0.04;
+		
+		if (movex1 < -30) {
+			movex1 = 260;
+		}
+		
+		//Draw GUI
 		app->guiManager->Draw();
+	
 			
 		break;
 	case SCENE:
