@@ -355,7 +355,7 @@ bool Scene::Update(float dt)
 		}
 
 		app->render->DrawTexture(Kirbo2Tex, movex1, movey1, &(Kirbo1Anim.GetCurrentFrame()), 1.0f, rot+80);
-		app->render->DrawTexture(MenuBoxTex,50, 90, NULL);
+		app->render->DrawTexture(MenuBoxTex,40, 90, NULL);
 		movex1 -= dt * 0.04;
 		
 		if (movex1 < -30) {
