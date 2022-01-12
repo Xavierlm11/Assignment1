@@ -527,8 +527,25 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	//sprintf_s(scoreText, 10, "%4d", steps);
-	app->fonts->BlitText(55, 100, Font, "config.");
-	app->fonts->BlitText(55, 135, GrayFont, "config.");
+	switch (currentScene)
+	{
+	case MENU:
+
+	app->fonts->BlitText(55, 100, Font, "play");
+	app->fonts->BlitText(120, 100, GrayFont, "continue");
+
+	app->fonts->BlitText(55, 135, Font, "config.");
+
+		break;
+	//case :
+
+	//	break;
+	//case MENU:
+
+	//	break;
+
+	}
+	
 	return ret;
 }
 
