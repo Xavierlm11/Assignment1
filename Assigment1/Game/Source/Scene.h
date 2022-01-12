@@ -142,6 +142,7 @@ private:
 	SDL_Texture* TeleportFinalTex;
 	SDL_Texture* MenuBackgroundTex;
 	SDL_Texture* MenuBoxTex;
+	SDL_Texture* MenuTitleTex;
 	SDL_Texture* Kirbo1Tex;
 	SDL_Texture* Kirbo2Tex;
 

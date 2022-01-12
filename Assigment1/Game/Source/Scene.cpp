@@ -165,6 +165,7 @@ bool Scene::Start()
 	TeleportFinalTex = app->tex->Load("Assets/textures/PadoruTex.png");
 	MenuBackgroundTex = app->tex->Load("Assets/textures/MEnuBackground.png");
 	MenuBoxTex= app->tex->Load("Assets/textures/MenuBoxesTex.png");
+	MenuTitleTex= app->tex->Load("Assets/textures/MenuTitleTex.png");
 	Kirbo1Tex= app->tex->Load("Assets/textures/Kirbo1Tex.png");
 	Kirbo2Tex = app->tex->Load("Assets/textures/Kirbo2Tex.png");
 	
@@ -341,6 +342,7 @@ bool Scene::Update(float dt)
 
 	case MENU:
 		app->render->DrawTexture(MenuBackgroundTex, 0, 0, NULL);
+		app->render->DrawTexture(MenuTitleTex, 0, 0, NULL);
 		app->render->DrawTexture(Kirbo1Tex, movex, movey, &(Kirbo1Anim.GetCurrentFrame()),1.0f,rot);
 		rot+= dt*0.09;
 	
