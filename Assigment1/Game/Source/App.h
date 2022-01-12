@@ -26,6 +26,7 @@ class ModuleEnemies;
 class PathFinding;
 class ModuleParticles;
 class GuiManager;
+class ModuleFonts;
 
 class App
 {
@@ -104,6 +105,7 @@ public:
 	ModuleParticles* particles;
 	uint32 maxFrameRate ;
 	GuiManager* guiManager;
+	ModuleFonts* fonts;
 
 	uint64 frameCount = 0;
 private:

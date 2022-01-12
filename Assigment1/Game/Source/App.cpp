@@ -14,6 +14,7 @@
 #include "ModuleParticles.h"
 #include "Particle.h"
 #include "GuiManager.h"
+#include "ModuleFonts.h"
 
 
 #include "Defs.h"
@@ -39,6 +40,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	enemies = new ModuleEnemies();
 	particles = new ModuleParticles();
 	guiManager = new GuiManager();
+	fonts = new ModuleFonts();
 
 	render = new Render();
 	// Ordered for awake / Start / Update
@@ -55,7 +57,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(coll);
 	AddModule(particles);
 	AddModule(guiManager);
-	
+	AddModule(fonts);
+
 	// Render last to swap buffer
 	AddModule(render);
 

@@ -99,6 +99,7 @@
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
     <ClCompile Include="Source\ModuleEnemies.cpp" />
+    <ClCompile Include="Source\ModuleFonts.cpp" />
     <ClCompile Include="Source\ModuleParticles.cpp" />
     <ClCompile Include="Source\Particle.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
     <ClInclude Include="Source\ModuleEnemies.h" />
+    <ClInclude Include="Source\ModuleFonts.h" />
     <ClInclude Include="Source\ModuleParticles.h" />
     <ClInclude Include="Source\Particle.h" />
     <ClInclude Include="Source\Pathfinding.h" />

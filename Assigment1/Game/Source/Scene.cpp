@@ -13,6 +13,8 @@
 #include "PathFinding.h"
 #include "ModuleEnemies.h"
 #include "GuiManager.h"
+#include "ModuleFonts.h"
+
 
 #include "SDL_mixer/include/SDL_mixer.h"
 
@@ -198,6 +200,12 @@ bool Scene::Start()
 	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (48), 127, 70, 20 }, this);
 	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 127, 70, 20 }, this);
 	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
+
+	btnPlay->texture = CoinTex;
+
+
+	char lookupTable[] = { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" };
+	scoreFont = app->fonts->Load("Assets/Fonts/rtype_font3.png", lookupTable, 2);
 	
 	StartCollidersLevel1();
 	
@@ -351,7 +359,7 @@ bool Scene::Update(float dt)
 		
 		//Draw GUI
 		app->guiManager->Draw();
-	
+		
 			
 		break;
 	case SCENE:

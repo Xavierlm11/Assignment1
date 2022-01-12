@@ -127,6 +127,10 @@ public:
 	bool conV = false;
 	bool frcap = false;
 	Timer clock;
+
+	uint score = 000;
+	int scoreFont = -1;
+	char scoreText[150] = { "\0" };
 	//void;
 private:
 	//scenes

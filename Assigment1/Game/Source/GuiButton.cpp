@@ -61,7 +61,7 @@ bool GuiButton::Draw(Render* render)
 
 	case GuiControlState::NORMAL:
 	{
-		render->DrawRectangle(bounds, 255, 0, 0, 255);
+		//render->DrawRectangle(bounds, 255, 0, 0, 255);
 
 	} break;
 
@@ -72,7 +72,7 @@ bool GuiButton::Draw(Render* render)
 	} break;
 	case GuiControlState::PRESSED:
 	{
-		render->DrawRectangle(bounds, 255, 255, 255, 255);
+		render->DrawRectangle(bounds, 20, 20, 255, 255);
 	} break;
 
 	/******/

@@ -67,6 +67,9 @@
     <ClCompile Include="Source\GuiManager.cpp">
       <Filter>Headers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleFonts.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -157,6 +160,9 @@
       <Filter>Origin</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiManager.h">
+      <Filter>Origin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleFonts.h">
       <Filter>Origin</Filter>
     </ClInclude>
   </ItemGroup>
