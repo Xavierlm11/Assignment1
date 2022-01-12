@@ -129,7 +129,8 @@ public:
 	Timer clock;
 
 	uint score = 000;
-	int scoreFont = -1;
+	int Font = -1;
+	int GrayFont = -1;
 	char scoreText[150] = { "\0" };
 	//void;
 private:

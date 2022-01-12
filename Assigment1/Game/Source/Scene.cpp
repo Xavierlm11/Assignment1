@@ -204,10 +204,11 @@ bool Scene::Start()
 
 	btnPlay->texture = CoinTex;
 
+	//Fonts
 
 	char lookupTable[] = { "! @,_./0123456789$;< ?abcdefghijklmnopqrstuvwxyz" };
-	scoreFont = app->fonts->Load("Assets/Fonts/rtype_font3.png", lookupTable, 2);
-	
+	Font = app->fonts->Load("Assets/Fonts/SelectedFont.png", lookupTable, 2);
+	GrayFont = app->fonts->Load("Assets/Fonts/DeSelectedFont.png", lookupTable, 2);
 	StartCollidersLevel1();
 	
 	if (app->map->Load("level1.tmx") == true)
@@ -523,6 +524,9 @@ bool Scene::PostUpdate()
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	//sprintf_s(scoreText, 10, "%4d", steps);
+	app->fonts->BlitText(55, 100, Font, "config.");
+	app->fonts->BlitText(55, 135, GrayFont, "config.");
 	return ret;
 }
 
