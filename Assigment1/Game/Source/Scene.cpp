@@ -164,6 +164,7 @@ bool Scene::Start()
 	WinScreen = app->tex->Load("Assets/textures/WinScreenTex.png");
 	TeleportFinalTex = app->tex->Load("Assets/textures/PadoruTex.png");
 	MenuBackgroundTex = app->tex->Load("Assets/textures/MEnuBackground.png");
+	MenuBoxTex= app->tex->Load("Assets/textures/MenuBoxesTex.png");
 	Kirbo1Tex= app->tex->Load("Assets/textures/Kirbo1Tex.png");
 	Kirbo2Tex = app->tex->Load("Assets/textures/Kirbo2Tex.png");
 	
@@ -195,10 +196,10 @@ bool Scene::Start()
 	//lvl1mus = Mix_LoadMUS("Assets/audio/music/BackgroundMusic.ogg");
 
 	// L14: TODO 2: Declare a GUI Button and create it using the GuiManager
-	btnPlay = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play", { (48), 91, 70, 31 }, this);
-	btnContinue = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (122), 91, 70, 31 }, this);
-	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (48), 127, 70, 20 }, this);
-	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 127, 70, 20 }, this);
+	btnPlay = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play", { (49), 91, 65, 31 }, this);
+	btnContinue = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (122), 91, 65, 31 }, this);
+	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (49), 127, 65, 20 }, this);
+	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 127, 65, 20 }, this);
 	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
 
 	btnPlay->texture = CoinTex;
@@ -349,8 +350,9 @@ bool Scene::Update(float dt)
 			movex = -10;
 			movey = -10;
 		}
+
 		app->render->DrawTexture(Kirbo2Tex, movex1, movey1, &(Kirbo1Anim.GetCurrentFrame()), 1.0f, rot+80);
-	
+		app->render->DrawTexture(MenuBoxTex,50, 90, NULL);
 		movex1 -= dt * 0.04;
 		
 		if (movex1 < -30) {
@@ -359,7 +361,6 @@ bool Scene::Update(float dt)
 		
 		//Draw GUI
 		app->guiManager->Draw();
-		
 			
 		break;
 	case SCENE:

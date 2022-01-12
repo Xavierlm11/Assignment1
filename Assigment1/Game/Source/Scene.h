@@ -140,6 +140,7 @@ private:
 	SDL_Texture* WinScreen;
 	SDL_Texture* TeleportFinalTex;
 	SDL_Texture* MenuBackgroundTex;
+	SDL_Texture* MenuBoxTex;
 	SDL_Texture* Kirbo1Tex;
 	SDL_Texture* Kirbo2Tex;
 

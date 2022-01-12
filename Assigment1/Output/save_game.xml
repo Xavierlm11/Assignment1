@@ -16,7 +16,7 @@
 	</enemy>
 	<renderer />
 	<player>
-		<position x="30000" y="31218" />
+		<position x="30000" y="30162" />
 		<lives count="5" />
 		<Key keyused="false" />
 	</player>
