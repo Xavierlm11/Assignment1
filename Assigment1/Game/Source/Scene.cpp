@@ -202,6 +202,8 @@ bool Scene::Start()
 	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (49), 127, 65, 20 }, this);
 	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 127, 65, 20 }, this);
 	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
+	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Exit", { (188), 41, 5, 5 }, this);
+	Config = app->tex->Load("Assets/textures/config.png");
 
 	btnPlay->texture = CoinTex;
 
@@ -226,6 +228,8 @@ bool Scene::Start()
 	pathTex = app->tex->Load("Assets/maps/cuad.png");
 	originTex = app->tex->Load("Assets/maps/a.png");
 	//app->map->CreateColliders();
+
+	
 	return true;
 }
 
@@ -331,7 +335,7 @@ bool Scene::Update(float dt)
 						
 
 			currentScene = MENU;
-		
+			silence = true;
 			app->SaveGameRequest();
 		}
 	
@@ -341,8 +345,11 @@ bool Scene::Update(float dt)
 		break;
 
 	case MENU:
+
 		app->render->DrawTexture(MenuBackgroundTex, 0, 0, NULL);
-		app->render->DrawTexture(MenuTitleTex, 0, 0, NULL);
+		
+
+
 		app->render->DrawTexture(Kirbo1Tex, movex, movey, &(Kirbo1Anim.GetCurrentFrame()),1.0f,rot);
 		rot+= dt*0.09;
 	
@@ -355,7 +362,15 @@ bool Scene::Update(float dt)
 		}
 
 		app->render->DrawTexture(Kirbo2Tex, movex1, movey1, &(Kirbo1Anim.GetCurrentFrame()), 1.0f, rot+80);
-		app->render->DrawTexture(MenuBoxTex,40, 90, NULL);
+		if (config == false)
+		{
+			app->render->DrawTexture(MenuBoxTex, 40, 90, NULL);
+			app->render->DrawTexture(MenuTitleTex, 0, 0, NULL);
+		}
+		if (config == true)
+		{
+			app->render->DrawTexture(Config, 0 ,0,NULL);
+		}
 		movex1 -= dt * 0.04;
 		
 		if (movex1 < -30) {
@@ -364,7 +379,22 @@ bool Scene::Update(float dt)
 		
 		//Draw GUI
 		app->guiManager->Draw();
-			
+		if (silence) {
+			app->audio->PlayMusic("Assets/audio/music/BackgroundMusicLevel2.ogg");
+			silence = false;
+		}
+		break;
+	case CONFIG:
+		app->render->DrawTexture(Config, 0, 0, NULL);
+
+		app->guiManager->Draw();
+
+		break;
+
+	case PAUSEMEN:
+
+
+
 		break;
 	case SCENE:
 		
@@ -523,20 +553,26 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || back==true)
 		ret = false;
 
 	//sprintf_s(scoreText, 10, "%4d", steps);
 	switch (currentScene)
 	{
 	case MENU:
+		if (config ==false)
+		{
+			app->fonts->BlitText(55, 100, Font, "play");
+			app->fonts->BlitText(128, 100, GrayFont, "continue");
 
-	app->fonts->BlitText(55, 100, Font, "play");
-	app->fonts->BlitText(120, 100, GrayFont, "continue");
+			app->fonts->BlitText(55, 135, Font, "config.");
 
-	app->fonts->BlitText(55, 135, Font, "config.");
+
+		}
+	
 
 		break;
+
 	//case :
 
 	//	break;
@@ -551,43 +587,70 @@ bool Scene::PostUpdate()
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 {
+	bool ret = true;
 
 	switch (control->type)
 	{
 	case GuiControlType::BUTTON:
 	{
+
 		//Checks the GUI element ID
-		if (control->id == 1)
-		{
-			LOG("Click on button 1");
-			currentScene = SCENE;
-			clock.Stop();
-			clock.Start();
-			startTitle = true;
+		
+		if (currentScene==MENU ) {
+			
+				if (control->id == 1)
+				{
+					LOG("Click on button 1");
+					currentScene = SCENE;
+					clock.Stop();
+					clock.Start();
+					startTitle = true;
 
-			app->render->camera.y = 0;
-			app->render->camera.x = 0;
+					app->render->camera.y = 0;
+					app->render->camera.x = 0;
 
-			app->player->position.x = 70;
-			app->player->position.y = 15;
-		}
+					app->player->position.x = 70;
+					app->player->position.y = 15;
+				}
 
-		if (control->id == 2)
-		{
-			LOG("Click on button 2");
-		}
+				if (control->id == 2)
+				{
+					LOG("Click on button 2");
+				}
 
-		if (control->id == 3)
-		{
-			LOG("Click on button 3");
+				if (control->id == 3)
+				{
+					LOG("Click on button 3");
+
+					currentScene = CONFIG;
+				}
+				if (control->id == 4)
+				{
+					LOG("Click on button 4");
+					a--;
+					
+					//Mix_Volume(1, a);
+					Mix_VolumeMusic(a);
+				}
+
+				if (control->id == 5)
+				{
+					LOG("Click on button 5");
+					back = true;
+				}
+			
+			/*if (config == true)
+			{
+				
+			}*/
 		}
-		if (control->id == 4)
+		if (currentScene == CONFIG)
 		{
-			LOG("Click on button 4");
-		}
-		if (control->id == 5)
-		{
-			LOG("Click on button 5");
+			if (control->id == 6)
+			{
+				LOG("Click on button 6");
+				currentScene = MENU;
+			}
 		}
 	}
 	//Other cases here
@@ -595,7 +658,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	default: break;
 	}
 
-	return true;
+	return ret;
 }
 
 // Called before quitting

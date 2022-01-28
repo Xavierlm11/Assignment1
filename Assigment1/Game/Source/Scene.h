@@ -5,7 +5,8 @@
 #include "Animation.h"
 #include "Point.h"
 #include "GuiButton.h"
-
+#include "Audio.h"
+#include "SDL_mixer/include/SDL_mixer.h"
 struct SDL_Texture;
 
 
@@ -14,6 +15,8 @@ enum State
 	TITLE_SCREEN,
 	MENU,
 	SCENE,
+	CONFIG,
+	PAUSEMEN,
 	SCENE2,
 	GAME_OVER,
 	WIN_GAME
@@ -133,6 +136,8 @@ public:
 	int GrayFont = -1;
 	char scoreText[150] = { "\0" };
 	//void;
+
+	float a = 128;
 private:
 	//scenes
 	SDL_Texture* bgTexture;
@@ -156,6 +161,13 @@ private:
 	SDL_Texture* GalaxyTex;
 	SDL_Texture* Level2Paral1;
 	SDL_Texture* Level2Paral2;
+
+	//mGUIII conf
+	SDL_Texture* Config;
+	GuiButton* Backmen;
+	bool config = false;
+	bool back = false;
+	
 
 	//scenes animations
 	Animation Press;

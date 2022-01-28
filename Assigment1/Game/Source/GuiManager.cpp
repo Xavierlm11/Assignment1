@@ -1,7 +1,7 @@
 #include "GuiManager.h"
 #include "App.h"
 #include "Textures.h"
-
+#include "Scene.h"
 #include "GuiButton.h"
 #include "Audio.h"
 
@@ -86,7 +86,28 @@ bool GuiManager::Draw() {
 
 	while (control != nullptr)
 	{
-		control->data->Draw(app->render);
+		switch (app->scene->currentScene)
+		{
+		case MENU:
+			if(control->data->id <=5) control->data->Draw(app->render);
+
+			break;
+
+		case CONFIG:
+			if (control->data->id >= 6&& control->data->id <= 10) control->data->Draw(app->render);
+			break;
+
+		case SCENE:
+
+			break;
+
+		case SCENE2:
+
+			break;
+
+		}
+
+		//control->data->Draw(app->render);
 		control = control->next;
 	}
 
