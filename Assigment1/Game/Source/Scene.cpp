@@ -191,6 +191,8 @@ bool Scene::Start()
 	wasted=app->audio->LoadFx("Assets/audio/fx/Wasted.wav");
 	teleportFx = app->audio->LoadFx("Assets/audio/fx/TeleportFx.wav");
 	winFx = app->audio->LoadFx("Assets/audio/fx/WinFx.wav");
+	ClickFx=app->audio->LoadFx("Assets/audio/fx/ClickButtonFx.wav");
+	SelectedFx = app->audio->LoadFx("Assets/audio/fx/SelectedFx.wav");
 	
 	currentScene = TITLE_SCREEN; //Game starts with Title Screen
 
@@ -676,28 +678,28 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			if (control->id == 7)
 			{
 				LOG("Up music");
-				if (a < 128)a++;
+				if (a < 128)a+=5;
 
 				Mix_VolumeMusic(a);
 			}
 			if (control->id == 8)
 			{
 				LOG("Down music");
-				if(a>0)a--;
+				if(a>0)a-=5;
 
 				Mix_VolumeMusic(a);
 			}
 			if (control->id == 9)
 			{
 				LOG("up fx");
-				if (b < 128)b++;
+				if (b < 128)b+=5;
 
 				Mix_Volume(-1,b);
 			}
 			if (control->id == 10)
 			{
 				LOG("down fx");
-				if (b >0)b--;
+				if (b >0)b-=5;
 
 				Mix_Volume(-1, b);
 			}

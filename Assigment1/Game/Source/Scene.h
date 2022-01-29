@@ -142,8 +142,10 @@ public:
 
 	bool pause = false;
 
-	//Textures Config
+	//Textures and fx Config
 	SDL_Texture* BtnSelected;
+	uint ClickFx = 0;
+	uint SelectedFx = 0;
 private:
 	//scenes
 	SDL_Texture* bgTexture;
@@ -201,6 +203,7 @@ private:
 	uint wasted=0;
 	uint winFx = 0;
 	uint teleportFx = 0;
+	
 	
 	//CheckPoint
 	SDL_Texture* CheckpointTex = nullptr;

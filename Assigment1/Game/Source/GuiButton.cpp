@@ -76,52 +76,57 @@ bool GuiButton::Draw(Render* render)
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
 
-		
-		if ((mouseX > 160) && (mouseX < (167)) &&
-			(mouseY > 47) && (mouseY < (54)))
-		{
-			app->render->DrawTexture(app->scene->BtnSelected, 159, 46, NULL);
+		if (app->scene->currentScene == CONFIG) {
+			if ((mouseX > 160) && (mouseX < (167)) &&
+				(mouseY > 47) && (mouseY < (54)))
+			{
+				app->render->DrawTexture(app->scene->BtnSelected, 159, 46, NULL);
+			}
+			if ((mouseX > 132) && (mouseX < (139)) &&
+				(mouseY > 47) && (mouseY < (54)))
+			{
+				app->render->DrawTexture(app->scene->BtnSelected, 131, 46, NULL);
+			}
+			if ((mouseX > 160) && (mouseX < (167)) &&
+				(mouseY > 60) && (mouseY < (67)))
+			{
+				app->render->DrawTexture(app->scene->BtnSelected, 159, 59, NULL);
+			}
+			if ((mouseX > 132) && (mouseX < (139)) &&
+				(mouseY > 60) && (mouseY < (67)))
+			{
+				app->render->DrawTexture(app->scene->BtnSelected, 131, 59, NULL);
+			}
+			if ((mouseX > 146) && (mouseX < (153)) &&
+				(mouseY > 73) && (mouseY < (80)))
+			{
+				app->render->DrawTexture(app->scene->BtnSelected, 145, 72, NULL);
+			}
+			if ((mouseX > 146) && (mouseX < (153)) &&
+				(mouseY > 91) && (mouseY < (98)))
+			{
+				app->render->DrawTexture(app->scene->BtnSelected, 145, 90, NULL);
+			}
+			if ((mouseX > 132) && (mouseX < (139)) &&
+				(mouseY > 106) && (mouseY < (113)))
+			{
+				app->render->DrawTexture(app->scene->BtnSelected, 131, 106, NULL);
+			}
+			if ((mouseX > 160) && (mouseX < (167)) &&
+				(mouseY > 106) && (mouseY < (113)))
+			{
+				app->render->DrawTexture(app->scene->BtnSelected, 159, 106, NULL);
+			}
 		}
-		if ((mouseX > 132) && (mouseX < (139)) &&
-			(mouseY > 47) && (mouseY < (54)))
-		{
-			app->render->DrawTexture(app->scene->BtnSelected, 131, 46, NULL);
-		}
-		if ((mouseX > 160) && (mouseX < (167)) &&
-			(mouseY > 60) && (mouseY < (67)))
-		{
-			app->render->DrawTexture(app->scene->BtnSelected, 159, 59, NULL);
-		}
-		if ((mouseX > 132) && (mouseX < (139)) &&
-			(mouseY > 60) && (mouseY < (67)))
-		{
-			app->render->DrawTexture(app->scene->BtnSelected, 131, 59, NULL);
-		}
-		if ((mouseX > 146) && (mouseX < (153)) &&
-			(mouseY > 73) && (mouseY < (80)))
-		{
-			app->render->DrawTexture(app->scene->BtnSelected, 145, 72, NULL);
-		}
-		if ((mouseX > 146) && (mouseX < (153)) &&
-			(mouseY > 91) && (mouseY < (98)))
-		{
-			app->render->DrawTexture(app->scene->BtnSelected, 145, 90, NULL);
-		}
-		if ((mouseX > 132) && (mouseX < (139)) &&
-			(mouseY > 106) && (mouseY < (113)))
-		{
-			app->render->DrawTexture(app->scene->BtnSelected, 131, 106, NULL);
-		}
-		if ((mouseX > 160) && (mouseX < (167)) &&
-			(mouseY > 106) && (mouseY < (113)))
-		{
-			app->render->DrawTexture(app->scene->BtnSelected, 159, 106, NULL);
-		}
+
+		app->audio->PlayFx(app->scene->ClickFx);
 
 	} break;
 	case GuiControlState::PRESSED:
 	{
 		render->DrawRectangle(bounds, 20, 20, 255, 255);
+		app->audio->PlayFx(app->scene->SelectedFx);
+		
 	} break;
 
 	/******/
