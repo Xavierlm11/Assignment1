@@ -381,7 +381,7 @@ bool Scene::Update(float dt)
 		}
 		if (config == true)
 		{
-			app->render->DrawTexture(Config, 0 ,0,NULL);
+			/*app->render->DrawTexture(Config, 0 ,0,NULL);*/
 		}
 		movex1 -= dt * 0.04;
 		
@@ -394,17 +394,10 @@ bool Scene::Update(float dt)
 		
 		break;
 	case CONFIG:
-		app->render->DrawTexture(Config, 0, 0, NULL);
-
-		app->guiManager->Draw();
+		ConfigMenu();
 
 		break;
 
-	case PAUSEMEN:
-
-
-
-		break;
 	case SCENE:
 		
 		
@@ -476,6 +469,7 @@ bool Scene::Update(float dt)
 			}
 
 			if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
+				pause = false;
 				app->coll->clean();
 				app->map->CleanUp();
 				level1 = true;
@@ -567,7 +561,7 @@ bool Scene::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && (currentScene == SCENE || currentScene == SCENE2))
 	{
 		if (!pause)pause = true;
-		else if (pause)pause = false;
+		else if (pause)pause = false ;
 	}
 
 	//sprintf_s(scoreText, 10, "%4d", steps);
@@ -578,10 +572,7 @@ bool Scene::PostUpdate()
 		{
 			app->fonts->BlitText(55, 100, Font, "play");
 			app->fonts->BlitText(128, 100, GrayFont, "continue");
-
 			app->fonts->BlitText(55, 135, Font, "config.");
-
-
 		}
 	
 
@@ -603,8 +594,6 @@ bool Scene::PostUpdate()
 		app->fonts->BlitText(113, 106, Font, "30");
 		app->fonts->BlitText(142, 106, Font, "60");
 
-		app->fonts->BlitText(160, 47, Font, "+");
-		app->fonts->BlitText(132, 47, Font, "-");
 	}
 	
 
@@ -675,7 +664,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			if (control->id == 6)
 			{
 				LOG("Click on button 6");
-				currentScene = MENU;
+				if(!pause)currentScene = MENU;
+				if (pause && actualScene == 1)currentScene = SCENE;
+				if (pause && actualScene == 2)currentScene = SCENE2;
 			}
 			if (control->id == 7)
 			{
@@ -1293,7 +1284,7 @@ void Scene::Level1ToLevel2() {
 }
 
 void Scene::ResetGame() {
-	
+		pause = false;
 		app->player->position.y = 20;
 		app->player->position.x = 70;
 		if (actualScene == 2)
@@ -1367,4 +1358,13 @@ void Scene::ResetGame() {
 
 		app->SaveGameRequest();
 	
+}
+
+void Scene::ConfigMenu()
+{
+	app->render->DrawTexture(Config, 0, 0, NULL);
+
+	app->guiManager->Draw();
+	
+
 }

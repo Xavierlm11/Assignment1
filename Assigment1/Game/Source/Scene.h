@@ -124,7 +124,7 @@ public:
 	void StartCollidersLevel2();
 	void Level1ToLevel2();
 	void ResetGame();
-
+	void ConfigMenu();
 	int actualScene = 1;
 	bool conT = false;
 	bool conV = false;
@@ -139,7 +139,7 @@ public:
 
 	float a = 128;
 	float b = 128;
-
+	float secs = 0;
 	bool pause = false;
 
 	//Textures and fx Config

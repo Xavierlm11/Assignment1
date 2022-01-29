@@ -199,6 +199,7 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
+
 	uint miliseconds = app->scene->clock.Read() % 1000;
 	uint seconds = (app->scene->clock.Read() / 1000) % 60;
 	uint minutes = (app->scene->clock.Read() / 1000) / 60;

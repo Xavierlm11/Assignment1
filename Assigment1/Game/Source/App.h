@@ -108,6 +108,7 @@ public:
 	ModuleFonts* fonts;
 
 	uint64 frameCount = 0;
+
 private:
 
 	int argc;

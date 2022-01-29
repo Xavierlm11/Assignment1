@@ -14,10 +14,10 @@ public:
 	void Stop();
 	uint32 Read() const;
 	float ReadSec() const;
-
+	bool	running;
 private:
 	uint32 startTime;
-	bool	running;
+	
 	uint32	started_at;
 	uint32	stopped_at;
 };
