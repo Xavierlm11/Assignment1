@@ -460,7 +460,9 @@ bool Scene::Update(float dt)
 			WinAnim.Reset();
 			currentScene = WIN_GAME;
 		}
-		
+		if (pause == true) {
+			PauseGame();
+		}
 		break;
 		case SCENE2:
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && UwU==0) {
@@ -517,6 +519,10 @@ bool Scene::Update(float dt)
 				WinAnim.Reset();
 				currentScene = WIN_GAME;
 			}
+
+			if (pause == true) {
+				PauseGame();
+			}
 			
 			break;
 	case GAME_OVER:
@@ -553,9 +559,7 @@ bool Scene::Update(float dt)
 		}
 	}
 
-	if (pause == true) {
-		PauseGame();
-	}
+
 	
 
 	return true;
@@ -627,6 +631,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				if (control->id == 1)
 				{
 					LOG("Click on button 1");
+					ResetGame();
 					currentScene = SCENE;
 					clock.Stop();
 					clock.Start();
@@ -748,6 +753,22 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				LOG("resume");
 				pause = false;
 			}
+			if (control->id == 21)
+			{
+				LOG("back to menu");
+				backtomenu = true;
+				pause = false;
+			}
+			if (control->id == 22)
+			{
+				LOG("settings");
+				currentScene = CONFIG;
+			}
+			if (control->id == 23)
+			{
+				LOG("exit");
+
+			}
 		}
 	}
 	//Other cases here
@@ -832,7 +853,7 @@ void Scene::DrawScene()
 
 	app->map->Draw();
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN||backtomenu==true) {
 		silence = true;
 		currentScene = TITLE_SCREEN;
 
@@ -840,6 +861,7 @@ void Scene::DrawScene()
 		app->player->position.y = 20000;
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
+		backtomenu = false;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		app->audio->PlayFx(wasted);
@@ -1382,14 +1404,18 @@ void Scene::ConfigMenu()
 	app->render->DrawTexture(Config, 0, 0, NULL);
 
 	app->guiManager->Draw();
-	
+	pause = true;
 
 }
 
 void Scene::PauseGame() {
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
-	app->render->DrawTexture(PauseTex,0, 0, NULL);
 
+	app->render->DrawTexture(PauseTex,0, 0, NULL);
+	app->fonts->BlitText(96, 48, Font, "resume");
+	app->fonts->BlitText(73, 69, Font, "back to menu");
+	app->fonts->BlitText(88, 90, Font, "settings");
+	app->fonts->BlitText(105, 108, Font, "exit");
 	app->guiManager->Draw();
 }

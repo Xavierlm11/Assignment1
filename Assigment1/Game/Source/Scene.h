@@ -198,6 +198,7 @@ private:
 	GuiButton* btnExit2;
 	bool config = false;
 	bool back = false;
+	bool backtomenu = false;
 		
 
 	//scenes animations
