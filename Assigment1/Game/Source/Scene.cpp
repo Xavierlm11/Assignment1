@@ -558,8 +558,13 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || back==true)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && (currentScene != SCENE && currentScene != SCENE2) || back == true)
 		ret = false;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && (currentScene == SCENE || currentScene == SCENE2))
+	{
+		if (!pause)pause = true;
+		else if (pause)pause = false;
+	}
 
 	//sprintf_s(scoreText, 10, "%4d", steps);
 	switch (currentScene)
