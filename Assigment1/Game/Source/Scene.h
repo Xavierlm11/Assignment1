@@ -147,6 +147,8 @@ public:
 	SDL_Texture* BtnExitTex;
 	uint ClickFx = 0;
 	uint SelectedFx = 0;
+	SDL_Texture* BtnBigRedTex;
+	SDL_Texture* BtnSmallRedTex;
 private:
 	//scenes
 	SDL_Texture* bgTexture;
@@ -173,6 +175,7 @@ private:
 
 	//mGUIII conf
 	SDL_Texture* Config;
+	SDL_Texture* PauseTex;
 	GuiButton* Backmen;
 	GuiButton* btnPlay;
 	GuiButton* btnContinue;

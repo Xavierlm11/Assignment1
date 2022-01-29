@@ -199,10 +199,10 @@ bool Scene::Start()
 	//lvl1mus = Mix_LoadMUS("Assets/audio/music/BackgroundMusic.ogg");
 
 	// L14: TODO 2: Declare a GUI Button and create it using the GuiManager
-	btnPlay = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play", { (49), 91, 65, 31 }, this);
-	btnContinue = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (122), 91, 65, 31 }, this);
-	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (49), 127, 65, 20 }, this);
-	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 127, 65, 20 }, this);
+	btnPlay = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play", { (40), 91, 76, 31 }, this);
+	btnContinue = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (122), 91, 76, 31 }, this);
+	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (40), 128, 76, 21 }, this);
+	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 128, 76, 21 }, this);
 	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
 	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Back", { (188), 41, 5, 5 }, this);
 	btnMusicUp = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Up Music", { (160), 47, 7, 7 }, this);
@@ -216,6 +216,9 @@ bool Scene::Start()
 	Config = app->tex->Load("Assets/textures/ConfigMenuTex.png");
 	BtnSelected = app->tex->Load("Assets/textures/BottonSelectedTex.png");
 	BtnExitTex= app->tex->Load("Assets/textures/ClockTexture.png");
+	PauseTex = app->tex->Load("Assets/textures/PauseMenuTex.png");
+	BtnSmallRedTex = app->tex->Load("Assets/textures/SmallBoxSelected.png");
+	BtnBigRedTex = app->tex->Load("Assets/textures/BigBoxSelected.png");
 	
 	btnPlay->texture = CoinTex;
 
