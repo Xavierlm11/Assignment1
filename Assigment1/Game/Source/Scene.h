@@ -141,6 +141,9 @@ public:
 	float b = 128;
 
 	bool pause = false;
+
+	//Textures Config
+	SDL_Texture* BtnSelected;
 private:
 	//scenes
 	SDL_Texture* bgTexture;
@@ -183,6 +186,7 @@ private:
 	GuiButton* btn60fps;
 	bool config = false;
 	bool back = false;
+
 	
 
 	//scenes animations
@@ -244,8 +248,6 @@ private:
 	// L12b: Debug pathfing
 	iPoint origin1;
 	bool originSelected = false;
-
-	// L14: TODO 2: Declare a GUI Button and create it using the GuiManager
 
 
 	int rot = 0;

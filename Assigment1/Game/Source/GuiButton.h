@@ -22,6 +22,9 @@ public:
 	void setpos(int x, int y);
 	bool canClick = true;
 	bool drawBasic = false;
+
+	int Font = -1;
+	int GrayFont = -1;
 };
 
 #endif // __GUIBUTTON_H__

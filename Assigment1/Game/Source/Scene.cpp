@@ -212,6 +212,7 @@ bool Scene::Start()
 	btn60fps = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "30fps", { (132), 107, 7,7 }, this);
 	btn30fps = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "60fps", { (160), 107,7, 7 }, this);
 	Config = app->tex->Load("Assets/textures/ConfigMenuTex.png");
+	BtnSelected = app->tex->Load("Assets/textures/BottonSelectedTex.png");
 	
 	btnPlay->texture = CoinTex;
 
@@ -598,6 +599,9 @@ bool Scene::PostUpdate()
 		app->fonts->BlitText(51, 106, Font, "fps");
 		app->fonts->BlitText(113, 106, Font, "30");
 		app->fonts->BlitText(142, 106, Font, "60");
+
+		app->fonts->BlitText(160, 47, Font, "+");
+		app->fonts->BlitText(132, 47, Font, "-");
 	}
 	
 
@@ -671,35 +675,37 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			}
 			if (control->id == 7)
 			{
-				LOG("Click on button 7");
+				LOG("Up music");
 				if (a < 128)a++;
 
 				Mix_VolumeMusic(a);
 			}
 			if (control->id == 8)
 			{
-				LOG("Click on button 8");
+				LOG("Down music");
 				if(a>0)a--;
 
 				Mix_VolumeMusic(a);
 			}
 			if (control->id == 9)
 			{
-				LOG("Click on button 9");
+				LOG("up fx");
 				if (b < 128)b++;
 
 				Mix_Volume(-1,b);
 			}
 			if (control->id == 10)
 			{
-				LOG("Click on button 10");
-			
+				LOG("down fx");
+				if (b >0)b--;
+
+				Mix_Volume(-1, b);
 			}
 			if (control->id == 11)
 			{
 			/*	Uint32 flags = SDL_WINDOW_SHOWN;*/
 
-				LOG("Click on button 11");
+				LOG("fullscreen");
 				if (app->win->fullscreen == false) {
 					app->win->fullscreen = true;
 				/*	if (app->win->fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;*/
@@ -710,7 +716,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			}
 			if (control->id == 12)
 			{
-				LOG("Click on button 12");
+				LOG("vsync");
 				if (app->render->vsync == false) {
 					app->render->vsync = true;
 				}
@@ -721,14 +727,15 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			}
 			if (control->id == 13)
 			{
-				LOG("Click on button 13");
+				LOG("fps 30");
 				frcap = true;
 			}
 			if (control->id == 14)
 			{
-				LOG("Click on button 14");
+				LOG("fps 60");
 				frcap = false;
 			}
+
 		}
 	}
 	//Other cases here
