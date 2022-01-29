@@ -144,6 +144,7 @@ public:
 
 	//Textures and fx Config
 	SDL_Texture* BtnSelected;
+	SDL_Texture* BtnExitTex;
 	uint ClickFx = 0;
 	uint SelectedFx = 0;
 private:

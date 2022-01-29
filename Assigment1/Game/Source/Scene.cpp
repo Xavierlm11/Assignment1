@@ -215,6 +215,7 @@ bool Scene::Start()
 	btn30fps = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "60fps", { (160), 107,7, 7 }, this);
 	Config = app->tex->Load("Assets/textures/ConfigMenuTex.png");
 	BtnSelected = app->tex->Load("Assets/textures/BottonSelectedTex.png");
+	BtnExitTex= app->tex->Load("Assets/textures/ClockTexture.png");
 	
 	btnPlay->texture = CoinTex;
 
@@ -593,7 +594,7 @@ bool Scene::PostUpdate()
 
 	//	break;
 	case CONFIG:
-
+		app->render->DrawTexture(BtnExitTex, 184, 42, NULL);
 		app->fonts->BlitText(51, 45, Font, "music");
 		app->fonts->BlitText(51, 60, Font, "fx");
 		app->fonts->BlitText(51, 72, Font, "fullscreen");
@@ -670,6 +671,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		if (currentScene == CONFIG)
 		{
+			
 			if (control->id == 6)
 			{
 				LOG("Click on button 6");
