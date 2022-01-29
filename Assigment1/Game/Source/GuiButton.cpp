@@ -2,7 +2,8 @@
 #include "Render.h"
 #include "App.h"
 #include "Audio.h"
-
+#include "GuiControl.h"
+#include "GuiManager.h"
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
@@ -49,7 +50,7 @@ bool GuiButton::Update(float dt)
 
 bool GuiButton::Draw(Render* render)
 {
-
+    ListItem<GuiControl*>* control = app->guiManager->controls.start;
 	// Draw the right button depending on state
 	switch (state)
 	{
@@ -69,7 +70,11 @@ bool GuiButton::Draw(Render* render)
 	case GuiControlState::FOCUSED:
 	{
 		render->DrawRectangle(bounds, 255, 255, 255, 160);
+		
+		/*if(control->data->id=1)
+		{
 
+		}*/
 	} break;
 	case GuiControlState::PRESSED:
 	{
@@ -86,4 +91,12 @@ bool GuiButton::Draw(Render* render)
 	}
 
 	return false;
+}
+
+void GuiButton::setpos( int x, int y)
+{
+	if (this != nullptr) {
+		bounds.x = x;
+		bounds.y = y;
+	}
 }

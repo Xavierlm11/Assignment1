@@ -2,7 +2,8 @@
 #define __GUIBUTTON_H__
 
 #include "GuiControl.h"
-
+#include "List.h"
+#include "Point.h"
 #include "Point.h"
 #include "SString.h"
 
@@ -18,7 +19,7 @@ public:
 
 	int mouseX, mouseY;
 	unsigned int click;
-
+	void setpos(int x, int y);
 	bool canClick = true;
 	bool drawBasic = false;
 };

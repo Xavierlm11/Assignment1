@@ -157,8 +157,10 @@ bool Player::PreUpdate()
 bool Player::Update(float dt) {
 	bool ret = true;
 	
-	MovementPlayer(dt);
-		
+	if (!app->scene->pause)
+	{
+		MovementPlayer(dt);
+	}
 	return ret;
 }
 
@@ -173,9 +175,10 @@ bool Player::PostUpdate()
 	Uint8 alpha = 80;
 	
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();	
-
+	if(!app->scene->pause)
+	{ 
 	app->render->DrawTexture(texture, position.x, position.y, &rect);//draw player
-
+	}
 	contact = false;
 	sidesR = false;
 	sidesL = false;

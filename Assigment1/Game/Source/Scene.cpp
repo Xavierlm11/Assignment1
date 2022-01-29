@@ -202,9 +202,9 @@ bool Scene::Start()
 	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (49), 127, 65, 20 }, this);
 	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 127, 65, 20 }, this);
 	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
-	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Exit", { (188), 41, 5, 5 }, this);
+	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Back", { (188), 41, 5, 5 }, this);
 	Config = app->tex->Load("Assets/textures/config.png");
-
+	
 	btnPlay->texture = CoinTex;
 
 	//Fonts
@@ -268,23 +268,25 @@ bool Scene::PreUpdate()
 				originSelected = true;
 			}
 		}*/
+		if (!pause) {
+			if (conV == true && app->enemies->BooLive == 1)
+			{
 
-		if (conV==true && app->enemies->BooLive == 1)
-		{
-			
-			app->pathfinding->CreatePath(volador, jug);
+				app->pathfinding->CreatePath(volador, jug);
+			}
 		}
-		
 	}
 
 	if (currentScene == SCENE2)
 	{
 		tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
 		jug = app->map->WorldToMap(app->player->position.x, app->player->position.y);
-		if (conT == true && app->enemies->WaddleLive == 1)
-		{
-			
-			app->pathfinding->CreatePath(tierra, jug);
+		if (!pause) {
+			if (conT == true && app->enemies->WaddleLive == 1)
+			{
+
+				app->pathfinding->CreatePath(tierra, jug);
+			}
 		}
 	}
 	if (level1) {
@@ -336,7 +338,7 @@ bool Scene::Update(float dt)
 
 			currentScene = MENU;
 			silence = true;
-			app->SaveGameRequest();
+			
 		}
 	
 		app->render->DrawTexture(bgTexture, 0, 0, &(intro.GetCurrentFrame()));
@@ -348,8 +350,6 @@ bool Scene::Update(float dt)
 
 		app->render->DrawTexture(MenuBackgroundTex, 0, 0, NULL);
 		
-
-
 		app->render->DrawTexture(Kirbo1Tex, movex, movey, &(Kirbo1Anim.GetCurrentFrame()),1.0f,rot);
 		rot+= dt*0.09;
 	
@@ -379,10 +379,7 @@ bool Scene::Update(float dt)
 		
 		//Draw GUI
 		app->guiManager->Draw();
-		if (silence) {
-			app->audio->PlayMusic("Assets/audio/music/BackgroundMusicLevel2.ogg");
-			silence = false;
-		}
+		
 		break;
 	case CONFIG:
 		app->render->DrawTexture(Config, 0, 0, NULL);
@@ -404,9 +401,9 @@ bool Scene::Update(float dt)
 			
 			startTitle = false;
 			
-			//app->audio->Music("Assets/audio/music/BackgroundMusic.ogg");
+			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
 		}
-
+		
 	
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			app->LoadGameRequest();
@@ -433,8 +430,8 @@ bool Scene::Update(float dt)
 		Health();
 		
 		// L12b: Debug pathfinding
+		if(!pause)Pathfinding(app->enemies->Enemy2);
 		
-		Pathfinding(app->enemies->Enemy2);
 		//if (conT)Pathfinding(app->enemies->Enemy1);
 
 		
@@ -481,7 +478,7 @@ bool Scene::Update(float dt)
 				app->audio->PlayMusic("Assets/audio/music/BackgroundMusicLevel2.ogg");
 				silence = false;
 			}
-
+			
 			app->map->Draw();
 			// Draw map
 			DrawScene();
@@ -489,7 +486,7 @@ bool Scene::Update(float dt)
 			Teleports();
 			Health();
 			Coins();
-			Pathfinding(app->enemies->Enemy1);
+			if (!pause)Pathfinding(app->enemies->Enemy1);
 
 
 			if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -611,6 +608,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 					app->player->position.x = 70;
 					app->player->position.y = 15;
+					app->SaveGameRequest();
 				}
 
 				if (control->id == 2)

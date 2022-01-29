@@ -138,6 +138,8 @@ public:
 	//void;
 
 	float a = 128;
+
+	bool pause = false;
 private:
 	//scenes
 	SDL_Texture* bgTexture;
