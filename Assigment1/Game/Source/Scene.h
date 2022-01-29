@@ -57,6 +57,8 @@ public:
 	// Define multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
+	void PauseGame();
+
 	State currentScene;
 
 	bool startTitle=true;
@@ -190,10 +192,13 @@ private:
 	GuiButton* btnVsync;
 	GuiButton* btn30fps;
 	GuiButton* btn60fps;
+	GuiButton* btnresume;
+	GuiButton* btnrestart;
+	GuiButton* btnSettings2;
+	GuiButton* btnExit2;
 	bool config = false;
 	bool back = false;
-
-	
+		
 
 	//scenes animations
 	Animation Press;

@@ -213,6 +213,10 @@ bool Scene::Start()
 	btnVsync = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 12, "Vsync", { (146), 91, 7, 7 }, this);
 	btn60fps = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "30fps", { (132), 107, 7,7 }, this);
 	btn30fps = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "60fps", { (160), 107,7, 7 }, this);
+	btnresume = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "resume", { (73), 47,95, 10 }, this);
+	btnrestart = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 21, "restart", { (73), 68,95, 10 }, this);
+	btnSettings2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 22, "settings", { (73), 89,95, 10 }, this);
+	btnExit2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 23, "exit", { (89), 107,62, 10 }, this);
 	Config = app->tex->Load("Assets/textures/ConfigMenuTex.png");
 	BtnSelected = app->tex->Load("Assets/textures/BottonSelectedTex.png");
 	BtnExitTex= app->tex->Load("Assets/textures/ClockTexture.png");
@@ -549,6 +553,9 @@ bool Scene::Update(float dt)
 		}
 	}
 
+	if (pause == true) {
+		PauseGame();
+	}
 	
 
 	return true;
@@ -734,6 +741,13 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				frcap = false;
 			}
 
+		}
+		if (pause == true) {
+			if (control->id == 20)
+			{
+				LOG("resume");
+				pause = false;
+			}
 		}
 	}
 	//Other cases here
@@ -1370,4 +1384,12 @@ void Scene::ConfigMenu()
 	app->guiManager->Draw();
 	
 
+}
+
+void Scene::PauseGame() {
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
+	app->render->DrawTexture(PauseTex,0, 0, NULL);
+
+	app->guiManager->Draw();
 }

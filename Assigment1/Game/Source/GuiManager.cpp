@@ -98,7 +98,9 @@ bool GuiManager::Draw() {
 			break;
 
 		case SCENE:
-
+			if (app->scene->pause == true) {
+				if (control->data->id >= 20 && control->data->id <= 30) control->data->Draw(app->render);
+			}
 			break;
 
 		case SCENE2:
