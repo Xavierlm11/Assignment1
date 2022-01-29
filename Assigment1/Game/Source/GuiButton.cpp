@@ -125,7 +125,7 @@ bool GuiButton::Draw(Render* render)
 				app->render->DrawTexture(app->scene->BtnBigRedTex, 40, 90, NULL);
 			}
 		
-			if ((mouseX > 122) && (mouseX < (180)) &&
+			if ((mouseX > 122) && (mouseX < (195)) &&
 				(mouseY > 91) && (mouseY < (122)))
 			{
 				app->render->DrawTexture(app->scene->BtnBigRedTex, 121, 90, NULL);
@@ -151,7 +151,7 @@ bool GuiButton::Draw(Render* render)
 	{
 		render->DrawRectangle(bounds, 20, 20, 255, 255);
 		app->audio->PlayFx(app->scene->SelectedFx);
-		
+			
 	} break;
 
 	/******/

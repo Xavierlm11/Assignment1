@@ -204,7 +204,7 @@ bool Scene::Start()
 	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (40), 128, 76, 21 }, this);
 	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 128, 76, 21 }, this);
 	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
-	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Back", { (188), 41, 5, 5 }, this);
+	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Back", { (188), 41, 8, 8 }, this);
 	btnMusicUp = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Up Music", { (160), 47, 7, 7 }, this);
 	btnMusicDown = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "Down Music", { (132), 47, 7, 7 }, this);
 	btnFxUp = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "Up Fx", { (160), 60, 7, 7 }, this);
@@ -366,7 +366,7 @@ bool Scene::Update(float dt)
 		break;
 
 	case MENU:
-
+		actualScene = 0;
 		app->render->DrawTexture(MenuBackgroundTex, 0, 0, NULL);
 		
 		app->render->DrawTexture(Kirbo1Tex, movex, movey, &(Kirbo1Anim.GetCurrentFrame()),1.0f,rot);
@@ -381,15 +381,11 @@ bool Scene::Update(float dt)
 		}
 
 		app->render->DrawTexture(Kirbo2Tex, movex1, movey1, &(Kirbo1Anim.GetCurrentFrame()), 1.0f, rot+80);
-		if (config == false)
-		{
-			app->render->DrawTexture(MenuBoxTex, 40, 90, NULL);
-			app->render->DrawTexture(MenuTitleTex, 0, 0, NULL);
-		}
-		if (config == true)
-		{
-			/*app->render->DrawTexture(Config, 0 ,0,NULL);*/
-		}
+
+		
+		app->render->DrawTexture(MenuBoxTex, 40, 90, NULL);
+		app->render->DrawTexture(MenuTitleTex, 0, 0, NULL);
+
 		movex1 -= dt * 0.04;
 		
 		if (movex1 < -30) {
@@ -582,12 +578,12 @@ bool Scene::PostUpdate()
 	switch (currentScene)
 	{
 	case MENU:
-		if (config ==false)
-		{
-			app->fonts->BlitText(55, 100, Font, "play");
-			app->fonts->BlitText(128, 100, GrayFont, "continue");
-			app->fonts->BlitText(55, 135, Font, "config.");
-		}
+		
+		
+		app->fonts->BlitText(55, 100, Font, "play");
+		app->fonts->BlitText(128, 100, GrayFont, "continue");
+		app->fonts->BlitText(55, 135, Font, "config.");
+		
 	
 
 		break;
@@ -607,7 +603,15 @@ bool Scene::PostUpdate()
 		app->fonts->BlitText(51, 106, Font, "fps");
 		app->fonts->BlitText(113, 106, Font, "30");
 		app->fonts->BlitText(142, 106, Font, "60");
-
+		if (app->render->vsync == true) {
+			app->fonts->BlitText(145, 90, Font, "x");
+		}
+		if (frcap == true) {
+			app->fonts->BlitText(132, 106, Font, "x");
+		}
+		if (frcap == false) {
+			app->fonts->BlitText(160, 106, Font, "x");
+		}
 	}
 	
 
@@ -632,17 +636,17 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				{
 					LOG("Click on button 1");
 					ResetGame();
-					currentScene = SCENE;
+					//currentScene = SCENE;
 					clock.Stop();
 					clock.Start();
-					startTitle = true;
+					//startTitle = true;
 
-					app->render->camera.y = 0;
-					app->render->camera.x = 0;
+					//app->render->camera.y = 0;
+					//app->render->camera.x = 0;
 
-					app->player->position.x = 70;
-					app->player->position.y = 15;
-					app->SaveGameRequest();
+					//app->player->position.x = 70;
+					//app->player->position.y = 15;
+					//app->SaveGameRequest();
 				}
 
 				if (control->id == 2)
@@ -655,6 +659,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 					LOG("Click on button 3");
 
 					currentScene = CONFIG;
+					config = true;
 				}
 				if (control->id == 4)
 				{
@@ -679,9 +684,10 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			if (control->id == 6)
 			{
 				LOG("Click on button 6");
-				if(!pause)currentScene = MENU;
-				if (pause && actualScene == 1)currentScene = SCENE;
-				if (pause && actualScene == 2)currentScene = SCENE2;
+				if(actualScene==0&&!pause)currentScene = MENU, config = false;
+				if (pause && actualScene == 1)currentScene = SCENE, config =false;
+				if (pause && actualScene == 2)currentScene = SCENE2, config = false;
+
 			}
 			if (control->id == 7)
 			{
@@ -747,7 +753,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			}
 
 		}
-		if (pause == true) {
+		if (pause == true&&actualScene!=0&&!config) {
 			if (control->id == 20)
 			{
 				LOG("resume");
@@ -763,11 +769,13 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			{
 				LOG("settings");
 				currentScene = CONFIG;
+				pause = true;
+				config = true;
 			}
 			if (control->id == 23)
 			{
 				LOG("exit");
-
+				back = true;
 			}
 		}
 	}
@@ -1404,7 +1412,7 @@ void Scene::ConfigMenu()
 	app->render->DrawTexture(Config, 0, 0, NULL);
 
 	app->guiManager->Draw();
-	pause = true;
+	
 
 }
 
