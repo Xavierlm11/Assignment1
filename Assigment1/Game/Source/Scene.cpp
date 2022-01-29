@@ -203,7 +203,15 @@ bool Scene::Start()
 	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 127, 65, 20 }, this);
 	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
 	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Back", { (188), 41, 5, 5 }, this);
-	Config = app->tex->Load("Assets/textures/config.png");
+	btnMusicUp = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Up Music", { (160), 47, 7, 7 }, this);
+	btnMusicDown = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "Down Music", { (132), 47, 7, 7 }, this);
+	btnFxUp = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "Up Fx", { (160), 60, 7, 7 }, this);
+	btnFxDown = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON,10, "Down Fx", { (132), 60, 7, 7 }, this);
+	btnFullScreen= (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "FullScreen", { (146), 73,7, 7 }, this);
+	btnVsync = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 12, "Vsync", { (146), 91, 7, 7 }, this);
+	btn60fps = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "30fps", { (132), 107, 7,7 }, this);
+	btn30fps = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "60fps", { (160), 107,7, 7 }, this);
+	Config = app->tex->Load("Assets/textures/ConfigMenuTex.png");
 	
 	btnPlay->texture = CoinTex;
 
@@ -576,8 +584,18 @@ bool Scene::PostUpdate()
 	//case MENU:
 
 	//	break;
+	case CONFIG:
 
+		app->fonts->BlitText(51, 45, Font, "music");
+		app->fonts->BlitText(51, 60, Font, "fx");
+		app->fonts->BlitText(51, 72, Font, "fullscreen");
+		app->fonts->BlitText(51, 89, Font, "vsync");
+		app->fonts->BlitText(51, 106, Font, "fps");
+		app->fonts->BlitText(113, 106, Font, "30");
+		app->fonts->BlitText(142, 106, Font, "60");
 	}
+	
+
 	
 	return ret;
 }
@@ -625,10 +643,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				if (control->id == 4)
 				{
 					LOG("Click on button 4");
-					a--;
 					
-					//Mix_Volume(1, a);
-					Mix_VolumeMusic(a);
 				}
 
 				if (control->id == 5)
@@ -648,6 +663,66 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			{
 				LOG("Click on button 6");
 				currentScene = MENU;
+			}
+			if (control->id == 7)
+			{
+				LOG("Click on button 7");
+				if (a < 128)a++;
+
+				Mix_VolumeMusic(a);
+			}
+			if (control->id == 8)
+			{
+				LOG("Click on button 8");
+				if(a>0)a--;
+
+				Mix_VolumeMusic(a);
+			}
+			if (control->id == 9)
+			{
+				LOG("Click on button 9");
+				if (b < 128)b++;
+
+				Mix_Volume(-1,b);
+			}
+			if (control->id == 10)
+			{
+				LOG("Click on button 10");
+			
+			}
+			if (control->id == 11)
+			{
+			/*	Uint32 flags = SDL_WINDOW_SHOWN;*/
+
+				LOG("Click on button 11");
+				if (app->win->fullscreen == false) {
+					app->win->fullscreen = true;
+				/*	if (app->win->fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;*/
+				}
+				else if (app->win->fullscreen == true) {
+					app->win->fullscreen = false;
+				}
+			}
+			if (control->id == 12)
+			{
+				LOG("Click on button 12");
+				if (app->render->vsync == false) {
+					app->render->vsync = true;
+				}
+				else if (app->render->vsync == true) {
+					app->render->vsync = false;
+				}
+			
+			}
+			if (control->id == 13)
+			{
+				LOG("Click on button 13");
+				frcap = true;
+			}
+			if (control->id == 14)
+			{
+				LOG("Click on button 14");
+				frcap = false;
 			}
 		}
 	}

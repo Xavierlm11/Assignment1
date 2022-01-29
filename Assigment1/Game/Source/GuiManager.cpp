@@ -94,7 +94,7 @@ bool GuiManager::Draw() {
 			break;
 
 		case CONFIG:
-			if (control->data->id >= 6&& control->data->id <= 10) control->data->Draw(app->render);
+			if (control->data->id >= 6&& control->data->id <= 14) control->data->Draw(app->render);
 			break;
 
 		case SCENE:

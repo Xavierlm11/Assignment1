@@ -138,6 +138,7 @@ public:
 	//void;
 
 	float a = 128;
+	float b = 128;
 
 	bool pause = false;
 private:
@@ -167,6 +168,19 @@ private:
 	//mGUIII conf
 	SDL_Texture* Config;
 	GuiButton* Backmen;
+	GuiButton* btnPlay;
+	GuiButton* btnContinue;
+	GuiButton* btnSettings;
+	GuiButton* btnCredits;
+	GuiButton* btnExit;
+	GuiButton* btnMusicUp;
+	GuiButton* btnMusicDown;
+	GuiButton* btnFxUp;
+	GuiButton* btnFxDown;
+	GuiButton* btnFullScreen;
+	GuiButton* btnVsync;
+	GuiButton* btn30fps;
+	GuiButton* btn60fps;
 	bool config = false;
 	bool back = false;
 	
@@ -232,11 +246,7 @@ private:
 	bool originSelected = false;
 
 	// L14: TODO 2: Declare a GUI Button and create it using the GuiManager
-	GuiButton* btnPlay;
-	GuiButton* btnContinue;
-	GuiButton* btnSettings;
-	GuiButton* btnCredits;
-	GuiButton* btnExit;
+
 
 	int rot = 0;
 	float movex = -10;
