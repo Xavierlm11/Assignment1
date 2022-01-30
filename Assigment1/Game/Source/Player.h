@@ -95,7 +95,7 @@ public:
 	bool PlayerPosition = true;
 
 	uint JumpFx = 0;
-
+	uint EnterFx = 0;
 	uint playerAttack = 0;
 
 	int score = 0;

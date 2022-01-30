@@ -119,6 +119,7 @@ bool Player::Start()
 	GetCoin = app->audio->LoadFx("Assets/audio/fx/GetCoinFx.wav");
 	JumpFx = app->audio->LoadFx("Assets/audio/fx/JumpFx.wav");
 	playerAttack = app->audio->LoadFx("Assets/audio/fx/PlayerAttackFx.wav");
+	EnterFx = app->audio->LoadFx("Assets/audio/fx/EnterFx.wav");
 
 	currentAnimation = &idleAnimR; //player start with idle anim
 
@@ -457,6 +458,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if ((c1->type == Collider::Type::PLAYER || c1->type == Collider::Type::PLAYERHEAD || c1->type == Collider::Type::PLAYERLEFT || c1->type == Collider::Type::PLAYERRIGHT) && c2->type == Collider::Type::TELEPORT)
 		{
 			if (Key == true) {
+				app->audio->PlayFx(EnterFx);
 				app->scene->AllowTeleport = true;
 			}
 		}

@@ -665,6 +665,9 @@ bool Scene::PostUpdate()
 		if (frcap == false) {
 			app->fonts->BlitText(160, 106, Font, "x");
 		}
+		if (app->win->fullscreen == true) {
+			app->fonts->BlitText(145, 72, Font, "x");
+		}
 		break;
 	}
 	
