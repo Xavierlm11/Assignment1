@@ -72,7 +72,10 @@ bool GuiButton::Draw(Render* render)
 	//L14: TODO 4: Draw the button according the GuiControl State
 	case GuiControlState::FOCUSED:
 	{
-		render->DrawRectangle(bounds, 255, 255, 255, 160);
+		if (app->scene->hitbox)
+		{
+			render->DrawRectangle(bounds, 255, 255, 255, 160);
+		}
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
 
@@ -149,7 +152,10 @@ bool GuiButton::Draw(Render* render)
 	} break;
 	case GuiControlState::PRESSED:
 	{
-		render->DrawRectangle(bounds, 20, 20, 255, 255);
+		if (app->scene->hitbox)
+		{
+			render->DrawRectangle(bounds, 20, 20, 255, 255);
+		}
 		app->audio->PlayFx(app->scene->SelectedFx);
 			
 	} break;

@@ -212,7 +212,7 @@ bool Player::LoadState(pugi::xml_node& data)
 	PlayerLives = data.child("lives").attribute("count").as_int();
 	
 	Key = data.child("Key").attribute("keyused").as_bool();
-
+	score = data.child("Data").attribute("score").as_int();
 	//saved= data.child("Saved").attribute("saved").as_bool();
 	
 
@@ -227,6 +227,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 	pugi::xml_node life = data.child("lives");
 	pugi::xml_node key = data.child("Key");
 	pugi::xml_node Saved = data.child("saved");
+	pugi::xml_node Data = data.child("Data");
 
 	pos.attribute("x").set_value(position.x);
 	pos.attribute("y").set_value(position.y);
@@ -235,6 +236,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 	key.attribute("keyused").set_value(Key);
 
+	Data.attribute("score").set_value(score);
 	//Saved.attribute("saved").set_value(saved);
 
 	return true;

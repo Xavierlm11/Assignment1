@@ -298,7 +298,7 @@ bool Scene::PreUpdate()
 			}
 		}
 	}
-
+	
 	if (currentScene == SCENE2)
 	{
 		tierra = app->map->WorldToMap(app->enemies->Enemy1.x, app->enemies->Enemy1.y);
@@ -376,6 +376,12 @@ bool Scene::Update(float dt)
 
 	case MENU:
 		LOG("ACTUALSCENE %d", actualScene);
+
+		if (silence)
+		{
+			silence = false;
+			app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
+		}
 		app->render->DrawTexture(MenuBackgroundTex, 0, 0, NULL);
 		
 		app->render->DrawTexture(Kirbo1Tex, movex, movey, &(Kirbo1Anim.GetCurrentFrame()),1.0f,rot);
@@ -434,7 +440,7 @@ bool Scene::Update(float dt)
 		LOG("ACTUALSCENE %d", currentScene);
 		if (startTitle)
 		{
-			
+			//app->pathfinding->CleanUp();
 			startTitle = false;
 			
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
@@ -494,6 +500,7 @@ bool Scene::Update(float dt)
 				BugFixer = true;
 			}
 			if (BugFixer == true) {
+				//app->pathfinding->CleanUp();
 				app->player->position.x = 40;
 				app->player->position.y = 0;
 				scrollerX2 = 0;
@@ -607,8 +614,12 @@ bool Scene::Update(float dt)
 		break;
 	}
 
-
-	
+	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+	{
+		if (hitbox)hitbox = false;
+		else if (!hitbox)hitbox = true;
+	}
+	 
 
 	return true;
 }
@@ -639,7 +650,10 @@ bool Scene::PostUpdate()
 		
 		app->render->DrawTexture(BtnExitWhite, 2, 2, NULL);
 		app->fonts->BlitText(61, 101, Font, "play");
-		app->fonts->BlitText(127, 101, GrayFont, "continue");
+
+		if(saved!=1)app->fonts->BlitText(127, 101, GrayFont, "continue");
+		if (saved == 1)app->fonts->BlitText(127, 101, Font, "continue");
+
 		app->fonts->BlitText(53, 135, Font, "config.");
 		app->fonts->BlitText(132, 135, Font, "credits");		
 	
@@ -1480,6 +1494,12 @@ void Scene::ResetGame() {
 
 		app->scene->currentScene = SCENE;
 
+		
+
+		clock.Stop();
+		clock.Start();
+		
+		score = 0;
 		app->SaveGameRequest();
 	
 }

@@ -86,31 +86,32 @@ bool GuiManager::Draw() {
 
 	while (control != nullptr)
 	{
-		switch (app->scene->currentScene)
-		{
-		case MENU:
-			if(control->data->id <=5) control->data->Draw(app->render);
+		
+			switch (app->scene->currentScene)
+			{
+			case MENU:
+				if (control->data->id <= 5) control->data->Draw(app->render);
 
-			break;
+				break;
 
-		case CONFIG:
-			if (control->data->id >= 6&& control->data->id <= 14) control->data->Draw(app->render);
-			break;
+			case CONFIG:
+				if (control->data->id >= 6 && control->data->id <= 14) control->data->Draw(app->render);
+				break;
 
-		case SCENE:
-			if (app->scene->pause == true) {
-				if (control->data->id >= 20 && control->data->id <= 30) control->data->Draw(app->render);
+			case SCENE:
+				if (app->scene->pause == true) {
+					if (control->data->id >= 20 && control->data->id <= 30) control->data->Draw(app->render);
+				}
+				break;
+
+			case SCENE2:
+				if (app->scene->pause == true) {
+					if (control->data->id >= 20 && control->data->id <= 30) control->data->Draw(app->render);
+				}
+				break;
+
 			}
-			break;
-
-		case SCENE2:
-			if (app->scene->pause == true) {
-				if (control->data->id >= 20 && control->data->id <= 30) control->data->Draw(app->render);
-			}
-			break;
-
-		}
-
+		
 		//control->data->Draw(app->render);
 		control = control->next;
 	}

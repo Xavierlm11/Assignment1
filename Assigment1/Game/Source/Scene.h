@@ -155,6 +155,8 @@ public:
 	SDL_Texture* BtnSmallRedTex;
 
 	int saved;
+
+	bool hitbox = false;
 private:
 	//scenes
 	SDL_Texture* bgTexture;
