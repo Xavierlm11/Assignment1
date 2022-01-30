@@ -560,6 +560,12 @@ bool Scene::Update(float dt)
 		app->render->camera.y = 0;
 		app->render->DrawTexture(CreditsTex, 0, credity, NULL);
 		credity -= dt * 0.0420;
+
+		if (silence) {
+			app->audio->PlayMusic("Assets/audio/music/CreditsMusic.ogg");
+			silence = false;
+		}
+
 	}
 
 
