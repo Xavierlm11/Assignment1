@@ -153,6 +153,8 @@ public:
 	uint SelectedFx = 0;
 	SDL_Texture* BtnBigRedTex;
 	SDL_Texture* BtnSmallRedTex;
+
+	int saved;
 private:
 	//scenes
 	SDL_Texture* bgTexture;
@@ -276,6 +278,10 @@ private:
 
 
 	bool end = false;
+
+	bool ready = false;
+
+	
 	//_Mix_Music* lvl1mus;
 	/*_Mix_Music* lvl2mus = 0;
 	_Mix_Music* Godmus=0;*/

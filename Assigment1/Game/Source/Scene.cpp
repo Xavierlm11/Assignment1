@@ -1,4 +1,4 @@
-#include "App.h"
+﻿#include "App.h"
 #include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -251,7 +251,7 @@ bool Scene::Start()
 	originTex = app->tex->Load("Assets/maps/a.png");
 	//app->map->CreateColliders();
 
-	
+	saved = 0;
 	return true;
 }
 
@@ -312,12 +312,14 @@ bool Scene::PreUpdate()
 		}
 	}
 	if (level1) {
+		currentScene = SCENE;
 		app->map->Load("level1.tmx");
 		StartCollidersLevel1();
 		app->map->CreateColliders();
 		level1 = false;	
 	}
 	if (level2) {
+		currentScene = SCENE2;
 		app->map->Load("level2.tmx");
 		StartCollidersLevel2();
 		app->map->CreateColliders();
@@ -358,9 +360,10 @@ bool Scene::Update(float dt)
 			silence = false;
 			app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)||(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)) {
-						
-
+		if ((app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)||(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) || (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)) 
+		{
+			
+			actualScene = 0;
 			currentScene = MENU;
 			silence = true;
 			
@@ -372,7 +375,7 @@ bool Scene::Update(float dt)
 		break;
 
 	case MENU:
-		actualScene = 0;
+		LOG("ACTUALSCENE %d", actualScene);
 		app->render->DrawTexture(MenuBackgroundTex, 0, 0, NULL);
 		
 		app->render->DrawTexture(Kirbo1Tex, movex, movey, &(Kirbo1Anim.GetCurrentFrame()),1.0f,rot);
@@ -398,6 +401,25 @@ bool Scene::Update(float dt)
 			movex1 = 260;
 		}
 		
+		if (saved == 1 )
+		{
+			
+			LOG("ACTUALSCENE %d", currentScene);
+
+			if (actualScene == 1)
+			{
+				currentScene = SCENE;
+
+			}
+			if (actualScene == 2)
+			{
+				currentScene = SCENE2;
+
+			}
+
+		}
+		LOG("ACTUALSCENE %d", actualScene);
+
 		//Draw GUI
 		app->guiManager->Draw();
 	
@@ -408,8 +430,8 @@ bool Scene::Update(float dt)
 		break;
 
 	case SCENE:
-		
-		
+		printf("GET OUT OF MY HEAD  %d",saved);
+		LOG("ACTUALSCENE %d", currentScene);
 		if (startTitle)
 		{
 			
@@ -467,6 +489,7 @@ bool Scene::Update(float dt)
 		}
 		break;
 		case SCENE2:
+			LOG("ACTUALSCENE %d", actualScene);
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && UwU==0) {
 				BugFixer = true;
 			}
@@ -556,9 +579,7 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			
 			ResetGame();
-		/*	startTitle = true;
-			currentScene = SCENE;
-			app->player->PlayerLives = 5;		*/
+		
 			clock.Start();
 		}
 		break;
@@ -625,12 +646,7 @@ bool Scene::PostUpdate()
 
 		break;
 
-	//case :
-
-	//	break;
-	//case MENU:
-
-	//	break;
+	
 	case CONFIG:
 		app->render->DrawTexture(BtnExitTex, 184, 42, NULL);
 		app->fonts->BlitText(51, 45, Font, "music");
@@ -674,22 +690,20 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				{
 					LOG("Click on button 1");
 					ResetGame();
-					//currentScene = SCENE;
+					
 					clock.Stop();
 					clock.Start();
-					//startTitle = true;
-
-					//app->render->camera.y = 0;
-					//app->render->camera.x = 0;
-
-					//app->player->position.x = 70;
-					//app->player->position.y = 15;
-					//app->SaveGameRequest();
+					
 				}
 
 				if (control->id == 2)
 				{
 					LOG("Click on button 2");
+					if (saved == 1) { 
+						ready = true;
+						app->LoadGameRequest();
+					}
+					
 				}
 
 				if (control->id == 3)
@@ -714,10 +728,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 					back = true;
 				}
 			
-			/*if (config == true)
-			{
-				
-			}*/
+			
 		}
 		if (currentScene == CONFIG)
 		{
@@ -725,7 +736,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			if (control->id == 6)
 			{
 				LOG("Click on button 6");
-				if(actualScene==0&&!pause)currentScene = MENU, config = false;
+				if(actualScene==0&&!pause)currentScene = MENU, config = false, actualScene = 0;
 				if (pause && actualScene == 1)currentScene = SCENE, config =false;
 				if (pause && actualScene == 2)currentScene = SCENE2, config = false;
 
@@ -805,8 +816,17 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			if (control->id == 21)
 			{
 				LOG("back to menu");
-				backtomenu = true;
+				actualScene = 0;
+				//backtomenu = true;
 				pause = false;
+
+				silence = true;
+				currentScene = MENU;
+
+				app->player->position.x = 50000;
+				app->player->position.y = 20000;
+				app->render->camera.x = 0;
+				app->render->camera.y = 0;
 			}
 			if (control->id == 22)
 			{
@@ -858,12 +878,16 @@ bool Scene::LoadState(pugi::xml_node& data) {
 	app->player->item3Used = data.child("Health").attribute("item3").as_bool();
 	app->player->item4Used = data.child("Health").attribute("item4").as_bool();
 
+	app->scene->actualScene = data.child("Actual").attribute("Scene").as_int();
+
 	return true;
 }
 bool Scene::SaveState(pugi::xml_node& data) const {
 	pugi::xml_node teleports = data.child("teleport");
 	pugi::xml_node coins = data.child("Money");
 	pugi::xml_node items = data.child("Health");
+	pugi::xml_node Actual = data.child("Actual");
+
 
 	teleports.attribute("check1").set_value(CheckUsed1);
 	teleports.attribute("check2").set_value(CheckUsed2);
@@ -882,6 +906,8 @@ bool Scene::SaveState(pugi::xml_node& data) const {
 	items.attribute("item2").set_value(app->player->item2Used);
 	items.attribute("item3").set_value(app->player->item3Used);
 	items.attribute("item4").set_value(app->player->item4Used);
+
+	Actual.attribute("Scene").set_value(actualScene);
 
 	return true;
 }

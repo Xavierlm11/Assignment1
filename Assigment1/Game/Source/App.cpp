@@ -33,11 +33,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	pathfinding = new PathFinding();
+	enemies = new ModuleEnemies();
 	scene = new Scene();
 	map = new Map();
 	player = new Player();
 	coll = new ModuleCollisions();
-	enemies = new ModuleEnemies();
 	particles = new ModuleParticles();
 	guiManager = new GuiManager();
 	fonts = new ModuleFonts();

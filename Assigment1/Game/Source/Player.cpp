@@ -209,8 +209,11 @@ bool Player::LoadState(pugi::xml_node& data)
 	position.y = data.child("position").attribute("y").as_int();
 
 	PlayerLives = data.child("lives").attribute("count").as_int();
-
+	
 	Key = data.child("Key").attribute("keyused").as_bool();
+
+	//saved= data.child("Saved").attribute("saved").as_bool();
+	
 
 	return true;
 }
@@ -222,6 +225,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 	pugi::xml_node pos = data.child("position");
 	pugi::xml_node life = data.child("lives");
 	pugi::xml_node key = data.child("Key");
+	pugi::xml_node Saved = data.child("saved");
 
 	pos.attribute("x").set_value(position.x);
 	pos.attribute("y").set_value(position.y);
@@ -229,6 +233,8 @@ bool Player::SaveState(pugi::xml_node& data) const
 	life.attribute("count").set_value(PlayerLives);
 
 	key.attribute("keyused").set_value(Key);
+
+	//Saved.attribute("saved").set_value(saved);
 
 	return true;
 }
@@ -260,9 +266,11 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT1)
 		{
 			if (app->scene->Point1 == false) {
+				 
 				app->audio->PlayFx(GetCheckpoint);
 				app->player->score += 25;
 			}
+			app->scene->saved = 1;
 			app->scene->Point1 = true;
 			CheckActive1 = true;
 			app->scene->ActiveTeleport1 = true;
@@ -272,9 +280,11 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT2)
 		{
 			if (app->scene->Point2 == false) {
+				 
 				app->audio->PlayFx(GetCheckpoint);
 				app->player->score += 25;
 			}
+			app->scene->saved = 1;
 			app->scene->Point2 = true;
 			CheckActive2 = true;
 			app->scene->ActiveTeleport2 = true;
@@ -284,9 +294,11 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT3)
 		{
 			if (app->scene->Point3 == false) {
+				
 				app->audio->PlayFx(GetCheckpoint);
 				app->player->score += 25;
 			}
+			app->scene->saved = 1;
 			app->scene->Point3 = true;
 			CheckActive3 = true;
 			app->scene->ActiveTeleport3 = true;
@@ -296,9 +308,11 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT4)
 		{
 			if (app->scene->Point4 == false) {
+				
 				app->audio->PlayFx(GetCheckpoint);
 				app->player->score += 25;
 			}
+			app->scene->saved = 1;
 			app->scene->Point4 = true;
 			CheckActive4 = true;
 			app->scene->ActiveTeleport4 = true;
@@ -308,9 +322,11 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == Collider::Type::PLAYER && c2->type == Collider::Type::CHECKPOINT5)
 		{
 			if (app->scene->Point5 == false) {
+				
 				app->audio->PlayFx(GetCheckpoint);
 				app->player->score += 25;
 			}
+			app->scene->saved = 1;
 			app->scene->Point5 = true;
 			CheckActive5 = true;
 			app->scene->ActiveTeleport5 = true;

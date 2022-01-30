@@ -106,6 +106,7 @@ public:
 
 	int limitFont = -1;
 	char limitText[10] = { "\0" };
+	
 private:
 	
 
