@@ -163,6 +163,7 @@ private:
 	SDL_Texture* MenuTitleTex;
 	SDL_Texture* Kirbo1Tex;
 	SDL_Texture* Kirbo2Tex;
+	SDL_Texture* CreditsTex;
 
 	//parallax
 	SDL_Texture* img;

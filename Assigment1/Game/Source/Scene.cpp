@@ -168,6 +168,8 @@ bool Scene::Start()
 	MenuTitleTex= app->tex->Load("Assets/textures/MenuTitleTex.png");
 	Kirbo1Tex= app->tex->Load("Assets/textures/Kirbo1Tex.png");
 	Kirbo2Tex = app->tex->Load("Assets/textures/Kirbo2Tex.png");
+	CreditsTex = app->tex->Load("Assets/textures/CreditsTex.png");
+
 	
 	//CheckPoints
 	CheckpointTex = app->tex->Load("Assets/textures/checkpointTex.png");
@@ -1334,18 +1336,18 @@ void Scene::ResetGame() {
 		pause = false;
 		app->player->position.y = 20;
 		app->player->position.x = 70;
-		if (actualScene == 2)
-		{
+	
 			app->coll->clean();
 			app->map->CleanUp();
 			level1 = true;
 			startTitle = true;
-		}
+	
 		app->scene->actualScene = 1;
 		app->scene->ActiveTeleport1 = false;
 		app->scene->ActiveTeleport2 = false;
 		app->scene->ActiveTeleport3 = false;
 		app->scene->ActiveTeleport4 = false;
+		app->scene->ActiveTeleport5 = false;
 		app->scene->AllowTeleport = false;
 		app->scene->scrollerX = 0;
 		app->scene->scrollerX1 = 0;
