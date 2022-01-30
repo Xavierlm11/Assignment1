@@ -443,6 +443,7 @@ bool Scene::Update(float dt)
 			startTitle = false;
 			
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
+			
 		}
 		
 	
@@ -715,6 +716,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 					if (saved == 1) { 
 						ready = true;
 						app->LoadGameRequest();
+						startTitle = true;
+						silence = true;
 					}
 					
 				}
