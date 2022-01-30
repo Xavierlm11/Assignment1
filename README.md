@@ -40,6 +40,8 @@ Keyboard
 - 1 - Direct win
 - M - Add life
 - N - Reduce life
+- 8 - View Buttons
+- H - Lose Time
 
 
 ## Developers
