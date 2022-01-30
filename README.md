@@ -24,7 +24,7 @@ Unlock the portal with the key
 Pass the level without being killed
 
 ### Debug functionality
-
+ 
 Keyboard
 - F1 - Start level
 - F2 - Start intro
