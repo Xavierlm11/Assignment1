@@ -120,6 +120,7 @@ bool Player::Start()
 	JumpFx = app->audio->LoadFx("Assets/audio/fx/JumpFx.wav");
 	playerAttack = app->audio->LoadFx("Assets/audio/fx/PlayerAttackFx.wav");
 	EnterFx = app->audio->LoadFx("Assets/audio/fx/EnterFx.wav");
+	dieFx = app->audio->LoadFx("Assets/audio/fx/GetHitFx.wav");
 
 	currentAnimation = &idleAnimR; //player start with idle anim
 
@@ -711,6 +712,7 @@ void Player::MovementPlayer(float dt) {
 			PlayerDeathL.Reset();
 			currentAnimation = &PlayerDeathL;
 		}
+		app->audio->PlayFx(dieFx);
 		death = false;
 		app->scene->silence = true;
 		app->scene->currentScene = GAME_OVER;

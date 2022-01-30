@@ -71,6 +71,8 @@ public:
 
 	Collider* misil = nullptr;
 
+	uint dieFx = 0;
+
 public:
 	List<SDL_Texture*> player;
 
