@@ -19,7 +19,8 @@ enum State
 	PAUSEMEN,
 	SCENE2,
 	GAME_OVER,
-	WIN_GAME
+	WIN_GAME,
+	CREDITS
 };
 
 
@@ -263,6 +264,8 @@ private:
 	iPoint origin1;
 	bool originSelected = false;
 
+	//Credits
+	float credity = 0;
 
 	int rot = 0;
 	float movex = -10;

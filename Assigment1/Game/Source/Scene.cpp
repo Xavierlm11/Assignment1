@@ -396,7 +396,7 @@ bool Scene::Update(float dt)
 		
 		//Draw GUI
 		app->guiManager->Draw();
-		
+	
 		break;
 	case CONFIG:
 		ConfigMenu();
@@ -555,6 +555,11 @@ bool Scene::Update(float dt)
 			app->player->PlayerLives = 5;		*/
 			
 		}
+	case CREDITS:
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->render->DrawTexture(CreditsTex, 0, credity, NULL);
+		credity -= dt * 0.0420;
 	}
 
 
@@ -582,10 +587,10 @@ bool Scene::PostUpdate()
 	case MENU:
 		
 		
-		app->fonts->BlitText(55, 100, Font, "play");
-		app->fonts->BlitText(128, 100, GrayFont, "continue");
-		app->fonts->BlitText(55, 135, Font, "config.");
-		
+		app->fonts->BlitText(61, 101, Font, "play");
+		app->fonts->BlitText(127, 101, GrayFont, "continue");
+		app->fonts->BlitText(53, 135, Font, "config.");
+		app->fonts->BlitText(132, 135, Font, "credits");		
 	
 
 		break;
@@ -666,7 +671,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				if (control->id == 4)
 				{
 					LOG("Click on button 4");
-					
+					currentScene = CREDITS;
 				}
 
 				if (control->id == 5)
