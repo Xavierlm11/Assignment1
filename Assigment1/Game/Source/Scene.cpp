@@ -521,9 +521,9 @@ bool Scene::Update(float dt)
 				currentScene = SCENE;
 			}
 
-			if (silence) {
+			if (startTitle) {
 				app->audio->PlayMusic("Assets/audio/music/BackgroundMusicLevel2.ogg");
-				silence = false;
+				startTitle = false;
 			}
 			
 			app->map->Draw();
