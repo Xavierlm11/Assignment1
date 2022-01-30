@@ -96,9 +96,6 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
       <Filter>External\PugiXml</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Window.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Animation.h">
       <Filter>Origin</Filter>
     </ClInclude>
@@ -163,6 +160,9 @@
       <Filter>Origin</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleFonts.h">
+      <Filter>Origin</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window.h">
       <Filter>Origin</Filter>
     </ClInclude>
   </ItemGroup>

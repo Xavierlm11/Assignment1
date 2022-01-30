@@ -377,7 +377,7 @@ bool Scene::Update(float dt)
 		break;
 
 	case MENU:
-		LOG("ACTUALSCENE %d", actualScene);
+	
 
 		if (silence)
 		{
@@ -412,7 +412,6 @@ bool Scene::Update(float dt)
 		if (saved == 1 )
 		{
 			
-			LOG("ACTUALSCENE %d", currentScene);
 
 			if (actualScene == 1)
 			{
@@ -426,7 +425,7 @@ bool Scene::Update(float dt)
 			}
 
 		}
-		LOG("ACTUALSCENE %d", actualScene);
+		
 
 		//Draw GUI
 		app->guiManager->Draw();
@@ -438,11 +437,9 @@ bool Scene::Update(float dt)
 		break;
 
 	case SCENE:
-		printf("GET OUT OF MY HEAD  %d",saved);
-		LOG("ACTUALSCENE %d", currentScene);
+		
 		if (startTitle)
 		{
-			//app->pathfinding->CleanUp();
 			startTitle = false;
 			
 			app->audio->PlayMusic("Assets/audio/music/BackgroundMusic.ogg");
@@ -497,7 +494,7 @@ bool Scene::Update(float dt)
 		}
 		break;
 		case SCENE2:
-			LOG("ACTUALSCENE %d", actualScene);
+			
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && UwU==0) {
 				BugFixer = true;
 			}
@@ -643,9 +640,6 @@ bool Scene::PostUpdate()
 		end = true;
 	}
 
-		
-	
-	//sprintf_s(scoreText, 10, "%4d", steps);
 	switch (currentScene)
 	{
 	case MENU:
