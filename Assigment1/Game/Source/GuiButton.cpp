@@ -146,6 +146,28 @@ bool GuiButton::Draw(Render* render)
 				app->render->DrawTexture(app->scene->BtnSmallRedTex, 122, 128, NULL);
 			}
 		}
+		if (app->scene->pause == true) {
+			if ((mouseX > 73) && (mouseX < (168)) &&
+				(mouseY > 89) && (mouseY < (99)))
+			{
+				app->render->DrawTexture(app->scene->BtnPause1, 72, 88, NULL);
+			}
+			if ((mouseX > 73) && (mouseX < (168)) &&
+				(mouseY > 68) && (mouseY < (78)))
+			{
+				app->render->DrawTexture(app->scene->BtnPause1, 72, 67, NULL);
+			}
+			if ((mouseX > 73) && (mouseX < (168)) &&
+				(mouseY > 47) && (mouseY < (57)))
+			{
+				app->render->DrawTexture(app->scene->BtnPause1, 72, 46, NULL);
+			}
+			if ((mouseX > 89) && (mouseX < (151)) &&
+				(mouseY > 107) && (mouseY < (117)))
+			{
+				app->render->DrawTexture(app->scene->BtnPause2, 88, 106, NULL);
+			}
+		}
 
 		app->audio->PlayFx(app->scene->ClickFx);
 

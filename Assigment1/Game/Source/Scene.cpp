@@ -226,7 +226,9 @@ bool Scene::Start()
 	PauseTex = app->tex->Load("Assets/textures/PauseMenuTex.png");
 	BtnSmallRedTex = app->tex->Load("Assets/textures/SmallBoxSelected.png");
 	BtnBigRedTex = app->tex->Load("Assets/textures/BigBoxSelected.png");
-	
+	BtnPause1 = app->tex->Load("Assets/textures/PauseBtn1.png");
+	BtnPause2 = app->tex->Load("Assets/textures/PauseBtn2.png");
+
 	btnPlay->texture = CoinTex;
 
 	//Fonts
