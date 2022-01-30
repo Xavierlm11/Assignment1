@@ -8,7 +8,7 @@
 		<teleport check1="false" check2="false" check3="false" check4="false" check5="false" />
 		<Money coins="0" coinused1="false" coinused2="false" coinused3="false" coinused4="false" coinused5="false" />
 		<Health item1="false" item2="false" item3="false" item4="false" />
-		<Actual actualScene="1"/>
+		<Actual Scene="1"/>
 	</scene>
 	<enemy>
 		<enemy x="10" y="10" />
