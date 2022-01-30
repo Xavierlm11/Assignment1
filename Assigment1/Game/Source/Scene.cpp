@@ -205,8 +205,8 @@ bool Scene::Start()
 	btnContinue = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (122), 91, 76, 31 }, this);
 	btnSettings = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", { (40), 128, 76, 21 }, this);
 	btnCredits = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", { (122), 128, 76, 21 }, this);
-	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 5, 5 }, this);
-	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Back", { (188), 41, 8, 8 }, this);
+	btnExit = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Exit", { (2), 2, 8, 8 }, this);
+	Backmen = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Back", { (184), 42, 8, 8 }, this);
 	btnMusicUp = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "Up Music", { (160), 47, 7, 7 }, this);
 	btnMusicDown = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "Down Music", { (132), 47, 7, 7 }, this);
 	btnFxUp = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "Up Fx", { (160), 60, 7, 7 }, this);
@@ -222,6 +222,7 @@ bool Scene::Start()
 	Config = app->tex->Load("Assets/textures/ConfigMenuTex.png");
 	BtnSelected = app->tex->Load("Assets/textures/BottonSelectedTex.png");
 	BtnExitTex= app->tex->Load("Assets/textures/ClockTexture.png");
+	BtnExitWhite = app->tex->Load("Assets/textures/WhiteExitTex.png");
 	PauseTex = app->tex->Load("Assets/textures/PauseMenuTex.png");
 	BtnSmallRedTex = app->tex->Load("Assets/textures/SmallBoxSelected.png");
 	BtnBigRedTex = app->tex->Load("Assets/textures/BigBoxSelected.png");
@@ -615,7 +616,7 @@ bool Scene::PostUpdate()
 	{
 	case MENU:
 		
-		
+		app->render->DrawTexture(BtnExitWhite, 2, 2, NULL);
 		app->fonts->BlitText(61, 101, Font, "play");
 		app->fonts->BlitText(127, 101, GrayFont, "continue");
 		app->fonts->BlitText(53, 135, Font, "config.");
@@ -1419,6 +1420,11 @@ void Scene::ResetGame() {
 		app->scene->CoinUsed5 = false;
 		app->coll->matrix[Collider::Type::COIN5][Collider::Type::PLAYER] = true;
 		app->scene->silence = true;
+
+		app->coll->matrix[Collider::Type::ITEM1][Collider::Type::PLAYER] = true;
+		app->coll->matrix[Collider::Type::ITEM2][Collider::Type::PLAYER] = true;
+		app->coll->matrix[Collider::Type::ITEM3][Collider::Type::PLAYER] = true;
+		app->coll->matrix[Collider::Type::ITEM4][Collider::Type::PLAYER] = true;
 
 		app->player->god = false;
 		app->player->ActivePlayer = false;
