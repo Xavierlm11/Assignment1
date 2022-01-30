@@ -343,6 +343,9 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	uint miliseconds = app->scene->clock.Read() % 1000;
+	uint seconds = (app->scene->clock.Read() / 1000) % 60;
+	uint minutes = (app->scene->clock.Read() / 1000) / 60;
 	EnterStart.Update();
 	switch (currentScene)
 	{
@@ -557,17 +560,29 @@ bool Scene::Update(float dt)
 			app->player->PlayerLives = 5;		*/
 			clock.Start();
 		}
+		break;
 	case CREDITS:
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
+		
+		
+
 		app->render->DrawTexture(CreditsTex, 0, credity, NULL);
-		credity -= dt * 0.0420;
+		credity -= dt * 0.0360;
 
 		if (silence) {
 			app->audio->PlayMusic("Assets/audio/music/CreditsMusic.ogg");
 			silence = false;
 		}
-
+		if (seconds==52 || end)
+		{
+			clock.Stop();
+			app->audio->PlayMusic("Assets/audio/music/Silence.ogg");
+			end = false;
+			currentScene = MENU;
+		}
+		
+		break;
 	}
 
 
@@ -581,14 +596,20 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && (currentScene != SCENE && currentScene != SCENE2) || back == true)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && currentScene != SCENE && currentScene != SCENE2 && currentScene!=CREDITS || back == true)
 		ret = false;
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && (currentScene == SCENE || currentScene == SCENE2))
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && (currentScene == SCENE || currentScene == SCENE2) )
 	{
 		if (!pause)pause = true;
 		else if (pause)pause = false ;
 	}
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && currentScene == CREDITS)
+	{
+		end = true;
+	}
 
+		
+	
 	//sprintf_s(scoreText, 10, "%4d", steps);
 	switch (currentScene)
 	{
@@ -627,6 +648,7 @@ bool Scene::PostUpdate()
 		if (frcap == false) {
 			app->fonts->BlitText(160, 106, Font, "x");
 		}
+		break;
 	}
 	
 
@@ -679,6 +701,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				if (control->id == 4)
 				{
 					LOG("Click on button 4");
+					clock.Stop();
+					clock.Start();
+					silence = true;
 					currentScene = CREDITS;
 				}
 

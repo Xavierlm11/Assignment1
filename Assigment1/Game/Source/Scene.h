@@ -273,6 +273,8 @@ private:
 	float movex1 = 260;
 	float movey1 = 30;
 
+
+	bool end = false;
 	//_Mix_Music* lvl1mus;
 	/*_Mix_Music* lvl2mus = 0;
 	_Mix_Music* Godmus=0;*/
