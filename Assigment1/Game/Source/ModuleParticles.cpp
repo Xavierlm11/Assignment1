@@ -64,11 +64,13 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 			if ((c1->type == Collider::Type::PLAYERATTACK && c2->type == Collider::Type::ENEMYBOO || c1->type == Collider::Type::ENEMYBOO && c2->type == Collider::Type::PLAYERATTACK) && app->enemies->BooLive == 1)
 			{
 				app->enemies->BooLive = 0;
+				app->player->score += 400;
 			}
 
 			if ((c1->type == Collider::Type::PLAYERATTACK && c2->type == Collider::Type::ENEMYWADDLE || c1->type == Collider::Type::ENEMYWADDLE && c2->type == Collider::Type::PLAYERATTACK) && app->enemies->WaddleLive==1)
 			{
 				app->enemies->WaddleLive = 0;
+				app->player->score += 400;
 			}
 
 			/*if (particles[i]->type == 1) {

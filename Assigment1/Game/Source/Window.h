@@ -36,6 +36,8 @@ public:
 	// Retrieve window height
 	int GetHeight() const;
 
+
+	void SwitchScreen();
 public:
 	// The window we'll be rendering to
 	SDL_Window* window;

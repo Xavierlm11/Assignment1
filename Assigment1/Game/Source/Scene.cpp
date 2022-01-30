@@ -543,17 +543,19 @@ bool Scene::Update(float dt)
 				app->player->PlayerLives = 5;
 				app->LoadGameRequest();
 			}
+			clock.Start();
 		}
 		break;
 	case WIN_GAME:
 		SetWinGame();
+		clock.Stop();
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			
 			ResetGame();
 		/*	startTitle = true;
 			currentScene = SCENE;
 			app->player->PlayerLives = 5;		*/
-			
+			clock.Start();
 		}
 	case CREDITS:
 		app->render->camera.x = 0;
@@ -737,10 +739,12 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				LOG("fullscreen");
 				if (app->win->fullscreen == false) {
 					app->win->fullscreen = true;
+					app->win->SwitchScreen();
 				/*	if (app->win->fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;*/
 				}
 				else if (app->win->fullscreen == true) {
 					app->win->fullscreen = false;
+					app->win->SwitchScreen();
 				}
 			}
 			if (control->id == 12)

@@ -50,10 +50,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(pathfinding);
+	AddModule(enemies);
 	AddModule(scene);
 	AddModule(map);
 	AddModule(player);
-	AddModule(enemies);
+	
 	AddModule(coll);
 	AddModule(particles);
 	AddModule(guiManager);
@@ -203,7 +204,7 @@ void App::FinishUpdate()
 	uint miliseconds = app->scene->clock.Read() % 1000;
 	uint seconds = (app->scene->clock.Read() / 1000) % 60;
 	uint minutes = (app->scene->clock.Read() / 1000) / 60;
-
+	
 	if (loadGameRequested == true) {
 		LoadGame();
 		loadGameRequested == false;

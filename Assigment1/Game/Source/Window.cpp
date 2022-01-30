@@ -111,3 +111,16 @@ int Window::GetHeight() const
 {
 	return (int)height;
 }
+
+void Window::SwitchScreen()
+{
+	if (fullscreen == true)
+	{
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(window, 0);
+	}
+
+}

@@ -10,7 +10,7 @@
 #include "Scene.h"
 #include "ModuleParticles.h"
 #include "ModuleEnemies.h"
-
+#include "ModuleFonts.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -261,6 +261,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			if (app->scene->Point1 == false) {
 				app->audio->PlayFx(GetCheckpoint);
+				app->player->score += 25;
 			}
 			app->scene->Point1 = true;
 			CheckActive1 = true;
@@ -272,6 +273,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			if (app->scene->Point2 == false) {
 				app->audio->PlayFx(GetCheckpoint);
+				app->player->score += 25;
 			}
 			app->scene->Point2 = true;
 			CheckActive2 = true;
@@ -283,6 +285,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			if (app->scene->Point3 == false) {
 				app->audio->PlayFx(GetCheckpoint);
+				app->player->score += 25;
 			}
 			app->scene->Point3 = true;
 			CheckActive3 = true;
@@ -294,6 +297,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			if (app->scene->Point4 == false) {
 				app->audio->PlayFx(GetCheckpoint);
+				app->player->score += 25;
 			}
 			app->scene->Point4 = true;
 			CheckActive4 = true;
@@ -305,6 +309,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			if (app->scene->Point5 == false) {
 				app->audio->PlayFx(GetCheckpoint);
+				app->player->score += 25;
 			}
 			app->scene->Point5 = true;
 			CheckActive5 = true;
@@ -320,6 +325,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			if (item1Used == true && PlayerLives < 5) {
 				PlayerLives += 1;
+				app->player->score += 10;
 			}
 		}
 
@@ -331,6 +337,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			if (item2Used == true && PlayerLives < 5) {
 				PlayerLives += 1;
+				app->player->score += 10;
 			}
 		}
 
@@ -342,6 +349,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			if (item3Used == true && PlayerLives < 5) {
 				PlayerLives += 1;
+				app->player->score += 10;
 			}
 		}
 
@@ -353,6 +361,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			if (item4Used == true && PlayerLives < 5) {
 				PlayerLives += 1;
+				app->player->score += 10;
 			}
 		}
 
@@ -360,6 +369,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			if (Key == false) {
 				app->audio->PlayFx(GetKey);
+				app->player->score += 50;
 			}
 			Key = true;
 		}
@@ -371,6 +381,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->coll->matrix[Collider::Type::COIN1][Collider::Type::PLAYER] = false;
 				Money += 1;
 				app->audio->PlayFx(GetCoin);
+				app->player->score += 100;
 			}
 			app->scene->CoinUsed1 = true;
 		}
@@ -381,6 +392,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->coll->matrix[Collider::Type::COIN2][Collider::Type::PLAYER] = false;
 				Money += 1;
 				app->audio->PlayFx(GetCoin);
+				app->player->score += 100;
 			}
 			app->scene->CoinUsed2 = true;
 		}
@@ -391,6 +403,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->coll->matrix[Collider::Type::COIN3][Collider::Type::PLAYER] = false;
 				Money += 1;
 				app->audio->PlayFx(GetCoin);
+				app->player->score += 100;
 			}
 			app->scene->CoinUsed3 = true;
 		}
@@ -401,6 +414,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->coll->matrix[Collider::Type::COIN4][Collider::Type::PLAYER] = false;
 				Money += 1;
 				app->audio->PlayFx(GetCoin);
+				app->player->score += 100;
 			}
 			app->scene->CoinUsed4 = true;
 		}
@@ -411,6 +425,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 				app->coll->matrix[Collider::Type::COIN5][Collider::Type::PLAYER] = false;
 				Money += 1;
 				app->audio->PlayFx(GetCoin);
+				app->player->score += 100;
 			}
 			app->scene->CoinUsed5 = true;
 		}
@@ -420,6 +435,7 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 			app->scene->win = true;
 			app->scene->WinAnim.Reset();
 			app->scene->currentScene = WIN_GAME;
+			app->player->score += 500;
 		}
 
 		if ((c1->type == Collider::Type::PLAYER || c1->type == Collider::Type::PLAYERHEAD || c1->type == Collider::Type::PLAYERLEFT || c1->type == Collider::Type::PLAYERRIGHT) && c2->type == Collider::Type::TELEPORT)
@@ -468,7 +484,11 @@ void Player::OnCollision(Collider* c1, Collider* c2) {
 
 void Player::MovementPlayer(float dt) {
 	float speed = 2 * dt * 0.09;
+	uint miliseconds = app->scene->clock.Read() % 1000;
+	uint seconds = (app->scene->clock.Read() / 1000) % 60;
+	uint minutes = (app->scene->clock.Read() / 1000) / 60;
 	
+
 	//particles
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
 		app->audio->PlayFx(playerAttack);
@@ -642,7 +662,9 @@ void Player::MovementPlayer(float dt) {
 			}
 		}
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
+		minutes = 4;
+	}
 	if (app->scene->currentScene == SCENE) {
 		//PLAYER LIMITS
 		if (position.x > 660)
@@ -685,6 +707,25 @@ void Player::MovementPlayer(float dt) {
 	}
 
 	if (app->scene->currentScene == SCENE|| app->scene->currentScene == SCENE2) {
+		sprintf_s(scoreText, 10, "%4d", score);
+		app->fonts->BlitText(10, 20, app->scene->Font, scoreText);
+
+		app->fonts->BlitText(66, 5, app->scene->Font, "limit 4;00;00");
+
+		
+		sprintf_s(limitText, 10, "%4d", minutes);
+		app->fonts->BlitText(90, 15, app->scene->Font, limitText);
+
+		app->fonts->BlitText(122, 15, app->scene->Font, ";");
+
+		sprintf_s(limitText, 10, "%4d", seconds);
+		app->fonts->BlitText(114, 15, app->scene->Font, limitText);
+
+		app->fonts->BlitText(146, 15, app->scene->Font, ";");
+
+		sprintf_s(limitText, 10, "%2d", miliseconds);
+		app->fonts->BlitText(154, 15, app->scene->Font, limitText);
+		 
 		if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		{
 			PlayerLives -= 1;
@@ -710,7 +751,7 @@ void Player::MovementPlayer(float dt) {
 		if (PlayerLives == 1) {
 			app->render->DrawTexture(HealthBarTex, 5, 5, &(Bar1.GetCurrentFrame()), 0);
 		}
-		if (PlayerLives == 0) {
+		if (PlayerLives == 0 || minutes==4) {
 			LOG("MORISTE");
 			death = true;
 		}

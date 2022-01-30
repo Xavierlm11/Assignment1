@@ -98,6 +98,14 @@ public:
 
 	uint playerAttack = 0;
 
+	int score = 0;
+	int timer = 500;
+	int secs;
+	int scoreFont = -1;
+	char scoreText[10] = { "\0" };
+
+	int limitFont = -1;
+	char limitText[10] = { "\0" };
 private:
 	
 
