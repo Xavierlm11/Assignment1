@@ -1,9 +1,17 @@
-# Assigment1
+# The legend of Kirbo
 
 ## Description
 
 This game is a platformer made by CITM students
 
+## Tools
+- Visual Studio
+- Tiled
+- Photoshop
+
+## Libraries
+- SDL2
+  
 ## Key Features
 
  - 1 player
